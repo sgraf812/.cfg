@@ -5,10 +5,12 @@
     # pkgs.creduce
     pkgs.fswatch
     # pkgs.gcc
+    pkgs.git
     pkgs.htop
     pkgs.man
     pkgs.manpages
     pkgs.nix-repl
+    # pkgs.openssh-with-kerberos
     pkgs.p7zip
     pkgs.python
     pkgs.silver-searcher
@@ -101,6 +103,8 @@
       grin = "grep -rin";
       e = "vim";
       ag = ''\ag --pager="less -XFR"'';
+      git = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin git";
+      ssh = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin ssh";
     };
   };
 

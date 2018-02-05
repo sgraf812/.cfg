@@ -4,6 +4,7 @@ stty -ixon
 export EDITOR=e
 export SPEC_PATH=/data1/graf/spec/cpu2017/
 export SHELL=$(which zsh)
+export PATH=/data1/graf/bin:$PATH
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward

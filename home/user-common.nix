@@ -2,19 +2,26 @@
 
 {
   home.packages = [
+    # pkgs.clang
     # pkgs.creduce
+    pkgs.fira-code
     pkgs.fswatch
     # pkgs.gcc
+    pkgs.ghc
+    pkgs.cabal-install
+    pkgs.cabal2nix
     pkgs.git
     pkgs.htop
     pkgs.man
     pkgs.manpages
     pkgs.nix-repl
-    # pkgs.openssh-with-kerberos
+    pkgs.nox
+    pkgs.openssh
     pkgs.p7zip
     pkgs.python
     pkgs.silver-searcher
     pkgs.stack
+    pkgs.stack2nix
     pkgs.tldr
     pkgs.tmux
     pkgs.tmuxinator

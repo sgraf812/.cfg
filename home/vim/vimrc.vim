@@ -35,6 +35,7 @@
 "    -> Spell checking
 "    -> Misc
 "    -> Helper functions
+"    -> Addons
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -122,6 +123,9 @@ set foldcolumn=1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" A new vim 8 option that should fix things
+" set termguicolors
+
 " Enable 256 colors palette in Gnome Terminal
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
@@ -169,8 +173,8 @@ set shiftwidth=4
 set tabstop=4
 
 " Linebreak on 500 characters
-set lbr
-set tw=80
+" set lbr
+" set tw=500
 
 set ai "Auto indent
 set si "Smart indent
@@ -358,3 +362,11 @@ function! VisualSelection(direction, extra_filter) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Addons
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+call vam#ActivateAddons(['github:dracula/vim'])
+" set background=dark
+" color solarized

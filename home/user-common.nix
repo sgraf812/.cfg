@@ -3,11 +3,13 @@
 {
   home.packages = [
     # pkgs.clang
+    pkgs.cloc
     # pkgs.creduce
     pkgs.fira-code
     pkgs.fswatch
     # pkgs.gcc
     pkgs.ghc
+    pkgs.gmp
     pkgs.cabal-install
     pkgs.cabal2nix
     pkgs.git
@@ -55,6 +57,8 @@
       lg1 = "log --decorate --graph --oneline";
       sf = "svn fetch";
       tar = "archive --format=tar";
+      wta = "worktree add --detach";
+      wtas = ''wtas = "!bash -ec 'if (( $# != 1)); then echo >&2 git wtas: 1 parameter expected; exit 2; fi; tree=\"$(python -c \"from __future__ import print_function; import os, os.path, sys; print(os.path.normpath(os.path.join(os.getenv(\\\"PWD\\\"), sys.argv[1])))\" \"$1\")\"; git wta \"$tree\"; cd \"$(git rev-parse --git-dir)\"; for mod in $(git config --blob HEAD:.gitmodules -l --name-only|gawk -F . \"/\\.path$/ {print \\$2}\"); do [ -d modules/$mod ] && git -C modules/$mod wta \"$tree/$(git config --blob HEAD:.gitmodules --get submodule.$mod.path)\"; done' wtas"'';
     };
     extraConfig = {
       core = { 
@@ -65,6 +69,11 @@
       };
       color.ui = "auto";
       push.default = "matching";
+        "url \"git://github.com/ghc/packages-\"".insteadOf = "git://github.com/ghc/packages/";
+        "url \"http://github.com/ghc/packages-\"".insteadOf = "http://github.com/ghc/packages/";
+        "url \"https://github.com/ghc/packages-\"".insteadOf = "https://github.com/ghc/packages/";
+        "url \"ssh://git@github.com/ghc/packages-\"".insteadOf = "ssh://git@github.com/ghc/packages/";
+        "url \"git@github.com/ghc/packages-\"".insteadOf = "git@github.com/ghc/packages/";
     };
   };
 
@@ -75,7 +84,7 @@
 
   programs.vim = {
     enable = true;
-    extraConfig = builtins.readFile ./vim/vimrc.vim;
+    extraConfig = builtins.readFile vim/vimrc.vim;
     settings = {
       relativenumber = true;
       number = true;

@@ -16,6 +16,7 @@
     pkgs.htop
     pkgs.man
     pkgs.manpages
+    pkgs.ncurses
     pkgs.nix-repl
     pkgs.nox
     pkgs.openssh
@@ -29,9 +30,9 @@
     pkgs.tmuxinator
     pkgs.tree
     pkgs.unzip
-    pkgs.vlc
+    # pkgs.vlc # pulls in rust
     pkgs.xclip
-    pkgs.zathura
+    # pkgs.zathura # pulls in rust
     # pkgs.ycomp
   ];
 
@@ -58,7 +59,7 @@
       sf = "svn fetch";
       tar = "archive --format=tar";
       wta = "worktree add --detach";
-      wtas = ''wtas = "!bash -ec 'if (( $# != 1)); then echo >&2 git wtas: 1 parameter expected; exit 2; fi; tree=\"$(python -c \"from __future__ import print_function; import os, os.path, sys; print(os.path.normpath(os.path.join(os.getenv(\\\"PWD\\\"), sys.argv[1])))\" \"$1\")\"; git wta \"$tree\"; cd \"$(git rev-parse --git-dir)\"; for mod in $(git config --blob HEAD:.gitmodules -l --name-only|gawk -F . \"/\\.path$/ {print \\$2}\"); do [ -d modules/$mod ] && git -C modules/$mod wta \"$tree/$(git config --blob HEAD:.gitmodules --get submodule.$mod.path)\"; done' wtas"'';
+      wtas = ''"!bash -ec 'if (( $# != 1)); then echo >&2 git wtas: 1 parameter expected; exit 2; fi; tree=\"$(python -c \"from __future__ import print_function; import os, os.path, sys; print(os.path.normpath(os.path.join(os.getenv(\\\"PWD\\\"), sys.argv[1])))\" \"$1\")\"; git wta \"$tree\"; cd \"$(git rev-parse --git-dir)\"; for mod in $(git config --blob HEAD:.gitmodules -l --name-only|gawk -F . \"/\\.path$/ {print \\$2}\"); do [ -d modules/$mod ] && git -C modules/$mod wta \"$tree/$(git config --blob HEAD:.gitmodules --get submodule.$mod.path)\"; done' wtas"'';
     };
     extraConfig = {
       core = { 
@@ -90,14 +91,14 @@
       number = true;
     };
     plugins = [
-      "The_NERD_Commenter"
-      "The_NERD_tree"
-      "fugitive" 
-      "sensible" 
-      "sleuth" 
-      "Solarized" 
-      "vim-airline" 
-      "vim-gitgutter" 
+      "The_NERD_Commenter"  # Comment scripts
+      "The_NERD_tree"       # File browser
+      "fugitive"            # Git commands
+      "sensible"            # Sensible defaults
+      "sleuth"              # Heuristically set buffer options
+      # "Solarized" 
+      "vim-airline"         # Powerline in vimscript
+      "vim-gitgutter"       # Show git changes in gutter
     ];
   };
 

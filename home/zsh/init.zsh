@@ -12,6 +12,13 @@ bindkey '^R' history-incremental-search-backward
 bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
 
+dm () {
+  PROG=$(which $1)
+  shift
+  nohup $PROG $@ > /dev/null 2>&1 &
+  disown
+}
+
 # Rebuild config and launch tmux if not already in some mux session,
 # before setting any aliases
 if command -v tmux>/dev/null && [[ ! $TERM =~ screen && -z $TMUX ]]; then

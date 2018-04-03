@@ -5,13 +5,14 @@
     # pkgs.clang
     pkgs.cloc
     # pkgs.creduce
+    pkgs.entr
     pkgs.fira-code
     pkgs.fswatch
     # pkgs.gcc
     pkgs.ghc
     pkgs.gmp
     pkgs.cabal-install
-    pkgs.cabal2nix
+    # pkgs.cabal2nix
     pkgs.git
     pkgs.htop
     pkgs.man
@@ -24,7 +25,7 @@
     pkgs.python
     pkgs.silver-searcher
     pkgs.stack
-    pkgs.stack2nix
+    # pkgs.stack2nix
     pkgs.tldr
     pkgs.tmux
     pkgs.tmuxinator

@@ -4,13 +4,18 @@ stty -ixon
 export EDITOR=e
 export SPEC_PATH=/data1/graf/spec/cpu2017/
 export SHELL=$(which zsh)
-export PATH=/data1/graf/stack/bin:/data1/graf/cabal/bin:/data1/graf/bin:$PATH
+export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/data1/graf/bin:$PATH
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
+bindkey '^[[1;5C' forward-word
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1~' beginning-of-line
+bindkey '^E' end-of-line
+
 
 dm () {
   PROG=$(which $1)

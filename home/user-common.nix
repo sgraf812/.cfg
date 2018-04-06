@@ -2,6 +2,7 @@
 
 {
   home.packages = [
+    pkgs.arcanist
     # pkgs.clang
     pkgs.cloc
     # pkgs.creduce

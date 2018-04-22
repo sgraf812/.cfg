@@ -3,18 +3,19 @@
 {
   home.packages = [
     pkgs.arcanist
+    pkgs.cabal-install
+    # pkgs.cabal2nix
     # pkgs.clang
     pkgs.cloc
     # pkgs.creduce
     pkgs.entr
     pkgs.fira-code
     pkgs.fswatch
-    # pkgs.gcc
+    pkgs.gcc
     pkgs.ghc
-    pkgs.gmp
-    pkgs.cabal-install
-    # pkgs.cabal2nix
     pkgs.git
+    pkgs.gmp
+    pkgs.gnumake
     pkgs.htop
     pkgs.man
     pkgs.manpages

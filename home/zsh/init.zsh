@@ -1,3 +1,5 @@
+. ~/.nix-profile/etc/profile.d/nix.sh
+
 # Deactivate tty flow control (e.g. suspending with ctlr-s and resuming with ctrl-q)
 stty -ixon
 

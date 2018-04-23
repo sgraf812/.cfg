@@ -43,6 +43,10 @@ key[PageDown]="$terminfo[knp]"
 [[ -n "$key[Left]"      ]] && bindkey -- "$key[Left]"      backward-char
 [[ -n "$key[Right]"     ]] && bindkey -- "$key[Right]"     forward-char
 
+# These still aren't bound and not present in $terminfo
+bindkey "^[[1;5D" backward-word # Ctrl-Left
+bindkey "^[[1;5C" forward-word  # Ctrl-Right
+
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then

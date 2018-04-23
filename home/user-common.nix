@@ -19,9 +19,11 @@
     pkgs.htop
     pkgs.man
     pkgs.manpages
+    pkgs.maven
     pkgs.ncurses
     pkgs.nix-repl
     pkgs.nox
+    pkgs.openjdk
     pkgs.openssh
     pkgs.p7zip
     pkgs.python

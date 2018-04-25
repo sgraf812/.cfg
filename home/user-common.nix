@@ -17,9 +17,11 @@
     pkgs.gmp
     pkgs.gnumake
     pkgs.htop
+    pkgs.i3
     pkgs.man
     pkgs.manpages
     pkgs.maven
+    pkgs.ncdu
     pkgs.ncurses
     pkgs.nix-repl
     pkgs.nox
@@ -133,5 +135,17 @@
   home.file = {
     ".tmux.conf".source = ./tmux/tmux.conf;
     ".tmuxinator".source = ./tmuxinator;
+  };
+
+  xsession.windowManager.i3 = {
+    enable = true;
+    config = {
+      assigns = {
+        "1: web" = [{ class = "^Firefox$"; }];
+        "10: spotify" = [{ class = "^Spotify$"; }];
+      };
+
+      fonts = [ "monospace 10" ];
+    };
   };
 }

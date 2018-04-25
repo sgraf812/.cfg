@@ -8,6 +8,7 @@ export SPEC_PATH=/data1/graf/spec/cpu2017/
 export SHELL=$(which zsh)
 export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/data1/graf/bin:$PATH
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
+export DISPLAY=:0
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward

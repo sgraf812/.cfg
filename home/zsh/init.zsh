@@ -3,7 +3,7 @@
 # Deactivate tty flow control (e.g. suspending with ctlr-s and resuming with ctrl-q)
 stty -ixon
 
-export EDITOR=e
+export EDITOR=vim
 export SPEC_PATH=/data1/graf/spec/cpu2017/
 export SHELL=$(which zsh)
 export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/data1/graf/bin:$PATH
@@ -67,7 +67,6 @@ dm () {
   PROG=$(which $1)
   shift
   nohup $PROG $@ > /dev/null 2>&1 &
-  disown
 }
 
 # Rebuild config and launch tmux if not already in some mux session,

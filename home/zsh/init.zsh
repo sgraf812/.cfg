@@ -61,14 +61,6 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-finish
 fi
 
-# dm will run its argument as a daemon
-
-dm () {
-  PROG=$(which $1)
-  shift
-  nohup $PROG $@ > /dev/null 2>&1 &
-}
-
 # Rebuild config and launch tmux if not already in some mux session,
 # before setting any aliases
 if command -v tmux>/dev/null && [[ ! $TERM =~ screen && -z $TMUX ]]; then

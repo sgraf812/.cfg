@@ -110,6 +110,9 @@ set novisualbell
 set t_vb=
 set tm=500
 
+" TeX highlighting is really slow with relative line numbers
+autocmd FileType tex setlocal norelativenumber
+
 " Properly disable sound on errors on MacVim
 if has("gui_macvim")
     autocmd GUIEnter * set vb t_vb=

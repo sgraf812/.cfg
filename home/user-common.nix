@@ -10,14 +10,13 @@
     # pkgs.creduce
     pkgs.entr
     pkgs.fira-code
-    pkgs.fswatch
-    pkgs.gcc
+    pkgs.gcc_multi
     pkgs.ghc
     pkgs.git
     pkgs.gmp
     pkgs.gnumake
     pkgs.htop
-    pkgs.i3
+    # pkgs.i3
     pkgs.man
     pkgs.manpages
     pkgs.maven
@@ -126,7 +125,9 @@
       grn = "grep -rn";
       grin = "grep -rin";
       e = "vim";
-      ag = ''\ag --pager="less -XFR"'';
+      less = "\less -XFR";
+      info = "info --vi-keys";
+      ag = ''\ag --pager="\less -XFR"'';
       git = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin git";
       ssh = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin ssh";
     };
@@ -137,15 +138,15 @@
     ".tmuxinator".source = ./tmuxinator;
   };
 
-  xsession.windowManager.i3 = {
-    enable = true;
-    config = {
-      assigns = {
-        "1: web" = [{ class = "^Firefox$"; }];
-        "10: spotify" = [{ class = "^Spotify$"; }];
-      };
-
-      fonts = [ "monospace 10" ];
-    };
-  };
+#  xsession.windowManager.i3 = {
+#    enable = true;
+#    config = {
+#      assigns = {
+#        "1: web" = [{ class = "^Firefox$"; }];
+#        "10: spotify" = [{ class = "^Spotify$"; }];
+#      };
+#
+#      fonts = [ "monospace 10" ];
+#    };
+#  };
 }

@@ -51,14 +51,14 @@ bindkey "^[[1;5C" forward-word  # Ctrl-Right
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
-    function zle-line-init () {
-        echoti smkx
-    }
-    function zle-line-finish () {
-        echoti rmkx
-    }
-    zle -N zle-line-init
-    zle -N zle-line-finish
+  function zle-line-init () {
+    echoti smkx
+  }
+  function zle-line-finish () {
+    echoti rmkx
+  }
+  zle -N zle-line-init
+  zle -N zle-line-finish
 fi
 
 # Rebuild config and launch tmux if not already in some mux session,
@@ -69,3 +69,11 @@ if command -v tmux>/dev/null && [[ ! $TERM =~ screen && -z $TMUX ]]; then
   exec tmux attach -t root
 fi
 
+# An alias for quietly forking to background:
+alias -g zzz='>/dev/null 2>&1 &!'
+
+# Making and changing into a directory:
+function mkcd() {
+  mkdir -p $@;
+  cd $@;
+}

@@ -9,6 +9,7 @@ export SHELL=$(which zsh)
 export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/data1/graf/bin:$PATH
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
 export DISPLAY=:0
+export hardeningDisable=all # because WTF, Nixpkgs?!!
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward

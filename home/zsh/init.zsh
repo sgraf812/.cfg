@@ -71,6 +71,7 @@ fi
 
 # An alias for quietly forking to background:
 alias -g zzz='>/dev/null 2>&1 &!'
+# We need -g (and thus define it here), otherwise it won't expand in postfix position
 
 # Making and changing into a directory:
 function mkcd() {

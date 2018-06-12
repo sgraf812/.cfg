@@ -11,8 +11,8 @@ self: super:
     src = super.fetchFromGitHub {
       owner = "csmith-project";
       repo = "creduce";
-      rev = "8e622ba74bc35c5a81299d3a34b9b14038d6a70";
-      sha256 = "0dyfg1ibr9zybv0sqjasrjk90qsfz6rq2w9shjf58p8c6f5ss6js";
+      rev = "48e622ba74bc35c5a81299d3a34b9b14038d6a70";
+      sha256 = "1zn61b2hgmc4kvbblgpwfsan3qqm3fgna055r8ldyfq27la8h117";
     };
   });
 }

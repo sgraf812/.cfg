@@ -7,7 +7,7 @@
     # pkgs.cabal2nix
     # pkgs.clang
     pkgs.cloc
-    # pkgs.creduce
+    pkgs.creduce-master
     pkgs.entr
     pkgs.fira-code
     pkgs.gcc_multi

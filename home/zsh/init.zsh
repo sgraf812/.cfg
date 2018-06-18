@@ -79,3 +79,8 @@ function mkcd() {
   mkdir -p $@;
   cd $@;
 }
+
+# An alias for a quiet xdg-open
+function o() {
+  xdg-open $@ > /dev/null 2>&1;
+}

@@ -4,9 +4,17 @@
   imports = [ ./user-common.nix ];
 
   home.packages = [
+    pkgs.arcanist
+    pkgs.cabal-install
+    pkgs.ghc
+    pkgs.gmp
     pkgs.krb5Full
+    pkgs.maven
+    pkgs.ncurses
+    pkgs.openjdk
     pkgs.openldap
     pkgs.sssd
+    pkgs.stack
   ];
 
   programs.git = {

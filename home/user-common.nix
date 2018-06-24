@@ -2,8 +2,6 @@
 
 {
   home.packages = [
-    pkgs.arcanist
-    pkgs.cabal-install
     # pkgs.cabal2nix
     # pkgs.clang
     pkgs.cloc
@@ -11,25 +9,17 @@
     pkgs.entr
     pkgs.fira-code
     pkgs.gcc_multi
-    pkgs.ghc
     pkgs.git
-    pkgs.gmp
     pkgs.gnumake
     pkgs.htop
     # pkgs.i3
     pkgs.man
     pkgs.manpages
-    pkgs.maven
     pkgs.ncdu
-    pkgs.ncurses
-    pkgs.nix-repl
-    pkgs.nox
-    pkgs.openjdk
     pkgs.openssh
     pkgs.p7zip
     pkgs.python
     pkgs.silver-searcher
-    pkgs.stack
     # pkgs.stack2nix
     pkgs.tldr
     pkgs.tmux

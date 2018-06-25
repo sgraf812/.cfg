@@ -8,6 +8,7 @@
     pkgs.cabal-install
     pkgs.ghc
     pkgs.gmp
+    pkgs.jetbrains.idea-community
     pkgs.krb5Full
     pkgs.maven
     pkgs.ncurses

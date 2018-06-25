@@ -87,14 +87,15 @@
       number = true;
     };
     plugins = [
-      "The_NERD_Commenter"  # Comment scripts
-      "The_NERD_tree"       # File browser
-      "fugitive"            # Git commands
-      "sensible"            # Sensible defaults
-      "sleuth"              # Heuristically set buffer options
+      "The_NERD_Commenter"        # Comment scripts
+      "The_NERD_tree"             # File browser
+      "fugitive"                  # Git commands
+      "sensible"                  # Sensible defaults
+      "sleuth"                    # Heuristically set buffer options
       # "Solarized" 
-      "vim-airline"         # Powerline in vimscript
-      "vim-gitgutter"       # Show git changes in gutter
+      "vim-airline"               # Powerline in vimscript
+      "vim-gitgutter"             # Show git changes in gutter
+      # "align"                     # Align stuff
     ];
   };
 

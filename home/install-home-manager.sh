@@ -2,5 +2,5 @@
 
 # Install home-manager so that this config is picked up
 sudo mkdir -m 0755 -p /nix/var/nix/{profiles,gcroots}/per-user/$USER
-HM_PATH=https://github.com/rycee/home-manager/archive/master.tar.gz
+HM_PATH=https://github.com/rycee/home-manager/archive/release-18.03.tar.gz
 nix-shell $HM_PATH -A install

@@ -121,6 +121,7 @@
       ag = ''\ag --pager="\less -XFR"'';
       git = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin git";
       ssh = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin ssh";
+      cg = "valgrind --tool=cachegrind";
     };
   };
 

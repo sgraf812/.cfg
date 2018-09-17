@@ -11,6 +11,8 @@
     pkgs.jetbrains.idea-community
     pkgs.krb5Full
     pkgs.maven
+    # Mendeley pulls Qt and more stuff that needs to be compiled
+    # pkgs.mendeley
     pkgs.ncurses
     pkgs.openjdk
     pkgs.openldap

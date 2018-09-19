@@ -112,7 +112,7 @@ set tm=500
 
 " TeX highlighting is really slow with relative line numbers
 autocmd FileType tex setlocal norelativenumber
-autocmd FileType lhs setlocal norelativenumber
+autocmd FileType lhaskell setlocal norelativenumber
 
 " Toggle relative line numbers
 nmap <C-L><C-L> :set invrelativenumber<CR>

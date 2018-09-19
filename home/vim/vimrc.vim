@@ -112,6 +112,10 @@ set tm=500
 
 " TeX highlighting is really slow with relative line numbers
 autocmd FileType tex setlocal norelativenumber
+autocmd FileType lhs setlocal norelativenumber
+
+" Toggle relative line numbers
+nmap <C-L><C-L> :set invrelativenumber<CR>
 
 " Properly disable sound on errors on MacVim
 if has("gui_macvim")

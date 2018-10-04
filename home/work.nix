@@ -16,6 +16,10 @@
     pkgs.ncurses
     pkgs.openjdk
     pkgs.openldap
+    (pkgs.openssh.override {
+      withKerberos = true;
+      withGssapiPatches = true;
+    })
     pkgs.sssd
     pkgs.stack
   ];

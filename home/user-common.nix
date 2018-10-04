@@ -1,11 +1,11 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   home.packages = [
     # pkgs.cabal2nix
     # pkgs.clang
     pkgs.cloc
-    pkgs.creduce-master
+    pkgs.creduce
     pkgs.entr
     pkgs.fira-code
     pkgs.gcc_multi
@@ -16,7 +16,7 @@
     pkgs.man
     pkgs.manpages
     pkgs.ncdu
-    pkgs.openssh
+    pkgs.nix-diff
     pkgs.p7zip
     pkgs.python
     pkgs.silver-searcher
@@ -26,9 +26,9 @@
     pkgs.tmuxinator
     pkgs.tree
     pkgs.unzip
-    # pkgs.vlc # pulls in rust
+    pkgs.vlc
     pkgs.xclip
-    # pkgs.zathura # pulls in rust
+    # pkgs.zathura # doesn't build
     # pkgs.ycomp
   ];
 
@@ -76,7 +76,7 @@
 
   programs.home-manager = {
     enable = true;
-    path = https://github.com/rycee/home-manager/archive/master.tar.gz;
+    path = "https://github.com/rycee/home-manager/archive/release-" + lib.fileContents ./release + ".tar.gz";
   };
 
   programs.vim = {

@@ -1,3 +1,3 @@
 {
-  imports = [ ./home/private.nix ];
+  imports = [ ./home/work.nix ];
 }

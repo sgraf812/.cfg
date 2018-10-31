@@ -36,6 +36,8 @@
   programs.git = {
     userName = "Sebastian Graf";
     aliases = {
+      a = "git add";
+      ap = "git add --patch";
       abort = "rebase --abort";
       amend = "commit --amend";
       cat = "cat-file -p";
@@ -51,8 +53,10 @@
       fixup = "commit --amend -C HEAD";
       graph = "log --decorate --graph";
       less = "-p cat-file -p";
+      l = "log --decorate --graph --oneline";
       lg = "log --decorate --graph --name-status";
-      lg1 = "log --decorate --graph --oneline";
+      publish = "!git push -u origin $(git branch-name)";
+      s = "status -sb";
       sf = "svn fetch";
       tar = "archive --format=tar";
       wta = "worktree add --detach";

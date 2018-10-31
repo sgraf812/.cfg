@@ -6,6 +6,7 @@
     # pkgs.clang
     pkgs.cloc
     pkgs.creduce
+    pkgs.dtrx
     pkgs.entr
     pkgs.fira-code
     pkgs.gcc_multi

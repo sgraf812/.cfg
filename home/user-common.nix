@@ -36,8 +36,8 @@
   programs.git = {
     userName = "Sebastian Graf";
     aliases = {
-      a = "git add";
-      ap = "git add --patch";
+      a = "add";
+      ap = "add --patch";
       abort = "rebase --abort";
       amend = "commit --amend";
       cat = "cat-file -p";
@@ -58,6 +58,7 @@
       publish = "!git push -u origin $(git branch-name)";
       s = "status -sb";
       sf = "svn fetch";
+      suir = "submodule update --init --recursive";
       tar = "archive --format=tar";
       wta = "worktree add --detach";
       wtas = ''"!bash -ec 'if (( $# != 1)); then echo >&2 git wtas: 1 parameter expected; exit 2; fi; tree=\"$(python -c \"from __future__ import print_function; import os, os.path, sys; print(os.path.normpath(os.path.join(os.getenv(\\\"PWD\\\"), sys.argv[1])))\" \"$1\")\"; git wta \"$tree\"; cd \"$(git rev-parse --git-dir)\"; for mod in $(git config --blob HEAD:.gitmodules -l --name-only|gawk -F . \"/\\.path$/ {print \\$2}\"); do [ -d modules/$mod ] && git -C modules/$mod wta \"$tree/$(git config --blob HEAD:.gitmodules --get submodule.$mod.path)\"; done' wtas"'';
@@ -101,6 +102,7 @@
       "vim-airline"               # Powerline in vimscript
       "vim-gitgutter"             # Show git changes in gutter
       # "align"                     # Align stuff
+      "tabular"                   # Also aligns stuff
     ];
   };
 

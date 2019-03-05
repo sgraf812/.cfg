@@ -4,6 +4,7 @@
   home.packages = [
     # pkgs.cabal2nix
     # pkgs.clang
+    pkgs.bench
     pkgs.cloc
     pkgs.creduce
     pkgs.dtrx
@@ -13,6 +14,7 @@
     pkgs.git
     pkgs.gnumake
     pkgs.htop
+    pkgs.haskellPackages.lhs2tex
     # pkgs.i3
     pkgs.man
     pkgs.manpages
@@ -100,6 +102,7 @@
       "sleuth"                    # Heuristically set buffer options
       # "Solarized" 
       "vim-airline"               # Powerline in vimscript
+      "vim-dispatch"              # Asynchronous dispatcher
       "vim-gitgutter"             # Show git changes in gutter
       # "align"                     # Align stuff
       "tabular"                   # Also aligns stuff
@@ -115,10 +118,11 @@
     };
     initExtra = builtins.readFile zsh/init.zsh;
     shellAliases = {
+      nix-zsh = "nix-shell --command zsh";
       setclip = "xclip -selection clipboard -in";
       getclip = "xclip -selection clipboard -out";
       gitc = "git checkout";
-      gits = "git status";
+      gits = "git status -s";
       gri = "grep -ri";
       grn = "grep -rn";
       grin = "grep -rin";

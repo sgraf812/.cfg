@@ -4,7 +4,6 @@
   imports = [ ./user-common.nix ];
 
   home.packages = [
-    pkgs.arcanist
     pkgs.cabal-install
     pkgs.ghc
     pkgs.gmp
@@ -14,7 +13,7 @@
     # Mendeley pulls Qt and more stuff that needs to be compiled
     # pkgs.mendeley
     pkgs.ncurses
-    pkgs.openjdk
+    pkgs.openjdk11
     pkgs.openldap
     (pkgs.openssh.override {
       withKerberos = true;

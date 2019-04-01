@@ -92,3 +92,6 @@ function hadr() {
   echo "${args[*]}"
   nix-shell --pure ../nix --run "${args[*]}"
 }
+
+# Replace with programs.direnv when lorri is on nixpkgs
+eval "$(direnv hook zsh)"

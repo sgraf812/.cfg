@@ -19,6 +19,10 @@
       (pkgs.haskell.lib.doJailbreak pkgs.haskellPackages.nofib-analyse)
       { broken = false; })
     # pkgs.i3
+    (fetchTarball {
+      sha256 = "0y9y7r16ki74fn0xavjva129vwdhqi3djnqbqjwjkn045i4z78c8";
+      url    = "https://github.com/target/lorri/archive/094a903d19eb652a79ad6e7db6ad1ee9ad78d26c.tar.gz";
+    })
     pkgs.man
     pkgs.manpages
     pkgs.ncdu

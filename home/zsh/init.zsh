@@ -86,5 +86,9 @@ function o() {
   xdg-open $@ > /dev/null 2>&1;
 }
 
-# Update everything in a single command
-alias upd='sudo apt update && sudo apt upgrade && nix-channel --update && home-manager switch && . ~/.zshrc'
+# Run a cached, local hadrian build from a nix-shell
+function hadr() {
+  args=("hadrian/build.sh" "-j9" "$@")
+  echo "${args[*]}"
+  nix-shell --pure ../nix --run "${args[*]}"
+}

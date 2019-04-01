@@ -15,6 +15,9 @@
     pkgs.gnumake
     pkgs.htop
     pkgs.haskellPackages.lhs2tex
+    (pkgs.haskell.lib.overrideCabal
+      (pkgs.haskell.lib.doJailbreak pkgs.haskellPackages.nofib-analyse)
+      { broken = false; })
     # pkgs.i3
     pkgs.man
     pkgs.manpages
@@ -133,6 +136,7 @@
       git = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin git";
       ssh = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin ssh";
       cg = "valgrind --tool=cachegrind";
+      upd = "sudo apt update && sudo apt upgrade --yes && nix-channel --update && home-manager switch && . ~/.zshrc";
     };
   };
 

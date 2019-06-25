@@ -23,8 +23,5 @@
     pkgs.stack
   ];
 
-  programs.git = {
-    enable = true;
-    userEmail = "sebastian.graf@kit.edu";
-  };
+  programs.git.userEmail = "sebastian.graf@kit.edu";
 }

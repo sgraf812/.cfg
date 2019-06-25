@@ -1,48 +1,54 @@
 { pkgs, lib, ... }:
 
-{
-  home.packages = [
-    # pkgs.cabal2nix
-    # pkgs.clang
-    pkgs.bench
-    pkgs.cloc
-    pkgs.creduce
-    pkgs.dtrx
-    pkgs.entr
-    pkgs.fira-code
-    pkgs.gcc_multi
-    pkgs.git
-    pkgs.gnumake
-    pkgs.htop
-    pkgs.haskellPackages.lhs2tex
-    (pkgs.haskell.lib.overrideCabal
-      (pkgs.haskell.lib.doJailbreak pkgs.haskellPackages.nofib-analyse)
+let
+  lorri-src = builtins.fetchGit { url = https://github.com/target/lorri.git; rev = "8224dfb57e508ec87d38a4ce7b9ce27bbf7c2a81"; };
+  lorri = import lorri-src { src = lorri-src; };
+in {
+  home.packages = with pkgs; [
+    # cabal2nix
+    # clang
+    alacritty
+    audacious
+    bench
+    cloc
+    creduce
+    dtrx
+    entr
+    exa
+    fd
+    fira-code
+    gcc_multi
+    gitAndTools.tig
+    gnumake
+    htop
+    haskellPackages.ghcid
+    haskellPackages.lhs2tex
+    (haskell.lib.overrideCabal
+      (haskell.lib.doJailbreak haskellPackages.nofib-analyse)
       { broken = false; })
-    # pkgs.i3
-    (fetchTarball {
-      sha256 = "0y9y7r16ki74fn0xavjva129vwdhqi3djnqbqjwjkn045i4z78c8";
-      url    = "https://github.com/target/lorri/archive/094a903d19eb652a79ad6e7db6ad1ee9ad78d26c.tar.gz";
-    })
-    pkgs.man
-    pkgs.manpages
-    pkgs.ncdu
-    pkgs.nix-diff
-    pkgs.p7zip
-    pkgs.python
-    pkgs.silver-searcher
-    # pkgs.stack2nix
-    pkgs.tldr
-    pkgs.tmux
-    pkgs.tmuxinator
-    pkgs.tree
-    pkgs.unzip
-    pkgs.vlc
-    pkgs.xclip
-    # pkgs.zathura # doesn't build
-    # pkgs.ycomp
+    lorri
+    man
+    manpages
+    ncdu
+    nix-diff
+    p7zip
+    python
+    ripgrep
+    silver-searcher
+    # stack2nix
+    tldr
+    tmux
+    tmuxinator
+    tree
+    unzip
+    vlc
+    xclip
+    # zathura # doesn't build
+    # ycomp
   ];
 
   programs.git = {
+    enable = true;
     userName = "Sebastian Graf";
     aliases = {
       a = "add";
@@ -141,6 +147,7 @@
       ssh = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin ssh";
       cg = "valgrind --tool=cachegrind";
       upd = "sudo apt update && sudo apt upgrade --yes && nix-channel --update && home-manager switch && . ~/.zshrc";
+      ls = "exa";
     };
   };
 

@@ -5,8 +5,5 @@
   home.packages = [
   	openssh
   ];
-  programs.git = {
-    enable = true;
-    userEmail = "sgraf1337@gmail.com";
-  };
+  programs.git.userEmail = "sgraf1337@gmail.com";
 }

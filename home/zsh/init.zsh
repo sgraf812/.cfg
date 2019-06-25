@@ -10,7 +10,7 @@ export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/data1/graf/bin:$PATH
 #export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/data1/graf/bin:/opt/ghc/bin:/opt/cabal/bin:$PATH
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
 export DISPLAY=:0
-export hardeningDisable=all # because WTF, Nixpkgs?!!
+export hardeningDisable=fortify # because WTF, Nixpkgs?!!
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward
@@ -50,7 +50,7 @@ key[PageDown]="$terminfo[knp]"
 bindkey "^[[1;5D" backward-word # Ctrl-Left
 bindkey "^[[1;5C" forward-word  # Ctrl-Right
 
-# Finally, make sure the terminal is in application mode, when zle is
+# Finally, make sure the terminal is in application mode when zle is
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   function zle-line-init () {
@@ -68,7 +68,7 @@ fi
 if command -v tmux>/dev/null && [[ ! $TERM =~ screen && -z $TMUX ]]; then
   home-manager switch
   tmux new-session -s root -n main -c $(pwd)
-  exec tmux attach -t root
+  exec tmux attach -t -u root
 fi
 
 # An alias for quietly forking to background:
@@ -90,7 +90,7 @@ function o() {
 function hadr() {
   args=("hadrian/build.sh" "-j9" "$@")
   echo "${args[*]}"
-  nix-shell --pure ../nix --run "${args[*]}"
+  nix-shell --pure ../nix --run "TEST=\"$TEST\" ${args[*]}"
 }
 
 # Replace with programs.direnv when lorri is on nixpkgs

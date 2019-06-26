@@ -1,3 +1,10 @@
+let 
+  os = builtins.elemAt (builtins.match "NAME\=([A-z]*).*" (builtins.readFile /etc/os-release)) 0;
+in 
 {
-  imports = [ ./home/work.nix ];
+  imports = [ 
+    (if os == "NixOS"
+      then ./home/private.nix 
+      else ./home/work.nix)
+  ];
 }

@@ -3,25 +3,38 @@
 {
   imports = [ ./user-common.nix ];
 
-  home.packages = [
-    pkgs.cabal-install
-    pkgs.ghc
-    pkgs.gmp
-    pkgs.jetbrains.idea-community
-    pkgs.krb5Full
-    pkgs.maven
+  home.packages = with pkgs; [
+    cabal-install
+    fira-code
+    gcc_multi
+    ghc
+    gmp
+    jetbrains.idea-community
+    krb5Full
+    maven
     # Mendeley pulls Qt and more stuff that needs to be compiled
-    # pkgs.mendeley
-    pkgs.ncurses
-    pkgs.openjdk11
-    pkgs.openldap
-    (pkgs.openssh.override {
+    # mendeley
+    ncurses
+    openjdk11
+    openldap
+    (openssh.override {
       withKerberos = true;
       withGssapiPatches = true;
     })
-    pkgs.sssd
-    pkgs.stack
+    sssd
+    # ycomp
   ];
 
   programs.git.userEmail = "sebastian.graf@kit.edu";
+
+  programs.zsh = {
+    shellAliases = {
+      # Can't use the git binary from nixpkgs :/
+      git = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin git";
+      ssh = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin ssh";
+    };
+    localVariables = [
+      USE_TMUX = "yes";
+    };
+  };
 }

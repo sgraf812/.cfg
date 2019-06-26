@@ -1,7 +1,11 @@
-. ~/.nix-profile/etc/profile.d/nix.sh
+# Source the home-manager profile
+. ~/.nix-profile/etc/profile.d/hm-session-vars.sh
 
 # Deactivate tty flow control (e.g. suspending with ctlr-s and resuming with ctrl-q)
 stty -ixon
+
+# https://github.com/NixOS/nixpkgs/issues/30121
+setopt prompt_sp
 
 export EDITOR=vim
 export SPEC_PATH=/data1/graf/spec/cpu2017/
@@ -9,7 +13,6 @@ export SHELL=$(which zsh)
 export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/data1/graf/bin:$PATH
 #export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/data1/graf/bin:/opt/ghc/bin:/opt/cabal/bin:$PATH
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
-export DISPLAY=:0
 export hardeningDisable=fortify # because WTF, Nixpkgs?!!
 
 bindkey -v
@@ -63,9 +66,13 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
   zle -N zle-line-finish
 fi
 
+function test_exec() {
+  command -v $1 > /dev/null
+}
+
 # Rebuild config and launch tmux if not already in some mux session,
 # before setting any aliases
-if command -v tmux>/dev/null && [[ ! $TERM =~ screen && -z $TMUX ]]; then
+if [ "x$USE_TMUX" = "xyes" ] && command -v tmux>/dev/null && [[ ! $TERM =~ screen && -z $TMUX ]]; then
   home-manager switch
   tmux new-session -s root -n main -c $(pwd)
   exec tmux attach -t -u root
@@ -83,7 +90,12 @@ function mkcd() {
 
 # An alias for a quiet xdg-open
 function o() {
-  xdg-open $@ > /dev/null 2>&1;
+  xdg-open $@ zzz
+}
+
+# Returns the nix store path of the given executable by stripping of the bin/blah suffix
+function nix-which() {
+  echo "$(dirname $(dirname $(readlink -f $(which $1))))"
 }
 
 # Run a cached, local hadrian build from a nix-shell
@@ -94,4 +106,5 @@ function hadr() {
 }
 
 # Replace with programs.direnv when lorri is on nixpkgs
+# lorri doesn't currently work
 eval "$(direnv hook zsh)"

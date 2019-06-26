@@ -4,48 +4,49 @@ let
   lorri-src = builtins.fetchGit { url = https://github.com/target/lorri.git; rev = "8224dfb57e508ec87d38a4ce7b9ce27bbf7c2a81"; };
   lorri = import lorri-src { src = lorri-src; };
 in {
+  imports = [ 
+    ./email.nix 
+  ];
+
   home.packages = with pkgs; [
-    # cabal2nix
-    # clang
-    alacritty
-    audacious
     bench
     cloc
     creduce
     dtrx
     entr
     exa
+    fasd
     fd
-    fira-code
-    gcc_multi
+    ghc
     gitAndTools.tig
+    gnome3.geary
     gnumake
-    htop
     haskellPackages.ghcid
     haskellPackages.lhs2tex
     (haskell.lib.overrideCabal
       (haskell.lib.doJailbreak haskellPackages.nofib-analyse)
       { broken = false; })
-    lorri
     man
     manpages
     ncdu
     nix-diff
+    nix-prefetch-scripts
     p7zip
-    python
-    ripgrep
-    silver-searcher
+    stack
     # stack2nix
+    ranger
+    ripgrep
     tldr
     tmux
-    tmuxinator
     tree
-    unzip
+    xclip # Maybe use clipit instead?
+    xdg_utils
     vlc
-    xclip
-    # zathura # doesn't build
-    # ycomp
   ];
+
+  programs.command-not-found.enable = true;
+
+  programs.zathura.enable = true;
 
   programs.git = {
     enable = true;
@@ -86,12 +87,12 @@ in {
         whitespace = "trailing-space,space-before-tab";
       };
       color.ui = "auto";
-      push.default = "matching";
-        "url \"git://github.com/ghc/packages-\"".insteadOf = "git://github.com/ghc/packages/";
-        "url \"http://github.com/ghc/packages-\"".insteadOf = "http://github.com/ghc/packages/";
-        "url \"https://github.com/ghc/packages-\"".insteadOf = "https://github.com/ghc/packages/";
-        "url \"ssh://git@github.com/ghc/packages-\"".insteadOf = "ssh://git@github.com/ghc/packages/";
-        "url \"git@github.com/ghc/packages-\"".insteadOf = "git@github.com/ghc/packages/";
+      push.default = "simple";
+      "url \"git://github.com/ghc/packages-\"".insteadOf = "git://github.com/ghc/packages/";
+      "url \"http://github.com/ghc/packages-\"".insteadOf = "http://github.com/ghc/packages/";
+      "url \"https://github.com/ghc/packages-\"".insteadOf = "https://github.com/ghc/packages/";
+      "url \"ssh://git@github.com/ghc/packages-\"".insteadOf = "ssh://git@github.com/ghc/packages/";
+      "url \"git@github.com/ghc/packages-\"".insteadOf = "git@github.com/ghc/packages/";
     };
   };
 
@@ -126,29 +127,40 @@ in {
     enable = true;
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" ];
+      plugins = [ "git" "fasd" ];
       theme = "robbyrussell";
     };
     initExtra = builtins.readFile zsh/init.zsh;
+    sessionVariables = {
+      RPROMPT = "";
+    };
     shellAliases = {
       nix-zsh = "nix-shell --command zsh";
       setclip = "xclip -selection clipboard -in";
       getclip = "xclip -selection clipboard -out";
-      gitc = "git checkout";
       gits = "git status -s";
-      gri = "grep -ri";
-      grn = "grep -rn";
-      grin = "grep -rin";
+      hadrid = "nix-shell --pure ../nix --run \"ghcid ./hadrian/ghci.sh\"";
       e = "vim";
-      less = "\less -XFR";
+      less = ''\less -XFR'';
       info = "info --vi-keys";
       ag = ''\ag --pager="\less -XFR"'';
-      git = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin git";
-      ssh = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin ssh";
       cg = "valgrind --tool=cachegrind";
       upd = "sudo apt update && sudo apt upgrade --yes && nix-channel --update && home-manager switch && . ~/.zshrc";
       ls = "exa";
+      # We need this crazy alias so that o is bound to our function, not the
+      # alias defined in the OMZ module for fasd
+      o = ''\o''; 
     };
+  };
+
+  home.keyboard.layout = "de";
+
+  home.language = {
+    base = "en_US.UTF-8";
+    address = "de_DE.UTF-8";
+    monetary = "de_DE.UTF-8";
+    paper = "de_DE.UTF-8";
+    time = "de_DE.UTF-8";
   };
 
   home.file = {
@@ -156,15 +168,5 @@ in {
     ".tmuxinator".source = ./tmuxinator;
   };
 
-#  xsession.windowManager.i3 = {
-#    enable = true;
-#    config = {
-#      assigns = {
-#        "1: web" = [{ class = "^Firefox$"; }];
-#        "10: spotify" = [{ class = "^Spotify$"; }];
-#      };
-#
-#      fonts = [ "monospace 10" ];
-#    };
-#  };
+  home.stateVersion = "19.03";
 }

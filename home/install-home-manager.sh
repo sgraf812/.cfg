@@ -2,5 +2,6 @@
 
 # Install home-manager so that this config is picked up
 sudo mkdir -m 0755 -p /nix/var/nix/{profiles,gcroots}/per-user/$USER
-HM_PATH=https://github.com/rycee/home-manager/archive/release-$(cat "$(dirname $0)/release").tar.gz
-nix-shell $HM_PATH -A install
+nix-channel --add https://github.com/rycee/home-manager/archive/release-$(cat "$(dirname $0)/release").tar.gz home-manager
+nix-channel --update
+nix-shell '<home-manager>' -A install

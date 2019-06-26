@@ -310,7 +310,6 @@ if has("autocmd")
     autocmd BufWritePre *.h,*.hpp,*.c,*.cc,*.cpp,*.hs,*.txt,*.js,*.py,*.wiki,*.sh :call CleanExtraSpaces()
 endif
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

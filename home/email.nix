@@ -16,7 +16,6 @@
     private = {
       name = "private";
       address = "sgraf1337@gmail.com";
-      aliases = [ "SebastianGraf@t-online.de" ];
       realName = "Sebastian Graf";
       flavor = "gmail.com";
       userName = "sgraf1337@gmail.com";

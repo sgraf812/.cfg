@@ -41,6 +41,7 @@ in
 {
   imports = [
     ./user-common.nix
+    ./email.nix
     # configure mopidy with home-manager
     (fetchTarball https://github.com/lightdiscord/mopidy-nix/archive/master.tar.gz)
   ];

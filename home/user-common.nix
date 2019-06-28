@@ -5,7 +5,6 @@ let
   lorri = import lorri-src { src = lorri-src; };
 in {
   imports = [ 
-    ./email.nix 
   ];
 
   home.packages = with pkgs; [

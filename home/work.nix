@@ -33,7 +33,7 @@
       git = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin git";
       ssh = "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin ssh";
     };
-    localVariables = [
+    localVariables = {
       USE_TMUX = "yes";
     };
   };

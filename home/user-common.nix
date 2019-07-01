@@ -144,7 +144,9 @@ in {
       ag = ''\ag --pager="\less -XFR"'';
       cg = "valgrind --tool=cachegrind";
       upd = "sudo apt update && sudo apt upgrade --yes && nix-channel --update && home-manager switch && . ~/.zshrc";
-      ls = "exa";
+      ls = "exa --color=automatic";
+      ll = "exa --color=automatic -l";
+      la = "exa --color=automatic -la";
     };
   };
 
@@ -160,7 +162,6 @@ in {
 
   home.file = {
     ".tmux.conf".source = ./tmux/tmux.conf;
-    ".tmuxinator".source = ./tmuxinator;
   };
 
   home.stateVersion = "19.03";

@@ -14,7 +14,6 @@ in {
     dtrx
     entr
     exa
-    fasd
     fd
     ghc
     gitAndTools.tig
@@ -126,7 +125,7 @@ in {
     enable = true;
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "fasd" ];
+      plugins = [ "git" ];
       theme = "robbyrussell";
     };
     initExtra = builtins.readFile zsh/init.zsh;
@@ -146,9 +145,6 @@ in {
       cg = "valgrind --tool=cachegrind";
       upd = "sudo apt update && sudo apt upgrade --yes && nix-channel --update && home-manager switch && . ~/.zshrc";
       ls = "exa";
-      # We need this crazy alias so that o is bound to our function, not the
-      # alias defined in the OMZ module for fasd
-      o = ''\o''; 
     };
   };
 

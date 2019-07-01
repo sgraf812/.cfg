@@ -104,7 +104,3 @@ function hadr() {
   echo "${args[*]}"
   nix-shell --pure ../nix --run "TEST=\"$TEST\" ${args[*]}"
 }
-
-# Replace with programs.direnv when lorri is on nixpkgs
-# lorri doesn't currently work
-eval "$(direnv hook zsh)"

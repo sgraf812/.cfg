@@ -145,8 +145,9 @@ in {
       cg = "valgrind --tool=cachegrind";
       upd = "sudo apt update && sudo apt upgrade --yes && nix-channel --update && home-manager switch && . ~/.zshrc";
       ls = "exa --color=automatic";
-      ll = "exa --color=automatic -l";
-      la = "exa --color=automatic -la";
+      l = "ls -l";
+      ll = "l --group --header --links --extended --git";
+      la = "ll -a";
     };
   };
 

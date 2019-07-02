@@ -98,9 +98,13 @@ function nix-which() {
   echo "$(dirname $(dirname $(readlink -f $(which $1))))"
 }
 
+function ncpus() {
+  grep -c ^processor /proc/cpuinfo
+}
+
 # Run a cached, local hadrian build from a nix-shell
 function hadr() {
-  args=("hadrian/build.sh" "-j9" "$@")
+  args=("hadrian/build.sh" "-j$(($(ncpus) + 1))" "$@")
   echo "${args[*]}"
   nix-shell --pure ../nix --run "TEST=\"$TEST\" ${args[*]}"
 }

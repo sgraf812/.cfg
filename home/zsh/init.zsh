@@ -75,7 +75,7 @@ function test_exec() {
 if [ "x$USE_TMUX" = "xyes" ] && command -v tmux>/dev/null && [[ ! $TERM =~ screen && -z $TMUX ]]; then
   home-manager switch
   tmux new-session -s root -n main -c $(pwd)
-  exec tmux attach -t -u root
+  exec tmux attach -t root
 fi
 
 # An alias for quietly forking to background:

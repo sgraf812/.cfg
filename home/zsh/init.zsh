@@ -98,6 +98,14 @@ function nix-which() {
   echo "$(dirname $(dirname $(readlink -f $(which $1))))"
 }
 
+function efd() {
+  vim $(fd $1)
+}
+
+function cpfd() {
+  cp $(fd $1) $2
+}
+
 function ncpus() {
   grep -c ^processor /proc/cpuinfo
 }

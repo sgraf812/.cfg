@@ -5,7 +5,6 @@
 
   home.packages = with pkgs; [
     cabal-install
-    fira-code
     gcc_multi
     ghc
     gmp

@@ -93,6 +93,11 @@ function o() {
   xdg-open $@ zzz
 }
 
+# Opens the first result of fd
+function efd() {
+  e $(fd $1)
+}
+
 # Returns the nix store path of the given executable by stripping of the bin/blah suffix
 function nix-which() {
   echo "$(dirname $(dirname $(readlink -f $(which $1))))"

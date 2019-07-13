@@ -1,9 +1,6 @@
 { pkgs, lib, ... }:
 
-let
-  lorri-src = builtins.fetchGit { url = https://github.com/target/lorri.git; rev = "8224dfb57e508ec87d38a4ce7b9ce27bbf7c2a81"; };
-  lorri = import lorri-src { src = lorri-src; };
-in {
+{
   imports = [ 
   ];
 
@@ -24,6 +21,7 @@ in {
     (haskell.lib.overrideCabal
       (haskell.lib.doJailbreak haskellPackages.nofib-analyse)
       { broken = false; })
+    lorri
     man
     manpages
     ncdu

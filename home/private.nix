@@ -136,8 +136,8 @@ in
     clipit = graphicalService "X11 Clipboard manager" "${pkgs.clipit}" "clipit -n";
     # Touchpad gestures
     libinput-gestures = graphicalService "libinput gestures" "${pkgs.libinput-gestures}" "libinput-gestures";
-    # alttab
     alttab = graphicalService "alttab" "${fork.alttab}" "alttab -d 1 -i 128x128 -t 128x196";
+    lightsonplus = graphicalService "lightsonplus" "${pkgs.lightsonplus}" "lightson+";
   };
 
   services.udiskie.enable = true;

@@ -74,7 +74,8 @@ function test_exec() {
 # before setting any aliases
 if [ "x$USE_TMUX" = "xyes" ] && command -v tmux>/dev/null && [[ ! $TERM =~ screen && -z $TMUX ]]; then
   home-manager switch
-  tmux new-session -s root -n main -c $(pwd)
+  tmux new-session -s -u root -n main -c $(pwd)
+  # For reference: Can't add -u below
   exec tmux attach -t root
 fi
 

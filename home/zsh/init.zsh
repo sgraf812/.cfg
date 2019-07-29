@@ -1,5 +1,5 @@
 # Source the home-manager profile
-. ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+. /etc/profile.d/nix.sh
 
 # Deactivate tty flow control (e.g. suspending with ctlr-s and resuming with ctrl-q)
 stty -ixon
@@ -74,9 +74,12 @@ function test_exec() {
 # before setting any aliases
 if [ "x$USE_TMUX" = "xyes" ] && command -v tmux>/dev/null && [[ ! $TERM =~ screen && -z $TMUX ]]; then
   home-manager switch
-  tmux new-session -s -u root -n main -c $(pwd)
-  # For reference: Can't add -u below
-  exec tmux attach -t root
+  # -u (only applicable to tmux, not to new-session): Force UTF-8
+  # -s root: Name the new session "root"
+  # -n main: Name the initial window "main"
+  # -c $(pwd): Set the initial directory to the pwd of the current zsh session
+  tmux -u new-session -s root -n main -c $(pwd)
+  exec tmux -u attach -t root
 fi
 
 # An alias for quietly forking to background:

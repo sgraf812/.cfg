@@ -20,7 +20,7 @@ self: super:
       cp lightson+cmd $out/bin/lightson+cmd
     '';
 
-    installPhase = let path = with self; [ procps xorg.xprop xorg.xvinfo ]; in ''
+    installPhase = let path = with self; [ gawk procps xorg.xprop xorg.xset xorg.xvinfo ]; in ''
       wrapProgram $out/bin/lightson+ \
         --prefix PATH : ${super.stdenv.lib.makeBinPath path}
       wrapProgram $out/bin/lightson+cmd \

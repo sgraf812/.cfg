@@ -47,6 +47,7 @@ in
   ];
 
   home.packages = with pkgs; [
+    discord
     file
     gucharmap
     gcc_multi

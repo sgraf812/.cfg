@@ -1,5 +1,7 @@
-# Source the home-manager profile
-. /etc/profile.d/nix.sh
+# Source nix stuff on systems other than NixOS
+if [ -t /etc/profile.d/nix.sh ]; then
+  . /etc/profile.d/nix.sh
+fi
 
 # Deactivate tty flow control (e.g. suspending with ctlr-s and resuming with ctrl-q)
 stty -ixon

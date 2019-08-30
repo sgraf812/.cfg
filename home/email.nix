@@ -5,7 +5,15 @@
 
   home.packages = with pkgs; [ ];
 
-  programs.notmuch.enable = true;
+  programs.mbsync.enable = true;
+  programs.msmtp.enable = true;
+
+  programs.notmuch = {
+    enable = true;
+    hooks = {
+      preNew = "mbsync --all";
+    };
+  };
 
   programs.astroid = {
     enable = true;
@@ -14,15 +22,18 @@
 
   accounts.email.accounts = {
     private = {
-      name = "private";
       address = "sgraf1337@gmail.com";
       realName = "Sebastian Graf";
       flavor = "gmail.com";
       userName = "sgraf1337@gmail.com";
-      mbsync.enable = true;
+      passwordCommand = "cat ${./keys/private/gmail.txt}";
+      mbsync = {
+        enable = true;
+        create = "maildir";
+      };
       msmtp.enable = true;
-      astroid.enable = true;
       notmuch.enable = true;
+      astroid.enable = true;
     };
   };
 }

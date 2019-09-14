@@ -18,6 +18,7 @@
   programs.astroid = {
     enable = true;
     externalEditor = "${pkgs.neovim-qt}/bin/nvim-qt -- -c 'set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' %1";
+    pollScript = "${pkgs.notmuch}/bin/notmuch new";
   };
 
   accounts.email.accounts = {
@@ -30,10 +31,67 @@
       mbsync = {
         enable = true;
         create = "maildir";
+        patterns = [ "INBOX" "[Gmail]/Gesendet" "[Gmail]/Entwürfe" "[Gmail]/Papierkorb" "[Gmail]/Alle Nachrichten" ];
       };
       msmtp.enable = true;
       notmuch.enable = true;
       astroid.enable = true;
+    };
+    "info@juphka" = {
+      address = "info@juphka.de";
+      realName = "Junge Philharmonie Karlsruhe";
+      flavor = "plain";
+      userName = "info@juphka.de";
+      passwordCommand = "cat ${./keys/private/info-juphka.txt}";
+      mbsync = {
+        enable = true;
+        create = "maildir";
+        patterns = [ "INBOX" "Archives" "Deleted Items" "Sent" "Sent Items" "Trash" "Templates" ];
+      };
+      msmtp.enable = true;
+      notmuch.enable = true;
+      astroid = {
+        enable = true;
+      };
+      imap = {
+        host = "web104.dogado.net";
+        port = 143;
+        tls.enable = true;
+        tls.useStartTls = true;
+      };
+      smtp = {
+        host = "web104.dogado.net";
+        port = 25;
+        tls.enable = true;
+        tls.useStartTls = true;
+      };
+    };
+    "mitspielen@juphka" = {
+      address = "mitspielen@juphka.de";
+      realName = "Junge Philharmonie Karlsruhe";
+      flavor = "plain";
+      userName = "mitspielen@juphka.de";
+      passwordCommand = "cat ${./keys/private/mitspielen-juphka.txt}";
+      mbsync = {
+        enable = true;
+        create = "maildir";
+        patterns = [ "INBOX" "Archives" "Deleted Items" "Sent" "Sent Items" "Trash" "Templates" ];
+      };
+      msmtp.enable = true;
+      notmuch.enable = true;
+      astroid.enable = true;
+      imap = {
+        host = "web104.dogado.net";
+        port = 143;
+        tls.enable = true;
+        tls.useStartTls = true;
+      };
+      smtp = {
+        host = "web104.dogado.net";
+        port = 25;
+        tls.enable = true;
+        tls.useStartTls = true;
+      };
     };
   };
 }

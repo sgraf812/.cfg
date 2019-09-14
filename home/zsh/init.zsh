@@ -1,5 +1,5 @@
 # Source nix stuff on systems other than NixOS
-if [ -t /etc/profile.d/nix.sh ]; then
+if [ -f /etc/profile.d/nix.sh ]; then
   . /etc/profile.d/nix.sh
 fi
 

@@ -81,7 +81,10 @@ if [ "x$USE_TMUX" = "xyes" ] && command -v tmux>/dev/null && [[ ! $TERM =~ scree
   # -n main: Name the initial window "main"
   # -c $(pwd): Set the initial directory to the pwd of the current zsh session
   tmux -u new-session -s root -n main -c $(pwd)
-  exec tmux -u attach -t root
+  # -u (only applicable to tmux, not to attach-session): Force UTF-8
+  # -t root: attach to the root session
+  # -d: detach other clients.
+  exec tmux -u attach-session -d -t root
 fi
 
 # An alias for quietly forking to background:
@@ -115,6 +118,17 @@ function efd() {
 
 function cpfd() {
   cp $(fd $1) $2
+}
+
+# Prepare a new testcase and open it in vim
+function ntc() {
+cat << EOF > $1
+-- {-# OPTIONS_GHC -Wincomplete-patterns -fforce-recomp #-}
+-- {-# LANGUAGE PatternSynonyms #-}
+module Lib where
+  
+EOF
+e $1
 }
 
 function ncpus() {

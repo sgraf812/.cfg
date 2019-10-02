@@ -1,9 +1,4 @@
-#! /bin/sh
-
-# Start nscd
-sudo apt update
-sudo apt install nscd
-nscd
+#! /bin/bash
 
 # (Re-)Install nix
 sh <(curl https://nixos.org/nix/install) --daemon

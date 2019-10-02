@@ -35,5 +35,11 @@
     localVariables = {
       USE_TMUX = "yes";
     };
+    sessionVariables = {
+      GIT_SSL_CAINFO = "/etc/ssl/certs/ca-certificates.crt";
+      CURL_CA_BUNDLE = "/etc/ssl/certs/ca-certificates.crt";
+      # fix locales for Nix on Ubuntu
+      LOCALE_ARCHIVE_2_27 = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+    };
   };
 }

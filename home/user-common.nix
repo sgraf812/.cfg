@@ -6,6 +6,9 @@
 
   home.packages = with pkgs; [
     bench
+    binutils # ar and stuff
+    cabal2nix
+    cabal-install
     cloc
     creduce
     dtrx
@@ -16,20 +19,21 @@
     gitAndTools.tig
     gnome3.geary
     gnumake
+    gmp.static
     haskellPackages.ghcid
+    # haskellPackages.hkgr # Hackage release management, but it's broken
     haskellPackages.lhs2tex
-    (haskell.lib.overrideCabal
-      (haskell.lib.doJailbreak haskellPackages.nofib-analyse)
-      { broken = false; })
     lorri
     man
     manpages
     ncdu
+    ncurses
     nix-diff
     nix-prefetch-scripts
+    nofib-analyse # see overlay
     p7zip
     stack
-    # stack2nix
+    # stack2nix # broken
     ranger
     ripgrep
     tldr
@@ -133,7 +137,10 @@
     };
     initExtra = builtins.readFile zsh/init.zsh;
     sessionVariables = {
+      # disable default rprompt...?
       RPROMPT = "";
+      # hide user in shell prompt
+      DEFAULT_USER = "sgraf";
     };
     shellAliases = {
       nix-zsh = "nix-shell --command zsh";
@@ -151,6 +158,16 @@
       l = "ls -l";
       ll = "l --group --header --links --extended --git";
       la = "ll -a";
+      hb = "hadrian/build.sh -j$(($(ncpus) +1))";
+      hbq = "hb --flavour=quick";
+      hbqs = "hbq --skip='//*.mk' --skip=rts/";
+      hbqf = "hbqs --freeze1";
+      hbd2 = "hb --flavour=devel2 --build-root=_devel2";
+      hbd2s = "hbd2 --skip='//*.mk'";
+      hbd2f = "hbd2s --freeze1";
+      hbp = "hb --flavour=prof --build-root=_prof";
+      hbps = "hbp --skip='//*.mk'";
+      hbpf = "hbps --freeze1";
     };
   };
 

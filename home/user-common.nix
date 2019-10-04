@@ -160,7 +160,7 @@
       la = "ll -a";
       hb = "hadrian/build.sh -j$(($(ncpus) +1))";
       hbq = "hb --flavour=quick";
-      hbqs = "hbq --skip='//*.mk' --skip=rts/";
+      hbqs = "hbq --skip='//*.mk' --skip='stage1:lib:rts'";
       hbqf = "hbqs --freeze1";
       hbd2 = "hb --flavour=devel2 --build-root=_devel2";
       hbd2s = "hbd2 --skip='//*.mk'";

@@ -113,18 +113,19 @@
       relativenumber = true;
       number = true;
     };
-    plugins = [
-      "The_NERD_Commenter"        # Comment scripts
-      "The_NERD_tree"             # File browser
-      "fugitive"                  # Git commands
-      "sensible"                  # Sensible defaults
-      "sleuth"                    # Heuristically set buffer options
-      # "Solarized" 
-      "vim-airline"               # Powerline in vimscript
-      "vim-dispatch"              # Asynchronous dispatcher
-      "vim-gitgutter"             # Show git changes in gutter
-      # "align"                     # Align stuff
-      "tabular"                   # Also aligns stuff
+    plugins = with pkgs.vimPlugins; [
+      ctrlp                # Fuzzy file finder etc.
+      nerdcommenter        # Comment scripts
+      nerdtree             # File browser
+      fugitive             # Git commands
+      sensible             # Sensible defaults
+      sleuth               # Heuristically set buffer options
+      # Solarized 
+      airline              # Powerline in vimscript
+      vim-dispatch         # Asynchronous dispatcher
+      gitgutter            # Show git changes in gutter
+      # align              # Align stuff
+      tabular              # Also aligns stuff
     ];
   };
 

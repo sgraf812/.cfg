@@ -394,10 +394,3 @@ function! VisualSelection(direction, extra_filter) range
     let @" = l:saved_reg
 endfunction
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Addons
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-call vam#ActivateAddons(['github:dracula/vim'])
-" set background=dark
-" color solarized

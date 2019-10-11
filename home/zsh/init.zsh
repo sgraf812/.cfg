@@ -13,9 +13,8 @@ setopt prompt_sp
 export max_print_line=1000
 
 export EDITOR=vim
-export SPEC_PATH=/data1/graf/spec/cpu2017/
 export SHELL=$(which zsh)
-export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/data1/graf/bin:$PATH
+export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:$PATH
 #export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/data1/graf/bin:/opt/ghc/bin:/opt/cabal/bin:$PATH
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
 export hardeningDisable=fortify # because WTF, Nixpkgs?!!
@@ -77,7 +76,7 @@ function test_exec() {
 
 # Rebuild config and launch tmux if not already in some mux session,
 # before setting any aliases
-if [ "x$USE_TMUX" = "xyes" ] && command -v tmux>/dev/null && [[ ! $TERM =~ screen && -z $TMUX ]]; then
+if [ "x$USE_TMUX" = "xyes" ] && test_exec tmux && [[ ! $TERM =~ screen && -z $TMUX ]]; then
   home-manager switch
   # -u (only applicable to tmux, not to new-session): Force UTF-8
   # -s root: Name the new session "root"
@@ -105,16 +104,12 @@ function o() {
   xdg-open $@ zzz
 }
 
-# Opens the first result of fd
-function efd() {
-  e $(fd $1)
-}
-
 # Returns the nix store path of the given executable by stripping of the bin/blah suffix
 function nix-which() {
   echo "$(dirname $(dirname $(readlink -f $(which $1))))"
 }
 
+# Opens the first result of fd
 function efd() {
   vim $(fd $1)
 }
@@ -131,16 +126,9 @@ cat << EOF > $1
 module Lib where
   
 EOF
-e $1
+vim $1
 }
 
 function ncpus() {
   grep -c ^processor /proc/cpuinfo
-}
-
-# Run a cached, local hadrian build from a nix-shell
-function hadr() {
-  args=("hadrian/build.sh" "-j$(($(ncpus) + 1))" "$@")
-  echo "${args[*]}"
-  nix-shell --pure ../nix --run "TEST=\"$TEST\" ${args[*]}"
 }

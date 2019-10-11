@@ -3,7 +3,9 @@
 {
   imports = [ ./user-common.nix ];
 
-  home.packages = with pkgs; [ ];
+  home.packages = with pkgs; [ 
+    pdftk
+  ];
 
   programs.git.userEmail = "sgraf1337@gmail.com";
 

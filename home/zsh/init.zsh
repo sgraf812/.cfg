@@ -9,6 +9,9 @@ stty -ixon
 # https://github.com/NixOS/nixpkgs/issues/30121
 setopt prompt_sp
 
+# pdflatex breaks its error output by default (WTF)
+export max_print_line=1000
+
 export EDITOR=vim
 export SPEC_PATH=/data1/graf/spec/cpu2017/
 export SHELL=$(which zsh)

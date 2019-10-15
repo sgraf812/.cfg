@@ -50,7 +50,7 @@ in
     discord
     file
     gucharmap
-    gcc_multi
+    # gcc_multi # ld.bfd conflicts with binutils-wapper's
     hicolor-icon-theme
     htop
     ncat

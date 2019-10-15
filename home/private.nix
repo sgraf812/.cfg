@@ -60,6 +60,7 @@ in
     pavucontrol
     pmutils
     python
+    rclone # OneDrive, Dropbox, etc.
     spotify
     myThunar
     vlc

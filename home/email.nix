@@ -19,6 +19,11 @@
     enable = true;
     externalEditor = "${pkgs.neovim-qt}/bin/nvim-qt -- -c 'set ft=mail' '+set fileencoding=utf-8' '+set ff=unix' '+set enc=utf-8' '+set fo+=w' %1";
     pollScript = "${pkgs.notmuch}/bin/notmuch new";
+    extraConfig = {
+      attachments = {
+        external_open_cmd = "${pkgs.xdg_utils}/bin/xdg-open";
+      };
+    };
   };
 
   accounts.email.accounts = {
@@ -36,6 +41,35 @@
       msmtp.enable = true;
       notmuch.enable = true;
       astroid.enable = true;
+    };
+    work = {
+      address = "sebastian.graf@kit.edu";
+      realName = "Sebastian Graf";
+      flavor = "plain";
+      userName = "sgraf";
+      passwordCommand = "cat ${./keys/private/work.txt}";
+      mbsync = {
+        enable = true;
+        create = "maildir";
+        patterns = [ "INBOX" "Archives" "Deleted Items" "Sent" "Sent Items" "Trash" "Templates" ];
+      };
+      msmtp.enable = true;
+      notmuch.enable = true;
+      astroid = {
+        enable = true;
+      };
+      imap = {
+        host = "imap.informatik.kit.edu";
+        port = 993;
+        tls.enable = true;
+        tls.useStartTls = false;
+      };
+      smtp = {
+        host = "smtp.informatik.kit.edu";
+        port = 587;
+        tls.enable = true;
+        tls.useStartTls = true;
+      };
     };
     "info@juphka" = {
       address = "info@juphka.de";

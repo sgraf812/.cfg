@@ -62,6 +62,7 @@ in
     python
     rclone # OneDrive, Dropbox, etc.
     spotify
+    texlive.combined.scheme-full
     myThunar
     vlc
     vscode
@@ -134,7 +135,6 @@ in
   '';
 
   systemd.user.services = {
-    # Clipboard manager
     clipit = graphicalService "X11 Clipboard manager" "${pkgs.clipit}" "clipit -n";
     # Touchpad gestures
     libinput-gestures = graphicalService "libinput gestures" "${pkgs.libinput-gestures}" "libinput-gestures";

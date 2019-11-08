@@ -1,5 +1,12 @@
 { pkgs, lib, ... }:
 
+# Worth considering:
+# - [starship](https://starship.rs): Cool cross-shell prompt
+# - [sxhkd](https://github.com/baskerville/sxhkd): For X keyboard shortcuts
+# - muchsync: If I ever get the E-Mail stuff working
+# - xsuspend: Might be useful on the laptop
+# - getmail: Automatically fetch mail in a systemd service
+
 {
   imports = [ 
   ];
@@ -17,9 +24,9 @@
     fd
     ghc
     gitAndTools.tig
-    gnome3.geary
     gnumake
     gmp.static
+    # gthumb # can crop images # segfaults in ubuntu...
     haskellPackages.ghcid
     # haskellPackages.hkgr # Hackage release management, but it's broken
     haskellPackages.lhs2tex
@@ -48,10 +55,12 @@
 
   programs.zathura.enable = true;
 
-  programs.direnv = {
+  programs.broot = {
     enable = true;
     enableZshIntegration = true;
   };
+
+  programs.direnv.enable = true;
 
   programs.git = {
     enable = true;
@@ -105,6 +114,8 @@
     enable = true;
     path = "https://github.com/rycee/home-manager/archive/release-" + lib.fileContents ./release + ".tar.gz";
   };
+
+  programs.kakoune.enable = true;
 
   programs.vim = {
     enable = true;

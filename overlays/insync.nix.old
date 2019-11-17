@@ -1,0 +1,87 @@
+self: super:
+
+let
+  dist = "buster";
+  
+  myPython = self.python37.withPackages(ps: [
+    ps.pyside
+  ]);
+
+  libc-deb = self.fetchurl {
+    url = "http://ftp.debian.org/debian/pool/main/g/glibc/libc6_2.28-10_amd64.deb";
+    sha256 = "6f703e27185f594f8633159d00180ea1df12d84f152261b6e88af75667195a79";
+  };
+in
+
+{
+  insync = super.insync.overrideAttrs (old: rec {
+    version = "3.0.23.40579";
+
+    src =
+      if self.stdenv.hostPlatform.system == "x86_64-linux" then
+	self.fetchurl {
+	  url = "http://s.insynchq.com/builds/${old.pname}_${version}-${dist}_amd64.deb";
+	  # buster
+	  sha256 = "f348fad2241dae11fe4d0af61398e40b900eab5d56f0e2d0cc75fc970c6b49eb";
+	  # stretch
+	  #sha256 = "0y3ln3x6w4fiybky9b323w9cxbwym7wc5lli1fr0mh9vw5k96nhc";
+	}
+      else
+	throw "${old.pname}-${version} is not supported on ${self.stdenv.hostPlatform.system}";
+
+    buildInputs = with self; [ 
+      glibc
+      zlib
+      libGL
+      glib
+      xorg.libxcb
+      libxkbcommon
+      qt5.qtvirtualkeyboard
+      nss
+      nspr
+      alsaLib
+      wayland
+      pango
+    ];
+
+    nativeBuildInputs = with self; [
+      autoPatchelfHook
+      dpkg
+      makeWrapper
+    ];
+
+    unpackPhase = ''
+      mkdir -p $out
+      dpkg --extract $src .
+      dpkg --extract ${libc-deb} .
+      cd usr/lib/insync
+      # Debian's pango includes libthai, which we don't have a nix package for
+      rm libpango*
+      # The Python 3.7 version from Buster needs glibc 3.28 at runtime. So we bundle our own.
+      #rm libpython* libpyside*
+      #rm *cpython*
+      #rm -rf psutil PySide2 shiboken2 Crypto base_library.zip include/ lib/ gi _struct zlib
+      #ln -s ${myPython}/lib/libpython3.7m.so.1.0 .
+      #ls -la .
+      cd ../../..
+    '';
+
+    postPatch = "true";
+
+    installPhase =
+      let
+	ldpath = with self; [
+	  myPython
+	];
+      in ''
+      cp -av usr/* $out
+      rm -rf $out/usr
+      rm $out/bin/insync
+
+      makeWrapper $out/lib/insync/insync $out/bin/insync --set LC_TIME C --prefix LD_LIBRARY_PATH : "$out/lib/x86_64-linux-gnu"
+
+      # Otherwise it looks "suspicious"
+      chmod -R g-w $out
+    '';
+  });
+}

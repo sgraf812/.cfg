@@ -36,6 +36,7 @@
     ncdu
     ncurses
     nix-diff
+    nix-index
     nix-prefetch-scripts
     nofib-analyse # see overlay
     p7zip

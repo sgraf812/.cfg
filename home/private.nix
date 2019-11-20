@@ -2,13 +2,7 @@
 
 let
 
-  fork = import (pkgs.fetchFromGitHub {
-    owner = "NixOS";
-    repo = "nixpkgs";
-    rev = "2c074fc6c8d278a8e8e7c3bfec42b7e762199fb4";
-    sha256 = "0hsj1d5f6n7gixqkygxysrfzvjpllzydj5q95lzjf1r6j00fcs5l";
-    fetchSubmodules = false;
-  }) {};
+  unstable = import (builtins.fetchTarball (import ./unstable.nix)) {};
 
   graphicalService = descr: pkg: exe: {
     Unit = {
@@ -137,7 +131,7 @@ in
     clipit = graphicalService "X11 Clipboard manager" "${pkgs.clipit}" "clipit -n";
     # Touchpad gestures
     libinput-gestures = graphicalService "libinput gestures" "${pkgs.libinput-gestures}" "libinput-gestures";
-    alttab = graphicalService "alttab" "${fork.alttab}" "alttab -d 1 -i 128x128 -t 128x196";
+    alttab = graphicalService "alttab" "${unstable.alttab}" "alttab -d 1 -i 128x128 -t 128x196";
     lightsonplus = graphicalService "lightsonplus" "${pkgs.lightsonplus}" "lightson+";
   };
 

@@ -7,6 +7,12 @@
 # - xsuspend: Might be useful on the laptop
 # - getmail: Automatically fetch mail in a systemd service
 
+let
+
+  unstable = import (builtins.fetchTarball (import ./unstable.nix)) {};
+
+in
+
 {
   imports = [ 
   ];
@@ -199,6 +205,24 @@
   };
 
   home.stateVersion = "19.03";
+
+  systemd.user.services = {
+    onedrive = {
+      Unit = {
+        Description = "OneDrive Free Client";
+        Documentation = "man:onedrive(1)";
+      };
+
+      Service = {
+        ExecStart = "${unstable.onedrive}/bin/onedrive --monitor";
+        Restart = "on-abnormal";
+      };
+
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
+  };
 
   xdg.mimeApps = {
     enable = true;

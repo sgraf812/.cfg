@@ -119,6 +119,13 @@ in
       "icons/hicolor/128x128/apps/alacritty.png".source = ./alacritty/icon-128.png;
       "icons/hicolor/128x128/apps/code.png".source = ./vscode/icon-128.png;
     };
+
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+      };
+    };
   };
 
   home.extraProfileCommands = ''

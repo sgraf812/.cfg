@@ -31,8 +31,6 @@
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
-  # Important for correct clock in Windows dual boot
-  time.hardwareClockInLocalTime = true;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -180,7 +178,7 @@
     group = "users";
     description = "Sebastian Graf";
     isNormalUser = true;
-    extraGroups = [ "wheel" "audio" "video" "input" "disk" "networkmanager" ];
+    extraGroups = [ "wheel" "audio" "video" "input" "disk" "networkmanager" "libvirtd" ];
     uid = 1000;
     shell = pkgs.zsh;
     hashedPassword = "$6$/XBcQHtEME$UA6R5al2se/3aodx8mV2XkhhMiAQ1qIBlVCgAOW5nYCtiZtmdj45Dp7DI/r.7AQQS1Op78VniNKgnKOza9TDS."; # mkpasswd -m sha-512
@@ -188,6 +186,8 @@
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5CKChZHMUIx7KYIYTgweK8oauSIdA8v2bQIPaO9ln6UwbecoryN7rvjJtV+KB46NG/2CmMBv/NEkkYz+9BU7CR0ierZUzMmvkfxqhlwXbvNpzqvngmSfY/0liHWF9H+/NaG3gY3e7kmM4Vl1MHpE4rzykFHahD9N3owOwbXXsIHXPNCPPZhJY654LLKC5YI1uQPuB8U7MXWKCd54nlL8ePBY7o+cElrOQXMdADAt60M9NH87nhiqq6t4Ytyp72b3oVrDME0bBdtsIu5aqFPqeGk+90Qqdr6Vtwren+mVdZITpH5PelCFoiRcUjuqza+qwIB5hG7IFawtWGvfgqSeB Sebastian@Sebastian-PC"
     ];
   };
+
+  virtualisation.libvirtd.enable = true;
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

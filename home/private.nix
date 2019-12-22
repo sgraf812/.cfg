@@ -57,6 +57,7 @@ in
     spotify
     texlive.combined.scheme-full
     myThunar
+    virtmanager # Needs virtualisation.libvirtd.enable = true; in configuration.nix
     vlc
     vscode
     w3m

@@ -43,6 +43,7 @@ in
   home.packages = with pkgs; [
     discord
     file
+    gnome3.dconf # some tools need this to preserve settings
     gucharmap
     # gcc_multi # ld.bfd conflicts with binutils-wapper's
     hicolor-icon-theme
@@ -53,6 +54,7 @@ in
     okular
     pavucontrol
     pmutils
+    powertop
     python
     spotify
     texlive.combined.scheme-full
@@ -141,6 +143,8 @@ in
     libinput-gestures = graphicalService "libinput gestures" "${pkgs.libinput-gestures}" "libinput-gestures";
     alttab = graphicalService "alttab" "${unstable.alttab}" "alttab -d 1 -i 128x128 -t 128x196";
     lightsonplus = graphicalService "lightsonplus" "${pkgs.lightsonplus}" "lightson+";
+    # dropbox only allows 3 devices in its free plan, so we are only installing it at home
+    dropbox = graphicalService "Dropbox as a system service" "${pkgs.dropbox}" "dropbox";
   };
 
   services.udiskie.enable = true;
@@ -163,6 +167,7 @@ in
     # runs xss-lock when the xsession is started, so needs
     #    xsession.enable = true;
     enable = true;
+    inactiveInterval = 60; # The maximum as per xautolock
     lockCmd = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim";
     xautolockExtraOptions = [ "-lockaftersleep" ];
   };
@@ -172,10 +177,9 @@ in
     vSync = "opengl-swc";
   };
 
+  services.xsuspender.enable = true;
+
   xsession = {
-    # We need enable = true for .xsession to start xss-lock. But then
-    # home-manager won't play nicely with the xsession started by the login
-    # manager. Chaos!
     enable = true;
 
     pointerCursor = {
@@ -190,7 +194,7 @@ in
         assigns = {
           "0: firefox" = [{ class = "^Firefox$"; }];
           # Doesn't work
-          # "99: spotify" = [{ class = "^Spotify$"; }];
+          "99: spotify" = [{ class = "^Spotify$"; }];
         };
 
         bars = [];

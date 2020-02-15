@@ -60,6 +60,9 @@
 
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
 
+  # Shoot things when there's less than 10% RAM
+  services.earlyoom.enable = true;
+
   # For completions mostly
   programs.zsh.enable = true;
 
@@ -165,10 +168,11 @@
 
   services.redshift = {
     enable = true;
-    provider = "geoclue2";
     temperature.day = 6500;
     temperature.night = 3500;
   };
+
+  location.provider = "geoclue2";
 
   users.mutableUsers = false;
 
@@ -187,7 +191,34 @@
     ];
   };
 
-  virtualisation.libvirtd.enable = true;
+  # libvirtd doesn't properly set up resolution and GPU acceleration
+  #
+  # boot.extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
+  # boot.kernelModules = [ "kvm-intel" ];
+  # virtualisation.kvmgt = {
+  #   enable = true;
+  #   vgpus = {
+  #     "i915-GVTg_V5_8" = {
+  #       uuid = "78afde9e-24fe-11ea-89ab-c3e54fc4e17c";
+  #     };
+  #   };
+  # };
+  # virtualisation.libvirtd.enable = true;
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "sgraf" ];
+  # Unfortunately the extension pack isn't built by Hydra (unfree) and I really
+  # don't want to rebuild this all the time
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
+
+  fileSystems."/mnt/sinfo" = {
+      device = ''\\sccfs.scc.kit.edu\Service\Web\zak-web-0002\www.sinfonieorchester.kit.edu'';
+      fsType = "cifs";
+      options = let
+        # this line prevents hanging on network split
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+
+      in ["${automount_opts},credentials=/etc/nixos/sinfo-secrets"];
+  };
 
   # This value determines the NixOS release with which your system is to be
   # compatible, in order to avoid breaking some software such as database

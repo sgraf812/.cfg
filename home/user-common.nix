@@ -18,6 +18,7 @@ in
   ];
 
   home.packages = with pkgs; [
+    bat
     bench
     binutils # ar and stuff
     cabal2nix
@@ -31,7 +32,7 @@ in
     ghc
     gitAndTools.tig
     gnumake
-    gmp.static
+    # haskell-ci # old version, can't get it to work on unstable either
     # gthumb # can crop images # segfaults in ubuntu...
     haskellPackages.ghcid
     # haskellPackages.hkgr # Hackage release management, but it's broken
@@ -56,6 +57,11 @@ in
     xclip # Maybe use clipit instead?
     xdg_utils
     vlc
+
+    # Haskell/Cabal/Stack stuff
+    zlib.dev
+    gmp.static
+    numactl
   ];
 
   programs.command-not-found.enable = true;
@@ -211,6 +217,7 @@ in
       Unit = {
         Description = "OneDrive Free Client";
         Documentation = "man:onedrive(1)";
+        After = [ "local-fs.target" "network.target" ];
       };
 
       Service = {
@@ -219,7 +226,7 @@ in
       };
 
       Install = {
-        WantedBy = [ "default.target" ];
+        WantedBy = [ "multi-user.target" ];
       };
     };
   };

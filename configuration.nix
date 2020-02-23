@@ -60,8 +60,11 @@
 
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
 
-  # Shoot things when there's less than 10% RAM
-  services.earlyoom.enable = true;
+  # Shoot things when there's less than 2% RAM
+  services.earlyoom = {
+    enable = true;
+    freeMemThreshold = 2;
+  };
 
   # For completions mostly
   programs.zsh.enable = true;

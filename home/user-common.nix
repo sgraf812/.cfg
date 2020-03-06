@@ -32,7 +32,6 @@ in
     ghc
     gitAndTools.tig
     gnumake
-    # haskell-ci # old version, can't get it to work on unstable either
     # gthumb # can crop images # segfaults in ubuntu...
     haskellPackages.ghcid
     # haskellPackages.hkgr # Hackage release management, but it's broken
@@ -59,6 +58,7 @@ in
     vlc
 
     # Haskell/Cabal/Stack stuff
+    # haskell-ci # old version, can't get it to work on unstable either
     zlib.dev
     gmp.static
     numactl
@@ -103,7 +103,7 @@ in
       sf = "svn fetch";
       suir = "submodule update --init --recursive";
       tar = "archive --format=tar";
-      wta = "worktree add --detach";
+      wta = "worktree add --detach"; # "worktree add --force --detach";
       wtas = ''"!bash -ec 'if (( $# != 1)); then echo >&2 git wtas: 1 parameter expected; exit 2; fi; tree=\"$(python -c \"from __future__ import print_function; import os, os.path, sys; print(os.path.normpath(os.path.join(os.getenv(\\\"PWD\\\"), sys.argv[1])))\" \"$1\")\"; git wta \"$tree\"; cd \"$(git rev-parse --git-dir)\"; for mod in $(git config --blob HEAD:.gitmodules -l --name-only|gawk -F . \"/\\.path$/ {print \\$2}\"); do [ -d modules/$mod ] && git -C modules/$mod wta \"$tree/$(git config --blob HEAD:.gitmodules --get submodule.$mod.path)\"; done' wtas"'';
     };
     extraConfig = {
@@ -183,7 +183,7 @@ in
       l = "ls -l";
       ll = "l --group --header --links --extended --git";
       la = "ll -a";
-      hb = "hadrian/build.sh -j$(($(ncpus) +1))";
+      hb = "hadrian/build -j$(($(ncpus) +1))";
       hbq = "hb --flavour=quick";
       hbqs = "hbq --skip='//*.mk' --skip='stage1:lib:rts'";
       hbqf = "hbqs --freeze1";
@@ -193,6 +193,9 @@ in
       hbp = "hb --flavour=prof --build-root=_prof";
       hbps = "hbp --skip='//*.mk'";
       hbpf = "hbps --freeze1";
+      hbv = "hb --flavour=validate --build-root=_validate";
+      hbvs = "hbv --skip='//*.mk' --skip='stage1:lib:rts'";
+      hbvf = "hbvs --freeze1";
     };
   };
 

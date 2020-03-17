@@ -2,8 +2,6 @@
 
 let
 
-  unstable = import (builtins.fetchTarball (import ./unstable.nix)) {};
-
   graphicalService = descr: pkg: exe: {
     Unit = {
       Description = "${descr}";
@@ -141,7 +139,7 @@ in
     clipit = graphicalService "X11 Clipboard manager" "${pkgs.clipit}" "clipit -n";
     # Touchpad gestures
     libinput-gestures = graphicalService "libinput gestures" "${pkgs.libinput-gestures}" "libinput-gestures";
-    alttab = graphicalService "alttab" "${unstable.alttab}" "alttab -d 1 -i 128x128 -t 128x196";
+    alttab = graphicalService "alttab" "${pkgs.unstable.alttab}" "alttab -d 1 -i 128x128 -t 128x196";
     lightsonplus = graphicalService "lightsonplus" "${pkgs.lightsonplus}" "lightson+";
     # dropbox only allows 3 devices in its free plan, so we are only installing it at home
     dropbox = graphicalService "Dropbox as a system service" "${pkgs.dropbox}" "dropbox";

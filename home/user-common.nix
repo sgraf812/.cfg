@@ -7,12 +7,6 @@
 # - xsuspend: Might be useful on the laptop
 # - getmail: Automatically fetch mail in a systemd service
 
-let
-
-  unstable = import (builtins.fetchTarball (import ./unstable.nix)) {};
-
-in
-
 {
   imports = [ 
   ];
@@ -25,6 +19,7 @@ in
     cabal-install
     cloc
     creduce
+    direnv
     dtrx
     entr
     exa
@@ -36,7 +31,7 @@ in
     haskellPackages.ghcid
     # haskellPackages.hkgr # Hackage release management, but it's broken
     haskellPackages.lhs2tex
-    lorri
+    haskellPackages.hasktags
     man
     manpages
     ncdu
@@ -215,6 +210,8 @@ in
 
   home.stateVersion = "19.03";
 
+  services.lorri.enable = true;
+
   systemd.user.services = {
     onedrive = {
       Unit = {
@@ -224,7 +221,7 @@ in
       };
 
       Service = {
-        ExecStart = "${unstable.onedrive}/bin/onedrive --monitor";
+        ExecStart = "${pkgs.unstable.onedrive}/bin/onedrive --monitor";
         Restart = "on-abnormal";
       };
 

@@ -145,6 +145,7 @@
       gitgutter            # Show git changes in gutter
       # align              # Align stuff
       tabular              # Also aligns stuff
+      tagbar               # ctags
     ];
   };
 

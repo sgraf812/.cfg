@@ -129,6 +129,10 @@ in
     };
   };
 
+  home.file = {
+    ".background-image".source = ./wallpapers/haskell.png;
+  };
+
   home.extraProfileCommands = ''
     if [[ -d "$out/share/applications" ]] ; then
       ${pkgs.desktop-file-utils}/bin/update-desktop-database $out/share/applications
@@ -166,7 +170,7 @@ in
     #    xsession.enable = true;
     enable = true;
     inactiveInterval = 60; # The maximum as per xautolock
-    lockCmd = "${pkgs.betterlockscreen}/bin/betterlockscreen -l dim";
+    lockCmd = "${pkgs.i3lock}/bin/i3lock -en -i ~/.background-image";
     xautolockExtraOptions = [ "-lockaftersleep" ];
   };
 
@@ -208,7 +212,7 @@ in
           in lib.mkOptionDefault {
             "${modifier}+Return" = "exec cd $(${pkgs.xcwd}/bin/xcwd) && ${pkgs.alacritty}/bin/alacritty";
             "${modifier}+d" = "exec --no-startup-id ${pkgs.rofi}/bin/rofi -show drun";
-            "${modifier}+Shift+x" = "exec --no-startup-id ${pkgs.betterlockscreen}/bin/betterlockscreen -l dimblur";
+            "${modifier}+Shift+x" = "exec --no-startup-id ${pkgs.i3lock}/bin/i3lock -en -i ~/.background-image";
             "${modifier}+b" = "split h";
             "${modifier}+${left}" = "focus left";
             "${modifier}+${down}" = "focus down";
@@ -262,10 +266,6 @@ in
         ];
       };
     };
-
-    initExtra = ''
-      ${pkgs.betterlockscreen}/bin/betterlockscreen -u ~/Pictures/lock &
-    '';
   };
 
   services.mopidy = {

@@ -19,7 +19,6 @@
     cabal-install
     cloc
     creduce
-    direnv
     dtrx
     entr
     exa
@@ -68,7 +67,11 @@
     enableZshIntegration = true;
   };
 
-  programs.direnv.enable = true;
+  # Used with lorri
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 
   programs.git = {
     enable = true;

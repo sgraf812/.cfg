@@ -20,12 +20,21 @@ self: super:
       cp lightson+cmd $out/bin/lightson+cmd
     '';
 
-    installPhase = let path = with self; [ coreutils gawk procps xorg.xprop xorg.xset xorg.xvinfo ]; in ''
-      wrapProgram $out/bin/lightson+ \
-        --prefix PATH : ${super.stdenv.lib.makeBinPath path}
-      wrapProgram $out/bin/lightson+cmd \
-        --prefix PATH : ${super.stdenv.lib.makeBinPath path}
-    '';
+    installPhase = let path = with self; [
+        coreutils
+        gawk
+        gnugrep
+        gnused
+        procps
+        xorg.xprop
+        xorg.xset
+        xorg.xvinfo
+      ]; in ''
+        wrapProgram $out/bin/lightson+ \
+          --prefix PATH : ${super.stdenv.lib.makeBinPath path}
+        wrapProgram $out/bin/lightson+cmd \
+          --prefix PATH : ${super.stdenv.lib.makeBinPath path}
+      '';
 
     meta = with self.stdenv.lib; {
       description = "Bash script managing screensaver and display power management (DPMS) on different conditions (fullscreen videos, specific applications, specific outputs).";

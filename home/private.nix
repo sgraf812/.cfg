@@ -179,7 +179,8 @@ in
     vSync = "opengl-swc";
   };
 
-  services.xsuspender.enable = true;
+  # Doesn't find the config file. Maybe with 20.03
+  # services.xsuspender.enable = true;
 
   xsession = {
     enable = true;

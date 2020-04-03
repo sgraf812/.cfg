@@ -6,7 +6,7 @@
 ## CONFIGURATION ##############################################################
 
 # Options to pass to i3lock
-echo options: $i3lock_options
+# i3lock_options="-d"
 
 # Run before starting the locker
 pre_lock() {

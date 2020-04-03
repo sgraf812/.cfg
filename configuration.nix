@@ -164,6 +164,8 @@
     windowManager.i3.enable = true;
   };
 
+  services.logind.extraConfig = "IdleAction=lock";
+
   services.geoclue2 = {
     enable = true;
     enableDemoAgent = true;

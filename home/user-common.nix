@@ -168,6 +168,7 @@
     };
     shellAliases = {
       nix-zsh = "nix-shell --command zsh";
+      nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\\w+-system|\\{memory)' | cut -d' ' -f1";
       setclip = "xclip -selection clipboard -in";
       getclip = "xclip -selection clipboard -out";
       gits = "git status -s";
@@ -195,6 +196,9 @@
       hbv = "hb --flavour=validate --build-root=_validate";
       hbvs = "hbv --skip='//*.mk' --skip='stage1:lib:rts'";
       hbvf = "hbvs --freeze1";
+      hbt = "mkdir -p _ticky; [ -e _ticky/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -ticky\\nstage1.ghc-bin.ghc.link.opts += -ticky' > _ticky/hadrian.settings; hb --flavour=validate --build-root=_ticky";
+      hbts = "hbt --skip='//*.mk' --skip='stage1:lib:rts'";
+      hbtf = "hbts --freeze1";
     };
   };
 

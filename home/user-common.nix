@@ -123,7 +123,7 @@
 
   programs.home-manager = {
     enable = true;
-    path = "https://github.com/rycee/home-manager/archive/release-" + lib.fileContents ./release + ".tar.gz";
+    path = "https://github.com/rycee/home-manager/archive/release-" + lib.fileContents ../release + ".tar.gz";
   };
 
   programs.kakoune.enable = true;
@@ -171,12 +171,9 @@
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\\w+-system|\\{memory)' | cut -d' ' -f1";
       setclip = "xclip -selection clipboard -in";
       getclip = "xclip -selection clipboard -out";
-      gits = "git status -s";
-      hadrid = "nix-shell --pure ../nix --run \"ghcid ./hadrian/ghci.sh\"";
       e = "vim";
       less = ''\less -XFR'';
       info = "info --vi-keys";
-      ag = ''\ag --pager="\less -XFR"'';
       cg = "valgrind --tool=cachegrind";
       upd = "sudo apt update && sudo apt upgrade --yes && nix-channel --update && home-manager switch && . ~/.zshrc";
       ls = "exa --color=automatic";

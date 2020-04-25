@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /usr/bin/env bash
 
 # (Re-)Install nix
 sh <(curl https://nixos.org/nix/install) --daemon

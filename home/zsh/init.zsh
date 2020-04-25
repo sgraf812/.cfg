@@ -14,8 +14,7 @@ export max_print_line=1000
 
 export EDITOR=vim
 export SHELL=$(which zsh)
-export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:$PATH
-#export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/data1/graf/bin:/opt/ghc/bin:/opt/cabal/bin:$PATH
+export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/opt/ghc/bin:/opt/cabal/bin:$PATH
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
 export hardeningDisable=fortify # because WTF, Nixpkgs?!!
 
@@ -122,7 +121,10 @@ function cpfd() {
 function ntc() {
 cat << EOF > $1
 -- {-# OPTIONS_GHC -Wincomplete-patterns -fforce-recomp #-}
+-- {-# OPTIONS_GHC -O2 -fforce-recomp #-}
 -- {-# LANGUAGE PatternSynonyms #-}
+-- {-# LANGUAGE BangPatterns #-}
+-- {-# LANGUAGE MagicHash, UnboxedTuples #-}
 module Lib where
   
 EOF
@@ -131,4 +133,12 @@ vim $1
 
 function ncpus() {
   grep -c ^processor /proc/cpuinfo
+}
+
+function rg-sed() {
+  # $1 is a sed-compatible regex, like s/foo/bar/g
+  IFS='/' read -A $parts <<< $1
+  # $parts[1..4] = s foo bar g
+  needle=${parts[2]}
+  rg --files-with-matches $needle | xargs sed -i $1
 }

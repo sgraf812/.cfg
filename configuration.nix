@@ -23,10 +23,11 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
-  i18n = {
-    consoleFont = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
-    consoleKeyMap = "de";
-    defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  console = {
+    font = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+    keyMap = "de";
   };
 
   # Set your time zone.
@@ -130,7 +131,6 @@
 
   hardware.bluetooth.enable = true;
 
-  hardware.brightnessctl.enable = true;
   services.actkbd = {
     enable = true;
     bindings = [
@@ -148,8 +148,9 @@
     xkbOptions = "eurosign:e";
     dpi = 132;
 
+    displayManager.defaultSession = "none+i3";
+
     desktopManager = {
-      default = "none";
       xterm.enable = false;
     };
 

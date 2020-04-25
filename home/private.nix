@@ -44,6 +44,7 @@ in
     discord
     file
     gnome3.dconf # some tools need this to preserve settings
+    google-chrome
     gucharmap
     # gcc_multi # ld.bfd conflicts with binutils-wapper's
     hicolor-icon-theme
@@ -175,9 +176,9 @@ in
       config = ./polybar/config;
     };
 
-  services.compton = {
+  services.picom = {
     enable = true;
-    vSync = "opengl-swc";
+    vSync = true;
   };
 
   # Doesn't find the config file. Maybe with 20.03
@@ -267,16 +268,12 @@ in
           { command = "systemctl --user restart alttab"; always = true; notification = false; }
         ];
       };
-    };
-  };
 
-  services.mopidy = {
-    enable = true;
-    extensionPackages = [ pkgs.mopidy-spotify pkgs.mopidy-iris pkgs.mopidy-mopify ];
-    configuration = ''
-      [spotify]
-      ${builtins.readFile ./keys/private/spotify.txt}
-      bitrate = 320
-    '';
+      extraConfig = ''
+          # Screenshots -- these have to be --release bindings
+          bindsym --release Print exec ${pkgs.scrot}/bin/scrot -e 'mv $f ~/Pictures/Screenshots/'
+          bindsym --release Shift+Print exec ${pkgs.scrot}/bin/scrot -s -e 'mv $f ~/Pictures/Screenshots/'
+      '';
+    };
   };
 }

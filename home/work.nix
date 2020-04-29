@@ -20,5 +20,8 @@
       # fix locales for Nix on Ubuntu
       LOCALE_ARCHIVE_2_27 = "${pkgs.glibcLocales}/lib/locale/locale-archive";
     };
+    shellAliases = {
+      afs-lease = "kinit -l 7d sgraf; aklog";
+    };
   };
 }

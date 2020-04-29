@@ -111,11 +111,11 @@ function nix-which() {
 
 # Opens the first result of fd
 function efd() {
-  vim $(fd $1)
+  vim $(fd --fixed-strings --full-path $1)
 }
 
 function cpfd() {
-  cp $(fd $1) $2
+  cp $(fd --fixed-strings --full-path $1) $2
 }
 
 # Prepare a new testcase and open it in vim

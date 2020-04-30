@@ -7,6 +7,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
+      <nixos-hardware/lenovo/thinkpad/x1/6th-gen>
       ./hardware-configuration.nix
     ];
 
@@ -16,7 +17,10 @@
 
   networking.hostName = "nixos-lt"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant. Not needed when we have networkmanager.
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    wifi.powersave = false;
+  };
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -157,6 +161,8 @@
     libinput = {
       enable = true;
       naturalScrolling = true;
+      # We don't want natural scrolling on the track point or mouse
+      additionalOptions = ''MatchIsTouchpad "on"'';
       accelSpeed = "0.6";
     };
 

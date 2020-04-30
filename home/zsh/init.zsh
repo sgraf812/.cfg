@@ -135,10 +135,8 @@ function ncpus() {
   grep -c ^processor /proc/cpuinfo
 }
 
+# $1: search regex
+# $2: replacement
 function rg-sed() {
-  # $1 is a sed-compatible regex, like s/foo/bar/g
-  IFS='/' read -A $parts <<< $1
-  # $parts[1..4] = s foo bar g
-  needle=${parts[2]}
-  rg --files-with-matches $needle | xargs sed -i $1
+  rg --files-with-matches $1 | xargs sed -i "s/$1/$2/g"
 }

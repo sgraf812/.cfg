@@ -8,8 +8,8 @@ self: super:
     src = super.fetchFromGitHub {
       owner = "sgraf812";
       repo = pname;
-      rev = "0e63ae81cc00520425ba669d8b49afbf99e1d016";
-      sha256 = "0y7csic4d8s7n85k1l6fw05kq6p2cgcs93g5xlqkv2hz5kll7f4x";
+      rev = "44828a7c2e37dbac20f80341728cb73867469bbd";
+      sha256 = "0cj9wcqhn3rlnclgl19d1bb9vjxx2xk0wrlhsbldc90p93qz9a2w";
     };
 
     nativeBuildInputs = [ super.makeWrapper ];

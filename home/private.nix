@@ -36,8 +36,6 @@ in
   imports = [
     ./user-common.nix
     ./email.nix
-    # configure mopidy with home-manager
-    (fetchTarball https://github.com/lightdiscord/mopidy-nix/archive/master.tar.gz)
   ];
 
   home.packages = with pkgs; [
@@ -170,7 +168,6 @@ in
       package = pkgs.polybar.override {
         i3Support = true;
         pulseSupport = true;
-        mpdSupport = true;
       };
       script = "PATH=${lib.makeBinPath path}:$PATH polybar top &";
       config = ./polybar/config;

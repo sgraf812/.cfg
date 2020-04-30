@@ -23,6 +23,7 @@
     entr
     exa
     fd
+    fzf
     ghc
     gitAndTools.tig
     gnumake

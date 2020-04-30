@@ -108,13 +108,28 @@ function nix-which() {
   echo "$(dirname $(dirname $(readlink -f $(which $1))))"
 }
 
-# Opens the first result of fd
+# Not FuZzy, but EXact
+alias exf=fzf --exact
+
+# Use fzf to find a file
 function efd() {
-  vim $(fd --fixed-strings --full-path $1)
+  f=$(exf --query $1)
+  ret=$?
+  if (( $ret != 0 )); then
+    (exit $ret);
+  else
+    e $f
+  fi
 }
 
 function cpfd() {
-  cp $(fd --fixed-strings --full-path $1) $2
+  f=$(exf --query $1)
+  ret=$?
+  if (( $ret != 0 )); then
+    (exit $ret);
+  else
+    cp $f $2
+  fi
 }
 
 # Prepare a new testcase and open it in vim

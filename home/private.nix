@@ -162,7 +162,7 @@ in
 
   services.polybar = 
     let
-      path = [pkgs.i3 pkgs.networkmanager_dmenu pkgs.dmenu];
+      path = [pkgs.i3 pkgs.networkmanager_dmenu pkgs.dmenu pkgs.polybar-spotify];
     in {
       enable = true;
       package = pkgs.polybar.override {

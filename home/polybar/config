@@ -34,7 +34,7 @@ height = 35
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 8.0
-fixed-center = false
+fixed-center = true
 
 background = ${colors.background}
 foreground = ${colors.foreground}
@@ -51,14 +51,14 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-font-0 = Roboto:fontformat=truetype:size=11;2
-font-1 = Fira Code:size=11;1
-font-2 = Material Design Icons:size=13;1
-font-3 = Material Design Icons:size=15;3
+font-0 = Roboto:fontformat=truetype:size=14:weight=medium;2
+font-1 = Fira Code:size=14;3
+font-2 = Material Design Icons:size=15;3
+font-3 = Material Design Icons:size=17;5
 
-modules-left = powermenu i3
-modules-center = mpd
-modules-right = filesystem backlight pulseaudio wlan battery date
+modules-left = i3
+modules-center = date
+modules-right = backlight pulseaudio wlan battery filesystem cpu
 
 tray-position = right
 tray-padding = 2
@@ -191,8 +191,8 @@ label-song-ellipsis = true
 type = internal/backlight
 
 card = intel_backlight
-format = <label> <bar>
-label = 
+; format = <label> <bar>
+label = " %percentage%%"
 
 bar-width = 10
 bar-indicator = |
@@ -208,10 +208,20 @@ bar-empty-foreground = ${colors.foreground-alt}
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
+format = <ramp-coreload>
 ;format-underline = #f90000
-label = %percentage:2%%
+;label = %percentage:2%%
+
+; Spacing between individual per-core ramps
+ramp-coreload-spacing = 0
+ramp-coreload-0 = ▁
+ramp-coreload-1 = ▂
+ramp-coreload-2 = ▃
+ramp-coreload-3 = ▄
+ramp-coreload-4 = ▅
+ramp-coreload-5 = ▆
+ramp-coreload-6 = ▇
+ramp-coreload-7 = █
 
 [module/memory]
 type = internal/memory
@@ -262,14 +272,14 @@ format-disconnected =
 type = internal/date
 interval = 5
 
-date =
-date-alt = " %d %b %Y"
+date = "%e %b"
+date-alt = "%e %b %Y"
 
 time = %R
 time-alt = %T
 
-format-prefix = 肋
-format-prefix-foreground = ${colors.foreground}
+; format-prefix = 肋
+; format-prefix-foreground = ${colors.foreground}
 ;format-underline = #0a6cf5
 
 label = %date% %time%
@@ -280,11 +290,11 @@ type = internal/pulseaudio
 # 100% only
 use-ui-max = false
 
-format-volume = <label-volume> <bar-volume>
+; format-volume = <label-volume> <bar-volume>
 label-volume = %{T3}%{T-} %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted = 
+label-muted = %{T3}%{T-} %percentage%%
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55
@@ -370,12 +380,12 @@ expand-right = true
 
 format-spacing = 1
 
-label-open = " "
-label-open-font = 4
+label-open = " %{T4}%{T-}"
 label-open-foreground = ${colors.foreground}
-label-close =  cancel
+label-close = " %{T4}%{T-} cancel"
+label-close-font = 4
 label-close-foreground = ${colors.foreground}
-label-separator = |
+label-separator = " %{T4}|%{T-} "
 label-separator-foreground = ${colors.foreground-alt}
 
 menu-0-0 = suspend

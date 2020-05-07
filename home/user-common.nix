@@ -197,6 +197,9 @@
       hbt = "mkdir -p _ticky; [ -e _ticky/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -ticky\\nstage1.ghc-bin.ghc.link.opts += -ticky' > _ticky/hadrian.settings; hb --flavour=validate --build-root=_ticky";
       hbts = "hbt --skip='//*.mk' --skip='stage1:lib:rts'";
       hbtf = "hbts --freeze1";
+      hbd = "mkdir -p _dwarf; [ -e _dwarf/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -g3\\nstage1.*.cabal.configure.opts += --disable-library-stripping --disable-executable-stripping' > _dwarf/hadrian.settings; hb --flavour=perf --build-root=_dwarf";
+      hbds = "hbt --skip='//*.mk' --skip='stage1:lib:rts'";
+      hbdf = "hbts --freeze1";
     };
   };
 

@@ -116,20 +116,18 @@ function efd() {
   f=$(exf --query $1)
   ret=$?
   if (( $ret != 0 )); then
-    (exit $ret);
-  else
-    e $f
+    return $ret
   fi
+  vim $f
 }
 
 function cpfd() {
   f=$(exf --query $1)
   ret=$?
   if (( $ret != 0 )); then
-    (exit $ret);
-  else
-    cp $f $2
+    return $ret
   fi
+  cp $f $2
 }
 
 # Prepare a new testcase and open it in vim

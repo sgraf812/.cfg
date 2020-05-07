@@ -6,4 +6,4 @@ nix-channel --add https://nixos.org/channels/nixos-$(cat "$(dirname $0)/release"
 nix-channel --update
 . /etc/profile.d/nix.sh
 
-home-manager switch && ~/.zshrc
+home-manager switch && . ~/.zshrc

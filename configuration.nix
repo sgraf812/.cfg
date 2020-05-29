@@ -52,16 +52,33 @@
     wget
   ];
  
-  fonts.fonts = with pkgs; [
-    fira-code
-    fira-code-symbols
-    font-awesome_4
-    material-design-icons # community
-    noto-fonts
-    noto-fonts-emoji
-    roboto
-    siji
-  ];
+  fonts = {
+    enableDefaultFonts = true;
+    enableFontDir = true;
+
+    fonts = with pkgs; [
+      cascadia-code
+      fira-code
+      fira-code-symbols
+      font-awesome_4
+      material-design-icons # community
+      noto-fonts
+      noto-fonts-emoji
+      roboto
+      siji
+      ubuntu_font_family
+    ];
+
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        emoji = [ "Noto Color Emoji" ];
+        serif = [ "Ubuntu" "Roboto" ];
+        sansSerif = [ "Ubuntu" "Roboto" ];
+        monospace = [ "Fira Code" "Cascadia Code" "Ubuntu" ];
+      };
+    };
+  };
 
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
 

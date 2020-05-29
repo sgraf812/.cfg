@@ -102,7 +102,7 @@ in
   programs.rofi = {
     enable = true;
     theme = "sidebar";
-    font = "Roboto medium 14";
+    font = "Ubuntu medium 14";
     terminal = "${pkgs.alacritty}/bin/alacritty";
   };
 

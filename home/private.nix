@@ -97,6 +97,7 @@ in
 
   programs.zsh.shellAliases = {
     ssh = "TERM=xterm-256color ssh";
+    upd = "sudo nix-channel --update && nix-channel --update && sudo nixos-rebuild switch && home-manager switch && . ~/.zshrc";
   };
 
   programs.rofi = {

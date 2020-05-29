@@ -25,6 +25,7 @@
     };
     shellAliases = {
       afs-lease = "kinit -l 7d sgraf; aklog";
+      upd = "sudo apt update && sudo apt upgrade --yes && nix-channel --update && home-manager switch && . ~/.zshrc";
     };
   };
 }

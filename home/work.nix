@@ -5,9 +5,12 @@
 
   home.packages = with pkgs; [ 
     pdftk
+    vit
   ];
 
-  programs.git.userEmail = "sgraf1337@gmail.com";
+  programs.git.userEmail = "sebastian.graf@kit.edu";
+
+  programs.taskwarrior.enable = true;
 
   programs.zsh = {
     localVariables = {

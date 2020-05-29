@@ -44,6 +44,7 @@
     stack
     # stack2nix # broken
     ranger
+    rename # prename -- https://stackoverflow.com/a/20657563/388010
     ripgrep
     tldr
     tmux
@@ -92,12 +93,13 @@
       da = "diff HEAD";
       di = "diff";
       dx = "diff --cached";
-      fixup = "commit --amend -C HEAD";
+      fixup = "commit --amend --reuse-message=HEAD"; # reuses timestamp and authorship info
+      # (f)etch (o)rigin and (s)witch to new branch from origin/master
+      fos = ''!bash -ec 'if (( $# != 1)); then echo >&2 git fos: 1 parameter expected; exit 2; fi; git fetch origin && git switch --create $1 --no-track origin/master' fos'';
       graph = "log --decorate --graph";
       less = "-p cat-file -p";
       l = "log --decorate --graph --oneline";
       lg = "log --decorate --graph --name-status";
-      publish = "!git push -u origin $(git branch-name)";
       s = "status -sb";
       sf = "svn fetch";
       suir = "submodule update --init --recursive";
@@ -198,8 +200,21 @@
       hbts = "hbt --skip='//*.mk' --skip='stage1:lib:rts'";
       hbtf = "hbts --freeze1";
       hbd = "mkdir -p _dwarf; [ -e _dwarf/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -g3\\nstage1.*.cabal.configure.opts += --disable-library-stripping --disable-executable-stripping' > _dwarf/hadrian.settings; hb --flavour=perf --build-root=_dwarf";
-      hbds = "hbt --skip='//*.mk' --skip='stage1:lib:rts'";
-      hbdf = "hbts --freeze1";
+      hbds = "hbd --skip='//*.mk' --skip='stage1:lib:rts'";
+      hbdf = "hbds --freeze1";
+      head-hackage = ''
+        cat << EOF >> cabal.project.local
+        repository head.hackage.ghc.haskell.org
+            url: https://ghc.gitlab.haskell.org/head.hackage/
+            secure: True
+            key-threshold: 3
+            root-keys:
+                f76d08be13e9a61a377a85e2fb63f4c5435d40f8feb3e12eb05905edb8cdea89
+                7541f32a4ccca4f97aea3b22f5e593ba2c0267546016b992dfadcd2fe944e55d
+                26021a13b401500c8eb2761ca95c61f2d625bfef951b939a8124ed12ecf07329
+        EOF
+      '';
+      ghcconfigure = "./configure $CONFIGURE_ARGS";
     };
   };
 

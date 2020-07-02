@@ -217,6 +217,28 @@
     };
   };
 
+  programs.tmux = {
+    enable = true;
+    extraConfig = builtins.readFile ./tmux/tmux.conf;
+    aggressiveResize = true;
+    baseIndex = 1;
+    keyMode = "vi";
+    shortcut = "a";
+    clock24 = true;
+    historyLimit = 50000;
+    plugins = with pkgs; [
+      tmuxPlugins.cpu
+      tmuxPlugins.resurrect
+      {
+        plugin = tmuxPlugins.continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '60' # minutes
+        '';
+      }
+    ];
+  };
+
   home.keyboard.layout = "de";
 
   home.language = {
@@ -225,10 +247,6 @@
     monetary = "de_DE.UTF-8";
     paper = "de_DE.UTF-8";
     time = "de_DE.UTF-8";
-  };
-
-  home.file = {
-    ".tmux.conf".source = ./tmux/tmux.conf;
   };
 
   home.stateVersion = "19.03";

@@ -9,6 +9,7 @@
 
 {
   imports = [ 
+    ./ghc-dev.nix
   ];
 
   home.packages = with pkgs; [
@@ -116,11 +117,6 @@
       };
       color.ui = "auto";
       push.default = "simple";
-      "url \"git://github.com/ghc/packages-\"".insteadOf = "git://github.com/ghc/packages/";
-      "url \"http://github.com/ghc/packages-\"".insteadOf = "http://github.com/ghc/packages/";
-      "url \"https://github.com/ghc/packages-\"".insteadOf = "https://github.com/ghc/packages/";
-      "url \"ssh://git@github.com/ghc/packages-\"".insteadOf = "ssh://git@github.com/ghc/packages/";
-      "url \"git@github.com/ghc/packages-\"".insteadOf = "git@github.com/ghc/packages/";
     };
   };
 
@@ -177,43 +173,10 @@
       e = "vim";
       less = ''\less -XFR'';
       info = "info --vi-keys";
-      cg = "valgrind --tool=cachegrind";
       ls = "exa --color=automatic";
       l = "ls -l";
       ll = "l --group --header --links --extended --git";
       la = "ll -a";
-      hb = "hadrian/build -j$(($(ncpus) +1))";
-      hbq = "hb --flavour=quick";
-      hbqs = "hbq --skip='//*.mk' --skip='stage1:lib:rts'";
-      hbqf = "hbqs --freeze1";
-      hbd2 = "hb --flavour=devel2 --build-root=_devel2";
-      hbd2s = "hbd2 --skip='//*.mk'";
-      hbd2f = "hbd2s --freeze1";
-      hbp = "hb --flavour=prof --build-root=_prof";
-      hbps = "hbp --skip='//*.mk'";
-      hbpf = "hbps --freeze1";
-      hbv = "hb --flavour=validate --build-root=_validate";
-      hbvs = "hbv --skip='//*.mk' --skip='stage1:lib:rts'";
-      hbvf = "hbvs --freeze1";
-      hbt = "mkdir -p _ticky; [ -e _ticky/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -ticky\\nstage1.ghc-bin.ghc.link.opts += -ticky' > _ticky/hadrian.settings; hb --flavour=validate --build-root=_ticky";
-      hbts = "hbt --skip='//*.mk' --skip='stage1:lib:rts'";
-      hbtf = "hbts --freeze1";
-      hbd = "mkdir -p _dwarf; [ -e _dwarf/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -g3\\nstage1.*.cabal.configure.opts += --disable-library-stripping --disable-executable-stripping' > _dwarf/hadrian.settings; hb --flavour=perf --build-root=_dwarf";
-      hbds = "hbd --skip='//*.mk' --skip='stage1:lib:rts'";
-      hbdf = "hbds --freeze1";
-      head-hackage = ''
-        cat << EOF >> cabal.project.local
-        repository head.hackage.ghc.haskell.org
-            url: https://ghc.gitlab.haskell.org/head.hackage/
-            secure: True
-            key-threshold: 3
-            root-keys:
-                f76d08be13e9a61a377a85e2fb63f4c5435d40f8feb3e12eb05905edb8cdea89
-                7541f32a4ccca4f97aea3b22f5e593ba2c0267546016b992dfadcd2fe944e55d
-                26021a13b401500c8eb2761ca95c61f2d625bfef951b939a8124ed12ecf07329
-        EOF
-      '';
-      ghcconfigure = "./configure $CONFIGURE_ARGS";
     };
   };
 

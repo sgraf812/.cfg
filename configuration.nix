@@ -191,6 +191,8 @@
 
   services.logind.extraConfig = "IdleAction=lock";
 
+  services.upower.enable = true;
+
   services.geoclue2 = {
     enable = true;
     enableDemoAgent = true;

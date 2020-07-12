@@ -195,8 +195,6 @@ in
       enable = true;
       config = let modifier = "Mod1"; in {
         assigns = {
-          "0: firefox" = [{ class = "^Firefox$"; }];
-          # Doesn't work
           "99: spotify" = [{ class = "^Spotify$"; }];
         };
 

@@ -241,6 +241,8 @@
   # Unfortunately the extension pack isn't built by Hydra (unfree) and I really
   # don't want to rebuild this all the time
   # virtualisation.virtualbox.host.enableExtensionPack = true;
+  virtualisation.docker.enable = true;
+  users.extraGroups.docker.members = [ "sgraf" ];
 
   fileSystems."/mnt/sinfo" = {
       device = ''\\sccfs.scc.kit.edu\Service\Web\zak-web-0002\www.sinfonieorchester.kit.edu'';

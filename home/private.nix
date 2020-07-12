@@ -48,7 +48,7 @@ in
     hicolor-icon-theme
     htop
     ncat
-    networkmanager_dmenu
+    gnome3.networkmanagerapplet
     nomacs
     okular
     pavucontrol
@@ -222,7 +222,14 @@ in
 
   services.polybar = 
     let
-      path = [pkgs.i3 pkgs.networkmanager_dmenu pkgs.dmenu pkgs.polybar-spotify];
+      path = with pkgs; [
+        i3
+        gnome3.networkmanagerapplet 
+        dmenu 
+        polybar-spotify
+        pavucontrol
+        # xorg.xmessage
+      ];
     in {
       enable = true;
       package = pkgs.polybar.override {
@@ -253,10 +260,6 @@ in
     windowManager.i3 = {
       enable = true;
       config = let modifier = "Mod1"; in {
-        assigns = {
-          "99: spotify" = [{ class = "^Spotify$"; }];
-        };
-
         bars = [];
 
         modifier = "${modifier}";
@@ -313,7 +316,8 @@ in
 
         floating = {
           criteria = [
-            { "class" = "Pavucontrol"; }
+            { class = "Nm-connection-editor"; } # Although WM_CLASS also lists a lowercase version, that doesn't seem to work
+            { class = "Pavucontrol"; }
           ];
         };
 

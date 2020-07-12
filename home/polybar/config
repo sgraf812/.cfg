@@ -248,10 +248,10 @@ type = internal/network
 interface = wlp4s0
 interval = 3.0
 
-format-connected = %{A1:networkmanager_dmenu:}<ramp-signal>%{A}
+format-connected = %{A1:nm-connection-editor:}<ramp-signal>%{A}
 ;format-connected-underline = #9f78e1
 
-format-disconnected = %{A1:networkmanager_dmenu:}%{A}
+format-disconnected = %{A1:nm-connection-editor:}%{A}
 ;format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
@@ -324,6 +324,8 @@ bar-volume-fill-font = 3
 bar-volume-empty = ─
 bar-volume-empty-font = 3
 bar-volume-empty-foreground = ${colors.foreground-alt}
+
+; click-right = pavucontrol & ; Doesn't work for some reason
 
 [module/battery]
 type = internal/battery

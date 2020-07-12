@@ -19,7 +19,7 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant. Not needed when we have networkmanager.
   networking.networkmanager = {
     enable = true;
-    wifi.powersave = false;
+    packages = [ pkgs.networkmanager-openvpn ];
   };
 
   # Configure network proxy if necessary
@@ -114,8 +114,9 @@
           proto udp
           auth-user-pass
           nobind
+          comp-lzo no
           tls-version-min 1.2
-          ca /etc/ssl/certs/T-TeleSec_GlobalRoot_Class_2.pem
+          ca ${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt
           verify-x509-name "C=DE, ST=Baden-Wuerttemberg, L=Karlsruhe, O=Karlsruhe Institute of Technology, OU=Steinbuch Centre for Computing, CN=ovpn.scc.kit.edu" subject
           cipher AES-256-CBC
           auth SHA384

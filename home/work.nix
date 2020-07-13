@@ -3,6 +3,8 @@
 {
   imports = [ ./user-common.nix ];
 
+  targets.genericLinux.enable = true;
+
   home.packages = with pkgs; [ 
     pdftk
     vit

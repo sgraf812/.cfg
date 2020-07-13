@@ -1,5 +1,10 @@
 { pkgs, lib, config, ... }:
 
+# Worth considering:
+# - cbatticon: Better battery icon
+# - home-manager.useGlobalPkgs: See https://rycee.gitlab.io/home-manager/#sec-install-nixos-module
+# - grobi: Alternative to autorandr?
+
 let
 
   graphicalService = descr: pkg: exe: {

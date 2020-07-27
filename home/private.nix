@@ -53,7 +53,6 @@ in
     hicolor-icon-theme
     htop
     ncat
-    gnome3.networkmanagerapplet
     nomacs
     okular
     pavucontrol
@@ -224,12 +223,12 @@ in
     };
 
   services.udiskie.enable = true;
+  services.network-manager-applet.enable = true;
 
   services.polybar = 
     let
       path = with pkgs; [
         i3
-        gnome3.networkmanagerapplet 
         dmenu 
         polybar-spotify
         pavucontrol

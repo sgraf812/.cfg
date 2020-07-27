@@ -61,7 +61,7 @@ font-4 = Noto Sans Symbols 2:size=15;3
 
 modules-left = i3 spotify
 modules-center = date
-modules-right = backlight pulseaudio wlan battery filesystem cpu
+modules-right = backlight pulseaudio battery filesystem cpu
 
 tray-position = right
 tray-padding = 2

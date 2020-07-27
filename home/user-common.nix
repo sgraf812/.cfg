@@ -225,7 +225,7 @@
       };
 
       Service = {
-        ExecStart = "${pkgs.unstable.onedrive}/bin/onedrive --monitor";
+        ExecStart = "${pkgs.onedrive}/bin/onedrive --monitor";
         Restart = "on-abnormal";
       };
 

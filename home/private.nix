@@ -290,8 +290,8 @@ in
             "${modifier}+Shift+${up}" = "move up";
             "${modifier}+Shift+${right}" = "move right";
 
-            "${modifier}+s" = "focus output up";
-            "${modifier}+p" = "move workspace to output up";
+            "${modifier}+p" = "focus output up";
+            "${modifier}+Shift+p" = "move workspace to output up";
 
             # For testing purposes
             #"${modifier}+a" = "exec ${pkgs.xorg.xmessage}/bin/xmessage hi";

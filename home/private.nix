@@ -59,6 +59,7 @@ in
     pmutils
     powertop
     python
+    skype
     spotify
     texlive.combined.scheme-full
     myThunar
@@ -66,6 +67,7 @@ in
     vlc
     w3m
     xorg.xprop
+    xarchiver
   ];
 
   accounts.email.accounts.private.primary = true;

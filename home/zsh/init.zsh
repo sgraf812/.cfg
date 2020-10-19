@@ -77,15 +77,19 @@ function test_exec() {
 # before setting any aliases
 if [ "x$USE_TMUX" = "xyes" ] && test_exec tmux && [[ ! $TERM =~ screen && -z $TMUX ]]; then
   home-manager switch
+  #
+  # Why override TMUX_TMPDIR below? Because its value in zsh is something like
+  # '/run/user/$(id -u)', e.g. unescaped. It seems to work in bash, though.
+  #
   # -u (only applicable to tmux, not to new-session): Force UTF-8
   # -s root: Name the new session "root"
   # -n main: Name the initial window "main"
   # -c $(pwd): Set the initial directory to the pwd of the current zsh session
-  tmux -u new-session -s root -n main -c $(pwd)
+  TMUX_TMPDIR=/tmp tmux -u new-session -s root -n main -c $(pwd)
   # -u (only applicable to tmux, not to attach-session): Force UTF-8
   # -t root: attach to the root session
   # -d: detach other clients.
-  exec tmux -u attach-session -d -t root
+  TMUX_TMPDIR=/tmp tmux -u attach-session -d -t root
 fi
 
 # An alias for quietly forking to background:
@@ -150,6 +154,7 @@ function ncpus() {
 
 # $1: search regex
 # $2: replacement
+# $3: where
 function rg-sed() {
-  rg --files-with-matches $1 | xargs sed -i "s/$1/$2/g"
+  rg --files-with-matches $1 $3 | xargs sed -i "s/$1/$2/g"
 }

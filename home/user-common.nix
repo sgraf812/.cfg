@@ -9,10 +9,12 @@
 
 {
   imports = [ 
-    ./ghc-dev.nix
+    modules/ghc-dev.nix
+    modules/cachix.nix
   ];
 
   home.packages = with pkgs; [
+    audacity
     bat
     bench
     binutils # ar and stuff
@@ -37,6 +39,7 @@
     manpages
     ncdu
     ncurses
+    niv
     nix-diff
     nix-index
     nix-prefetch-scripts
@@ -48,7 +51,6 @@
     rename # prename -- https://stackoverflow.com/a/20657563/388010
     ripgrep
     tldr
-    tmux
     tree
     xclip # Maybe use clipit instead?
     xdg_utils
@@ -59,6 +61,10 @@
     zlib.dev
     gmp.static
     numactl
+  ];
+
+  caches.cachix = [
+    "ghc-nix"
   ];
 
   programs.command-not-found.enable = true;
@@ -117,6 +123,7 @@
       };
       color.ui = "auto";
       push.default = "simple";
+      merge.conflictstyle = "diff3";
     };
   };
 
@@ -217,7 +224,6 @@
         plugin = tmuxPlugins.continuum;
         extraConfig = ''
           set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '60' # minutes
         '';
       }
     ];

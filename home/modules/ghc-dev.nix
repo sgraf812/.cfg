@@ -33,6 +33,7 @@ in
       hb = "hadrian/build -j$(($(ncpus) +1))";
       hbq = "hb --flavour=quick";
       hbv = "hb --flavour=validate --build-root=_validate";
+      hbsv = "hb --flavour=slow-validate --build-root=_slow-validate";
       hbd2 = "hb --flavour=devel2 --build-root=_devel2";
       hbp = "hb --flavour=perf --build-root=_perf";
       hbt = "mkdir -p _ticky; [ -e _ticky/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -ticky\\nstage1.ghc-bin.ghc.link.opts += -ticky' > _ticky/hadrian.settings; hb --flavour=perf --build-root=_ticky";

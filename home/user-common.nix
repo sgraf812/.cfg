@@ -122,7 +122,7 @@
 
   programs.home-manager = {
     enable = true;
-    path = "https://github.com/rycee/home-manager/archive/release-" + lib.fileContents ../release + ".tar.gz";
+    path = "https://github.com/nix-community/home-manager/archive/release-" + lib.fileContents ../release + ".tar.gz";
   };
 
   programs.kakoune.enable = true;

@@ -125,7 +125,28 @@
     path = "https://github.com/nix-community/home-manager/archive/release-" + lib.fileContents ../release + ".tar.gz";
   };
 
-  programs.kakoune.enable = true;
+  programs.kakoune = {
+    enable = true;
+    config = {
+      numberLines = {
+        enable = true;
+        relative = true;
+      };
+      scrollOff = {
+        columns = 5;
+        lines = 2;
+      };
+      showMatching = true;
+    };
+    plugins = with pkgs.kakounePlugins; [
+      kak-fzf
+      # kak-powerline
+      # kak-vertical-selection # unclear if needed
+    ];
+    extraConfig = ''
+      map global normal <c-p> ': fzf-mode<ret>'
+    '';
+  };
 
   programs.vim = {
     enable = true;

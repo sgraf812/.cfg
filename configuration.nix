@@ -88,6 +88,8 @@
     freeMemThreshold = 2;
   };
 
+  services.pki.certificateFiles = [ "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" ];
+
   # For completions mostly
   programs.zsh.enable = true;
 

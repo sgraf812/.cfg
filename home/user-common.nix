@@ -123,6 +123,7 @@
       };
       color.ui = "auto";
       push.default = "simple";
+      pull.ff = "only";
       merge.conflictstyle = "diff3";
     };
   };

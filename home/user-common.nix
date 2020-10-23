@@ -15,6 +15,7 @@
 
   home.packages = with pkgs; [
     audacity
+    bandwhich
     bat
     bench
     binutils # ar and stuff
@@ -23,6 +24,7 @@
     cloc
     creduce
     dtrx
+    dust
     entr
     exa
     fd
@@ -45,16 +47,18 @@
     nix-prefetch-scripts
     nofib-analyse # see overlay
     p7zip
+    sd
     stack
     # stack2nix # broken
     ranger
     rename # prename -- https://stackoverflow.com/a/20657563/388010
     ripgrep
-    tldr
+    tealdeer
     tree
     xclip # Maybe use clipit instead?
     xdg_utils
     vlc
+    ytop
 
     # Haskell/Cabal/Stack stuff
     # haskell-ci # old version, can't get it to work on unstable either

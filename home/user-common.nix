@@ -151,6 +151,7 @@
       kak-fzf
       # kak-powerline
       # kak-vertical-selection # unclear if needed
+      kak-lsp
     ];
     extraConfig = ''
       map global normal <c-p> ': fzf-mode<ret>'

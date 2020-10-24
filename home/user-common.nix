@@ -24,7 +24,7 @@
     cloc
     creduce
     dtrx
-    dust
+    # dust # Needs pypy (WTF)
     entr
     exa
     fd
@@ -149,12 +149,28 @@
     };
     plugins = with pkgs.kakounePlugins; [
       kak-fzf
-      # kak-powerline
+      kak-powerline
       # kak-vertical-selection # unclear if needed
       kak-lsp
     ];
     extraConfig = ''
+      hook global InsertChar k %{ try %{
+            exec -draft hH <a-k>jk<ret> d
+              exec <esc>
+      }}
+      hook global InsertChar j %{ try %{
+            exec -draft hH <a-k>kj<ret> d
+              exec <esc>
+      }}
       map global normal <c-p> ': fzf-mode<ret>'
+      map global normal 0 <a-h>
+      map global normal $ <a-l>
+      map global normal § $
+      map global user y '<a-|>${pkgs.xclip}/bin/xclip -selection clipboard -in <ret>'
+      map global user p '<a-!>${pkgs.xclip}/bin/xclip -selection clipboard -out <ret>'
+      map global user P '!${pkgs.xclip}/bin/xclip -selection clipboard -out <ret>'
+      map global user w ':write <ret>' -docstring "Save current buffer"
+      map global user e ':e<space>'
     '';
   };
 

@@ -8,7 +8,7 @@ self: super:
       phases = ["installPhase"];
       installPhase = ''
 	mkdir -p $out/share/kak/autoload/plugins
-	echo -e "eval %sh{${self.kak-lsp}/bin/kak-lsp --kakoune -s $kak_session}\nlsp-enable" > $out/share/kak/autoload/plugins/lsp
+	echo -e 'eval %sh{${self.kak-lsp}/bin/kak-lsp --kakoune -s $kak_session}\nlsp-enable' > $out/share/kak/autoload/plugins/lsp.kak
       '';
     };
   };

@@ -217,11 +217,11 @@ in
       clipit = graphicalService "X11 Clipboard manager" "${pkgs.clipit}" "clipit -n";
       # Touchpad gestures
       libinput-gestures = graphicalService "libinput gestures" "${pkgs.libinput-gestures}" "libinput-gestures";
-      alttab = graphicalService "alttab" "${pkgs.unstable.alttab}" "alttab -d 1 -i 128x128 -t 128x196";
+      alttab = graphicalService "alttab" "${pkgs.alttab}" "alttab -d 1 -i 128x128 -t 128x196";
       lightsonplus = graphicalService "lightsonplus" "${pkgs.lightsonplus}" "lightson+";
       # dropbox only allows 3 devices in its free plan, so we are only installing it at home
       dropbox = graphicalService "Dropbox as a system service" "${pkgs.dropbox}" "dropbox";
-      xss-lock = graphicalService "X screensaver locker" "${pkgs.unstable.xss-lock}" "xss-lock -s $XDG_SESSION_ID --transfer-sleep-lock -- ${locker}";
+      xss-lock = graphicalService "X screensaver locker" "${pkgs.xss-lock}" "xss-lock -s $XDG_SESSION_ID --transfer-sleep-lock -- ${locker}";
     };
 
   services.udiskie.enable = true;

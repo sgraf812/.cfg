@@ -51,7 +51,7 @@
     vim
     wget
   ];
- 
+
   fonts = {
     enableDefaultFonts = true;
     enableFontDir = true;
@@ -88,9 +88,6 @@
     freeMemThreshold = 2;
   };
 
-  services.pki.certificateFiles = [ "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" ];
-
-  # For completions mostly
   programs.zsh.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -130,6 +127,9 @@
     };
   };
 
+  security.pki.certificateFiles = [ "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" ];
+
+  # For completions mostly
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
@@ -245,6 +245,11 @@
   # virtualisation.virtualbox.host.enableExtensionPack = true;
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "sgraf" ];
+
+  nix = {
+    autoOptimiseStore = true;
+    trustedUsers = [ "root" "@wheel" ]; # for user-mode cachix
+  };
 
   fileSystems."/mnt/sinfo" = {
       device = ''\\sccfs.scc.kit.edu\Service\Web\zak-web-0002\www.sinfonieorchester.kit.edu'';

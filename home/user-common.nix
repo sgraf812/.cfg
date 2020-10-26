@@ -154,6 +154,7 @@
       kak-lsp
     ];
     extraConfig = ''
+      colorscheme tomorrow-night
       hook global InsertChar k %{ try %{
             exec -draft hH <a-k>jk<ret> d
               exec <esc>

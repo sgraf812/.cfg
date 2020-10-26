@@ -265,7 +265,7 @@ in
 
     windowManager.i3 = {
       enable = true;
-      config = let modifier = "Mod1"; in {
+      config = let modifier = "Mod4"; in {
         bars = [];
 
         modifier = "${modifier}";

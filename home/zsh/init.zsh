@@ -12,11 +12,11 @@ setopt prompt_sp
 # pdflatex breaks its error output by default (WTF)
 export max_print_line=1000
 
-export EDITOR=vim
-export SHELL=$(which zsh)
+# export EDITOR=vim
+# export SHELL=$(which zsh)
 export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/opt/ghc/bin:/opt/cabal/bin:$PATH
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
-export hardeningDisable=fortify # because WTF, Nixpkgs?!!
+# export hardeningDisable=fortify # because WTF, Nixpkgs?!!
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward
@@ -75,7 +75,7 @@ function test_exec() {
 
 # Rebuild config and launch tmux if not already in some mux session,
 # before setting any aliases
-if [ "x$USE_TMUX" = "xyes" ] && test_exec tmux && [[ ! $TERM =~ screen && -z $TMUX ]]; then
+if [ "x$USE_TMUX" = "xyes" ] && test_exec tmux && [[ ! $TERM =~ screen-256colors && -z $TMUX ]]; then
   home-manager switch
   #
   # Why override TMUX_TMPDIR below? Because its value in zsh is something like

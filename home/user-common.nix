@@ -159,19 +159,36 @@
             exec -draft hH <a-k>jk<ret> d
               exec <esc>
       }}
-      hook global InsertChar j %{ try %{
-            exec -draft hH <a-k>kj<ret> d
-              exec <esc>
-      }}
       map global normal <c-p> ': fzf-mode<ret>'
       map global normal 0 <a-h>
       map global normal $ <a-l>
       map global normal § $
+
+      # User mode stuff
+      ## Copy and pasting from clipboard
       map global user y '<a-|>${pkgs.xclip}/bin/xclip -selection clipboard -in <ret>'
       map global user p '<a-!>${pkgs.xclip}/bin/xclip -selection clipboard -out <ret>'
       map global user P '!${pkgs.xclip}/bin/xclip -selection clipboard -out <ret>'
+      ## Other shortcuts
       map global user w ':write <ret>' -docstring "Save current buffer"
       map global user e ':e<space>'
+
+      # Tab completion
+      hook global InsertCompletionShow .* %{
+          try %{
+              # this command temporarily removes cursors preceded by whitespace;
+              # if there are no cursors left, it raises an error, does not
+              # continue to execute the mapping commands, and the error is eaten
+              # by the `try` command so no warning appears.
+              execute-keys -draft 'h<a-K>\h<ret>'
+              map window insert <tab> <c-n>
+              map window insert <s-tab> <c-p>
+          }
+      }
+      hook global InsertCompletionHide .* %{
+          unmap window insert <tab> <c-n>
+          unmap window insert <s-tab> <c-p>
+      }
     '';
   };
 
@@ -212,13 +229,16 @@
       RPROMPT = "";
       # hide user in shell prompt
       DEFAULT_USER = "sgraf";
+      PAGER = "kak";
+      EDITOR = "kak";
+      hardeningDisable = "fortify";
     };
     shellAliases = {
       nix-zsh = "nix-shell --command zsh";
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\\w+-system|\\{memory)' | cut -d' ' -f1";
       setclip = "xclip -selection clipboard -in";
       getclip = "xclip -selection clipboard -out";
-      e = "vim";
+      e = "kak";
       less = ''\less -XFR'';
       info = "info --vi-keys";
       ls = "exa --color=automatic";

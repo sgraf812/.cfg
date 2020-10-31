@@ -37,6 +37,7 @@
     # haskellPackages.hkgr # Hackage release management, but it's broken
     haskellPackages.lhs2tex
     haskellPackages.hasktags
+    unstable.haskell-language-server
     man
     manpages
     ncdu
@@ -192,6 +193,8 @@
     '';
   };
 
+  xdg.configFile."kak-lsp/kak-lsp.toml".source = ./kak/kak-lsp.toml;
+
   programs.vim = {
     enable = true;
     extraConfig = builtins.readFile vim/vimrc.vim;
@@ -229,7 +232,7 @@
       RPROMPT = "";
       # hide user in shell prompt
       DEFAULT_USER = "sgraf";
-      PAGER = "kak";
+      # PAGER = "kak"; # doesn't understand color codes
       EDITOR = "kak";
       hardeningDisable = "fortify";
     };

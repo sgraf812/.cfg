@@ -1,5 +1,5 @@
 let 
-  os = builtins.elemAt (builtins.match ".*NAME\=([A-z]*).*" (builtins.readFile /etc/os-release)) 0;
+  os = builtins.elemAt (builtins.match "(.*[[:space:]])?NAME\=\"([A-z]*).*" (builtins.readFile /etc/os-release)) 1;
 in 
 {
   imports = [ 

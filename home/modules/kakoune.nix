@@ -19,11 +19,12 @@
       showMatching = true;
     };
     plugins = with pkgs.kakounePlugins; [
-      kak-fzf
-      kak-powerline
-      # kak-vertical-selection # unclear if needed
-      kak-lsp
-      kak-git-mode
+      kak-fzf             # fzf mode
+      kak-powerline       # A powerline
+      kak-lsp             # A plugin for communicating with lang servers
+      kak-git-mode        # A git user mode for better interaction
+      kak-auto-pairs      # Auto close parens, etc.
+      kak-buffers         # smarter buffer movements
     ];
     extraConfig = ''
       colorscheme tomorrow-night
@@ -48,6 +49,16 @@
       map global user w ':write <ret>' -docstring "Save current buffer"
       map global user e ':e<space>'
       map global user a '*%s<ret>' -docstring "Select all occurrences"
+
+      # kak-buffers
+      map global normal ^ q
+      map global normal <a-^> Q
+      map global normal q b
+      map global normal Q B
+      map global normal <a-q> <a-b>
+      map global normal <a-Q> <a-B>
+      map global normal b ': enter-buffers-mode<ret>' -docstring 'buffers'
+      map global normal B ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
 
       # Tab completion
       hook global InsertCompletionShow .* %{

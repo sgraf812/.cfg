@@ -10,13 +10,6 @@ self: super:
 	mkdir -p $out/share/kak/autoload/plugins
 	echo -e 'eval %sh{${self.kak-lsp}/bin/kak-lsp --kakoune -s $kak_session}\nlsp-enable' > $out/share/kak/autoload/plugins/lsp.kak
       '';
-      meta = with super.stdenv.lib; {
-        description = "Kakoune Language Server Protocol Client (Plugin)";
-        homepage = "https://github.com/kak-lsp/kak-lsp";
-        license = licenses.unlicense;
-        maintainers = with maintainers; [ sgraf ];
-        platforms = platforms.all;
-      };
     };
   };
 }

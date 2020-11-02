@@ -12,11 +12,11 @@ setopt prompt_sp
 # pdflatex breaks its error output by default (WTF)
 export max_print_line=1000
 
-# export EDITOR=vim
-# export SHELL=$(which zsh)
+# because otherwise tmux starts in bash (?!).
+# tmux's default-shell doesn't work because we don't have zsh's path
+export SHELL=$(which zsh) 
 export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/opt/ghc/bin:/opt/cabal/bin:$PATH
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
-# export hardeningDisable=fortify # because WTF, Nixpkgs?!!
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward

@@ -5,6 +5,9 @@ in
   imports = [ 
     (if os == "NixOS"
       then ./home/private.nix 
-      else ./home/work.nix)
+     else if os == "Pengwin"
+      then ./home/pengwin.nix
+     else
+      ./home/work.nix)
   ];
 }

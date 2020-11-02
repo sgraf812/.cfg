@@ -1,6 +1,6 @@
 [language.haskell]
 filetypes = ["haskell"]
-roots = ["Setup.hs", "stack.yaml", "*.cabal", "cabal.project", "hie.yaml"]
+roots = ["hie.yaml", "Setup.hs", "cabal.project", "stack.yaml", "*.cabal"]
 command = "haskell-language-server-wrapper"
 args = ["--lsp"] 
 

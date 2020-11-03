@@ -28,15 +28,19 @@
     ];
     extraConfig = ''
       colorscheme tomorrow-night
-      
+
+      # Indent
+      set global indentwidth 2
+      set global tabstop 8
+
+      # Remove trailing whitespace
+      hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
+
       hook global InsertChar k %{ try %{
             exec -draft hH <a-k>jk<ret> d
               exec <esc>
       }}
       map global normal <c-p> ': fzf-mode<ret>'
-      map global normal 0 <a-h>
-      map global normal $ <a-l>
-      map global normal § $
 
       # User mode stuff
       ## Copy and pasting from clipboard
@@ -75,6 +79,42 @@
       hook global InsertCompletionHide .* %{
           unmap window insert <tab> <c-n>
           unmap window insert <s-tab> <c-p>
+      }
+
+      # auto-pairs.kak
+      hook global WinCreate .* auto-pairs-enable
+
+      # kak-lsp
+      hook global WinCreate .* lsp-auto-hover-enable
+
+      # Kudos to wz1000 for this ... device
+      define-command ghc-jump-note %{
+        try %{
+          execute-keys 'xsNote \[[^\]\n]+\]<ret>'
+          evaluate-commands %sh{
+            brace=$(echo '{}' | cut -b1)
+            out=$(rg --no-messages --vimgrep -i --engine pcre2 "^ ?[$brace\-#*]* *\Q$kak_reg_dot")
+            [ -n "$out" ] || { echo 'echo "No definition found!"' ; exit 1; }
+            ln=$(wc -l <<< "$out")
+            if [ "$ln" -gt 1 ]; then
+              output=$(mktemp -d "${TMPDIR:-/tmp}"/kak-grep.XXXXXXXX)/fifo
+              mkfifo $output
+              ( cat <<< "$out" > $output & ) > /dev/null 2>&1 < /dev/null
+              printf %s\\n "evaluate-commands %{
+                       edit! -fifo $output *grep*
+                       set-option buffer filetype grep
+                       set-option buffer grep_current_line 0
+                       hook -always -once buffer BufCloseFifo .* %{ nop %sh{ rm -r $(dirname $output) } }
+                   }"
+              exit 0
+            fi
+            file=$(echo "$out" | cut -d: -f1)
+            line=$(echo "$out" | cut -d: -f2)
+            printf 'edit -existing %s %s\n' "$file" "$line"
+          }
+        } catch %{
+          nop
+        }
       }
     '';
   };

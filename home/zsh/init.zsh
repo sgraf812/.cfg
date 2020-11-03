@@ -122,7 +122,7 @@ function efd() {
   if (( $ret != 0 )); then
     return $ret
   fi
-  vim $f
+  $EDITOR $f
 }
 
 function cpfd() {
@@ -134,7 +134,7 @@ function cpfd() {
   cp $f $2
 }
 
-# Prepare a new testcase and open it in vim
+# Prepare a new testcase and open it in $EDITOR
 function ntc() {
 cat << EOF > $1
 -- {-# OPTIONS_GHC -Wincomplete-patterns -fforce-recomp #-}
@@ -145,7 +145,7 @@ cat << EOF > $1
 module Lib where
   
 EOF
-vim $1
+$EDITOR $1
 }
 
 function ncpus() {

@@ -35,6 +35,8 @@
     extraConfig = ''
       colorscheme tomorrow-night
 
+      # Highlight trailing whitespace. But we simply delete it anyway
+      # add-highlighter global/show-trailing-whitespaces regex '\h+$' 0:Error
       # Remove trailing whitespace
       hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
 
@@ -52,7 +54,8 @@
       # Git mode
       map global user g ': enter-user-mode git<ret>' -docstring "Git mode"
       hook global BufOpenFile .* git-mode-show-diff
-      hook global ButWritePost .* git-mode-update-diff
+      hook global BufWritePost .* git-mode-update-diff
+      hook global BufReload .* git-mode-update-diff
       ## Other shortcuts
       map global user w ':write <ret>' -docstring "Save current buffer"
       map global user e ':e<space>'

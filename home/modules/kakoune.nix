@@ -60,6 +60,7 @@
       map global user w ':write <ret>' -docstring "Save current buffer"
       map global user e ':e<space>'
       map global user a '*%s<ret>' -docstring "Select all occurrences"
+      map global user f '|fmt --width $kak_opt_autowrap_column<ret>' -docstring "Wrap lines of selection"
 
       # kak-buffers
       map global normal ^ q
@@ -93,6 +94,7 @@
 
       # kak-lsp
       hook global WinCreate .* lsp-auto-hover-enable
+      map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"
 
       # Kudos to wz1000 for this ... device
       define-command ghc-jump-note %{

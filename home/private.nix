@@ -62,8 +62,9 @@ in
     skype
     spotify
     texlive.combined.scheme-full
+    thunderbird
     myThunar
-    virtmanager # Needs virtualisation.libvirtd.enable = true; in configuration.nix
+    # virtmanager # Needs virtualisation.libvirtd.enable = true; in configuration.nix and is currently deactivated
     vlc
     w3m
     xorg.xprop

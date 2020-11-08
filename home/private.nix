@@ -69,6 +69,7 @@ in
     w3m
     xorg.xprop
     xarchiver
+    zoom-us
   ];
 
   accounts.email.accounts.private.primary = true;
@@ -228,11 +229,11 @@ in
   services.udiskie.enable = true;
   services.network-manager-applet.enable = true;
 
-  services.polybar = 
+  services.polybar =
     let
       path = with pkgs; [
         i3
-        dmenu 
+        dmenu
         polybar-spotify
         pavucontrol
         # xorg.xmessage

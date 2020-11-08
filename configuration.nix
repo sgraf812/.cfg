@@ -138,7 +138,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.drivers = [ 
+  services.printing.drivers = [
     pkgs.epson-escpr
     pkgs.gutenprint
     pkgs.gutenprintBin
@@ -169,7 +169,7 @@
   services.xserver = {
     enable = true;
     layout = "de";
-    xkbOptions = "eurosign:e";
+    xkbOptions = "eurosign:e, caps:swapescape";
     dpi = 132;
 
     displayManager.defaultSession = "none+i3";

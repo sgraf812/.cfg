@@ -193,9 +193,11 @@ in
         i3Support = true;
         pulseSupport = true;
       };
-      script = "MONITOR=$(${pkgs.xorg.xrandr}/bin/xrandr | grep -E ' connected primary [1-9]+' | cut -d' ' -f1) \
-                PATH=${pkgs.fontconfig}/bin:${lib.makeBinPath path}:$PATH \
-                polybar top &";
+      # Apparently the service doesn't see the XSession and thus can't find
+      # the primiary display
+      # script = "MONITOR=$(${pkgs.xorg.xrandr}/bin/xrandr | grep -E ' connected primary [1-9]+' | cut -d' ' -f1) \\\
+      script = "PATH=${pkgs.fontconfig}/bin:${lib.makeBinPath path}:$PATH polybar top &";
+      # See also https://cdn.materialdesignicons.com/5.4.55/ for icon hexcodes
       config = ./polybar/config;
     };
 

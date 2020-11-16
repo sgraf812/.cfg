@@ -142,8 +142,8 @@ index-sort = true
 ;pin-workspaces = true
 
 ;strip-wsnumbers = true
-ws-icon-0 = "0: firefox;"
-ws-icon-1 = "99: spotify;"
+ws-icon-0 = "0: firefox;󰈹"
+ws-icon-1 = "99: spotify;󰓇"
 
 label-mode-padding = 2
 label-mode-foreground = #000

@@ -41,6 +41,7 @@ in
   imports = [
     ./user-common.nix
     ./email.nix
+    modules/xrandr.nix
   ];
 
   home.packages = with pkgs; [
@@ -110,10 +111,6 @@ in
   programs.zsh.shellAliases = {
     ssh = "TERM=xterm-256color ssh";
     upd = "sudo nix-channel --update && nix-channel --update && sudo nixos-rebuild switch && home-manager switch && . ~/.zshrc";
-    xrandr-hdmi = "xrandr --output HDMI-1 --auto";
-    xrandr-hdmi-mirror = "xrandr-hdmi --same-as eDP-1";
-    xrandr-hdmi-above = "xrandr-hdmi --above eDP-1";
-    xrandr-hdmi-off = "xrandr-hdmi --off";
   };
 
   programs.rofi = {
@@ -133,54 +130,6 @@ in
 
   programs.vscode = {
     enable = true;
-  };
-
-  programs.autorandr = {
-    enable = true;
-    profiles =
-      let
-        # TODO: This probably belongs in hardware-configuration.nix
-        fingerprints = {
-          thinkpad = "00ffffffffffff0006af3d3100000000001a0104a51f1178028d15a156529d280a505400000001010101010101010101010101010101143780b87038244010103e0035ae100000180000000f0000000000000000000000000020000000fe0041554f0a202020202020202020000000fe004231343048414e30332e31200a003b";
-          benq24 = "00ffffffffffff0009d1a778455400002018010380351e782eba45a159559d280d5054a56b80810081c08180a9c0b300d1c001010101023a801871382d40582c4500132a2100001e000000ff0037384530323839343031390a20000000fd00324c1e5311000a202020202020000000fc0042656e5120474c32343530480a0150020322f14f90050403020111121314060715161f2309070765030c00100083010000023a801871382d40582c4500132a2100001f011d8018711c1620582c2500132a2100009f011d007251d01e206e285500132a2100001e8c0ad08a20e02d10103e9600132a21000018000000000000000000000000000000000000000000eb";
-        };
-      in
-      {
-        mobile = {
-          fingerprint.eDP-1 = fingerprints.thinkpad;
-          config.eDP-1 = {
-            enable = true;
-            primary = true;
-            #crtc = 0;
-            mode = "1920x1080";
-            position = "0x0";
-            rate = "60.05";
-            dpi = 132;
-          };
-        };
-        "docked-home" = {
-          fingerprint.eDP-1 = fingerprints.thinkpad;
-          fingerprint.HDMI-1 = fingerprints.benq24;
-          config.eDP-1 = {
-            enable = true;
-            primary = false;
-            #crtc = 0;
-            mode = "1920x1080";
-            position = "0x1080";
-            rate = "60.05";
-            dpi = 132;
-          };
-          config.HDMI-1 = {
-            enable = true;
-            primary = true;
-            #crtc = 1;
-            mode = "1920x1080";
-            position = "0x0";
-            rate = "60.00";
-            dpi = 96;
-          };
-        };
-      };
   };
 
   xdg = {
@@ -244,7 +193,9 @@ in
         i3Support = true;
         pulseSupport = true;
       };
-      script = "PATH=${lib.makeBinPath path}:$PATH polybar top &";
+      script = "MONITOR=$(${pkgs.xorg.xrandr}/bin/xrandr | grep -E ' connected primary [1-9]+' | cut -d' ' -f1) \
+                PATH=${pkgs.fontconfig}/bin:${lib.makeBinPath path}:$PATH \
+                polybar top &";
       config = ./polybar/config;
     };
 

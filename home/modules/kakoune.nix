@@ -41,8 +41,8 @@
       hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
 
       hook global InsertChar k %{ try %{
-            exec -draft hH <a-k>jk<ret> d
-              exec <esc>
+          exec -draft hH <a-k>jk<ret> d
+          exec <esc>
       }}
       map global normal <c-p> ': fzf-mode<ret>'
 
@@ -60,7 +60,14 @@
       map global user w ':write <ret>' -docstring "Save current buffer"
       map global user e ':e<space>'
       map global user a '*%s<ret>' -docstring "Select all occurrences"
-      map global user f '|fmt --width $kak_opt_autowrap_column<ret>' -docstring "Wrap lines of selection"
+      map global user f '<a-x>|fmt --width $kak_opt_autowrap_column<ret>' -docstring "Wrap full lines of selection"
+      map global user F '|fmt --width $kak_opt_autowrap_column<ret>' -docstring "Wrap lines of selection"
+
+      # case insensitive search
+      map -docstring 'case insensitive search' global user '/' /(?i)
+      map -docstring 'case insensitive backward search' global user '<a-/>' <a-/>(?i)
+      map -docstring 'case insensitive extend search' global user '?' ?(?i)
+      map -docstring 'case insensitive backward extend-search' global user '<a-?>' <a-?>(?i)
 
       # kak-buffers
       map global normal ^ q

@@ -306,7 +306,7 @@ use-ui-max = false
 label-volume = %{T3}󰕾%{T-} %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted = %{T3}%{T-} %percentage%%
+label-muted = %{T3}󰖁%{T-} %percentage%%
 
 bar-volume-width = 10
 bar-volume-foreground-0 = #55aa55

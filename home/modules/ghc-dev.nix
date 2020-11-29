@@ -1,6 +1,6 @@
 { pkgs, lib, ... }:
 
-let 
+let
 
   addSkipAndFreezeAliases = baseAliases: lib.fold (alias: a: a // {
     "${alias}s" = "${alias} --skip='//*.mk' --skip=stage1:lib:rts";
@@ -29,6 +29,7 @@ in
                 26021a13b401500c8eb2761ca95c61f2d625bfef951b939a8124ed12ecf07329
         EOF
       '';
+      ghc-head = "$HOME/code/hs/ghc/pristine/_validate/stage1/bin/ghc";
     }) // addSkipAndFreezeAliases {
       hb = "hadrian/build -j$(($(ncpus) +1))";
       hbq = "hb --flavour=quick";

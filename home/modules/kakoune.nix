@@ -23,13 +23,22 @@
         enableMouse = false;
         setTitle = true;
       };
+      showWhitespace = {
+        enable = true;
+        # We only do this to see tabs
+        lineFeed = " ";
+        space = " ";
+        nonBreakingSpace = " ";
+      };
     };
     plugins = with pkgs.kakounePlugins; [
       kak-fzf             # fzf mode
       kak-powerline       # A powerline
       kak-lsp             # A plugin for communicating with lang servers
       kak-git-mode        # A git user mode for better interaction
-      kak-auto-pairs      # Auto close parens, etc.
+      # auto-pairs is more trouble than worth it, not smart enough about
+      # balancing!
+      # kak-auto-pairs    # Auto close parens, etc.
       kak-buffers         # smarter buffer movements
     ];
     extraConfig = ''
@@ -58,16 +67,37 @@
       hook global BufReload .* git-mode-update-diff
       ## Other shortcuts
       map global user w ':write <ret>' -docstring "Save current buffer"
-      map global user e ':e<space>'
+      map global user e ':e<space>' -docstring "Edit file"
       map global user a '*%s<ret>' -docstring "Select all occurrences"
-      map global user f '<a-x>|fmt --width $kak_opt_autowrap_column<ret>' -docstring "Wrap full lines of selection"
-      map global user F '|fmt --width $kak_opt_autowrap_column<ret>' -docstring "Wrap lines of selection"
+      map global user c ': addhl window/col column 80 default,rgb:303030' -docstring "Add 80th column highlighter"
+      map global user C ': rmhl window/col' -docstring "Remove 80th column highlighter"
 
-      # case insensitive search
+      ## case insensitive search
       map -docstring 'case insensitive search' global user '/' /(?i)
       map -docstring 'case insensitive backward search' global user '<a-/>' <a-/>(?i)
       map -docstring 'case insensitive extend search' global user '?' ?(?i)
       map -docstring 'case insensitive backward extend-search' global user '<a-?>' <a-?>(?i)
+
+      ## Formatting
+
+      # The following line wraps
+      #
+      # - to (w)idth $kak_opt_autowrap_column
+      # - recognising B(ody) characters
+      #   - .,?
+      #   - _q (single quote) and _Q (double quote)
+      #   - _a lower and _A upper case
+      # - recogising (q)uote with (Q)uote characters
+      #   - spaces _s
+      #   - dash -  (Haskell comments!)
+      #   - angle bracket > (quotes in markdown)
+      #   The q makes sure that we choose the leading quote characters as the
+      #   prefix when expanding a single line
+      # - making sure that lines (f)it in the least of amount of columns by
+      #   redistributing words
+      #
+      # TODO: Need to add _@ (neither case characters) in par-1.53
+      map global user f '<a-x>|${pkgs.par}/bin/par w$kak_opt_autowrap_column "B=.,?_q_Q_A_a" q "Q=_s->" f<ret>' -docstring "Wrap lines of selection"
 
       # kak-buffers
       map global normal ^ q
@@ -76,7 +106,7 @@
       map global normal Q B
       map global normal <a-q> <a-b>
       map global normal <a-Q> <a-B>
-      map global normal b ': enter-buffers-mode<ret>' -docstring 'buffers'
+      map global normal b ': enter-user-mode buffers<ret>' -docstring 'buffers'
       map global normal B ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
 
       # Tab completion
@@ -96,8 +126,8 @@
           unmap window insert <s-tab> <c-p>
       }
 
-      # auto-pairs.kak
-      hook global WinCreate .* auto-pairs-enable
+      # auto-pairs.kak: currently disabled
+      # hook global WinCreate .* auto-pairs-enable
 
       # kak-lsp
       hook global WinCreate .* lsp-auto-hover-enable

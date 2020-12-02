@@ -69,8 +69,8 @@
       map global user w ':write <ret>' -docstring "Save current buffer"
       map global user e ':e<space>' -docstring "Edit file"
       map global user a '*%s<ret>' -docstring "Select all occurrences"
-      map global user c ': addhl window/col column 80 default,rgb:303030' -docstring "Add 80th column highlighter"
-      map global user C ': rmhl window/col' -docstring "Remove 80th column highlighter"
+      map global user c ': addhl window/col column 80 default,rgb:303030<ret>' -docstring "Add 80th column highlighter"
+      map global user C ': rmhl window/col<ret>' -docstring "Remove 80th column highlighter"
 
       ## case insensitive search
       map -docstring 'case insensitive search' global user '/' /(?i)
@@ -98,6 +98,10 @@
       #
       # TODO: Need to add _@ (neither case characters) in par-1.53
       map global user f '<a-x>|${pkgs.par}/bin/par w$kak_opt_autowrap_column "B=.,?_q_Q_A_a" q "Q=_s->" f<ret>' -docstring "Wrap lines of selection"
+
+      ## Copying from tmux
+
+      map global user t '<a-|> cat > /tmp/kak-cpy && tmux new-window "cat /tmp/kak-cpy; read"<ret>' -docstring "Open selection in new tmux window for copying"
 
       # kak-buffers
       map global normal ^ q
@@ -130,7 +134,7 @@
       # hook global WinCreate .* auto-pairs-enable
 
       # kak-lsp
-      hook global WinCreate .* lsp-auto-hover-enable
+      # hook global WinCreate .* lsp-auto-hover-enable
       map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"
 
       # Kudos to wz1000 for this ... device

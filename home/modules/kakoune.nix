@@ -69,6 +69,7 @@
       map global user w ':write <ret>' -docstring "Save current buffer"
       map global user e ':e<space>' -docstring "Edit file"
       map global user a '*%s<ret>' -docstring "Select all occurrences"
+      map global user * '<a-i>w*%s<ret>' -docstring "Select all occurrences of inner word"
       map global user c ': addhl window/col column 80 default,rgb:303030<ret>' -docstring "Add 80th column highlighter"
       map global user C ': rmhl window/col<ret>' -docstring "Remove 80th column highlighter"
 
@@ -134,22 +135,29 @@
       # hook global WinCreate .* auto-pairs-enable
 
       # kak-lsp
-      # hook global WinCreate .* lsp-auto-hover-enable
+      hook global WinCreate .* %{
+        lsp-auto-hover-enable
+        set-option global lsp_show_hover_format 'printf %s "''${lsp_diagnostics}"'
+      }
       map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"
 
+      # haskell mode
+      declare-user-mode haskell
+      map global user h ': enter-user-mode haskell<ret>' -docstring "Haskell mode"
       # Kudos to wz1000 for this ... device
       define-command ghc-jump-note %{
         try %{
           execute-keys 'xsNote \[[^\]\n]+\]<ret>'
           evaluate-commands %sh{
             brace=$(echo '{}' | cut -b1)
-            out=$(rg --no-messages --vimgrep -i --engine pcre2 "^ ?[$brace\-#*]* *\Q$kak_reg_dot")
+            echo "echo $brace"
+            out=$(${pkgs.ripgrep}/bin/rg --no-messages --vimgrep -i --engine pcre2 "^ ?[$brace\-#*]* *\Q$kak_reg_dot")
             [ -n "$out" ] || { echo 'echo "No definition found!"' ; exit 1; }
-            ln=$(wc -l <<< "$out")
+            ln=$(cat "$out" | wc -l)
             if [ "$ln" -gt 1 ]; then
-              output=$(mktemp -d "${TMPDIR:-/tmp}"/kak-grep.XXXXXXXX)/fifo
+              output=$(mktemp -d "''${TMPDIR:-/tmp}"/kak-grep.XXXXXXXX)/fifo
               mkfifo $output
-              ( cat <<< "$out" > $output & ) > /dev/null 2>&1 < /dev/null
+              ( cat "$out" > $output & ) > /dev/null 2>&1 < /dev/null
               printf %s\\n "evaluate-commands %{
                        edit! -fifo $output *grep*
                        set-option buffer filetype grep
@@ -166,6 +174,27 @@
           nop
         }
       }
+      map global haskell n ': ghc-jump-note<ret>' -docstring "Jump to GHC Note in line under selection"
+
+      # Kudos to andreyorst
+      define-command -override -docstring "flygrep: run grep on every key" \
+      flygrep %{
+          edit -scratch *grep*
+          prompt "flygrep: " -on-change %{
+              flygrep-call-grep %val{text}
+          } nop
+      }
+
+      define-command -override flygrep-call-grep -params 1 %{ evaluate-commands %sh{
+          length=$(printf "%s" "$1" | wc -m)
+          [ -z "''${1##*&*}" ] && text=$(printf "%s\n" "$1" | sed "s/&/&&/g") || text="$1"
+          if [ ''${length:-0} -gt 2 ]; then
+              printf "%s\n" "info"
+              printf "%s\n" "evaluate-commands %&grep '$text'&"
+          else
+              printf "%s\n" "info -title flygrep %{$((3-''${length:-0})) more chars}"
+          fi
+      }}
     '';
   };
 

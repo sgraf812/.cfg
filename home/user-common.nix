@@ -8,7 +8,7 @@
 # - getmail: Automatically fetch mail in a systemd service
 
 {
-  imports = [ 
+  imports = [
     modules/ghc-dev.nix
     modules/cachix.nix
     modules/kakoune.nix
@@ -31,6 +31,7 @@
     fd
     fzf
     ghc
+    glow # CLI markdown viewer
     gitAndTools.tig
     gnumake
     # gthumb # can crop images # segfaults in ubuntu...
@@ -121,7 +122,7 @@
       wtas = ''!bash -ec 'if (( $# != 1)); then echo >&2 git wtas: 1 parameter expected; exit 2; fi; tree=\"$(python -c \"from __future__ import print_function; import os, os.path, sys; print(os.path.normpath(os.path.join(os.getenv(\\\"PWD\\\"), sys.argv[1])))\" \"$1\")\"; git wta \"$tree\"; cd \"$(git rev-parse --git-dir)\"; for mod in $(git config --blob HEAD:.gitmodules -l --name-only|gawk -F . \"/\\.path$/ {print \\$2}\"); do [ -d modules/$mod ] && git -C modules/$mod wta \"$tree/$(git config --blob HEAD:.gitmodules --get submodule.$mod.path)\"; done' wtas'';
     };
     extraConfig = {
-      core = { 
+      core = {
         editor = "vim";
         pager = "less -x 4 -R -~"; # -F -c
         # excludesfile = "$HOME/.gitignore";
@@ -150,7 +151,7 @@
       fugitive             # Git commands
       sensible             # Sensible defaults
       sleuth               # Heuristically set buffer options
-      # Solarized 
+      # Solarized
       airline              # Powerline in vimscript
       vim-dispatch         # Asynchronous dispatcher
       gitgutter            # Show git changes in gutter

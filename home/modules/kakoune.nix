@@ -36,6 +36,7 @@
       kak-powerline       # A powerline
       kak-lsp             # A plugin for communicating with lang servers
       kak-git-mode        # A git user mode for better interaction
+      kak-kit             # Git porcellain
       # auto-pairs is more trouble than worth it, not smart enough about
       # balancing!
       # kak-auto-pairs    # Auto close parens, etc.
@@ -65,6 +66,24 @@
       hook global BufOpenFile .* git-mode-show-diff
       hook global BufWritePost .* git-mode-update-diff
       hook global BufReload .* git-mode-update-diff
+      hook global WinSetOption filetype=git-status %{
+          map window normal c ': git commit --verbose '
+          map window normal l ': git log --oneline --graph<ret>'
+          map window normal d ': -- %val{selections}<a-!><home> git diff '
+          map window normal D ': -- %val{selections}<a-!><home> git diff --cached '
+          map window normal a ': -- %val{selections}<a-!><home> git add '
+          map window normal A ': -- %val{selections}<a-!><home> repl git add -p '
+          map window normal r ': -- %val{selections}<a-!><home> git reset '
+          map window normal R ': -- %val{selections}<a-!><home> repl git reset -p '
+          map window normal o ': -- %val{selections}<a-!><home> git checkout '
+      }
+      hook global WinSetOption filetype=git-log %{
+          map window normal d     ': %val{selections}<a-!><home> git diff '
+          map window normal <ret> ': %val{selections}<a-!><home> git show '
+          map window normal r     ': %val{selections}<a-!><home> git reset '
+          map window normal R     ': %val{selections}<a-!><home> repl git reset -p '
+          map window normal o     ': %val{selections}<a-!><home> git checkout '
+      }
       ## Other shortcuts
       map global user w ':write <ret>' -docstring "Save current buffer"
       map global user e ':e<space>' -docstring "Edit file"

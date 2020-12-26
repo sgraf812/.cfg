@@ -61,29 +61,6 @@
       map global user y '<a-|>${pkgs.xclip}/bin/xclip -selection clipboard -in <ret>' -docstring "Copy to clipboard"
       map global user p '<a-!>${pkgs.xclip}/bin/xclip -selection clipboard -out <ret>' -docstring "Paste from clipboard (after)"
       map global user P '!${pkgs.xclip}/bin/xclip -selection clipboard -out <ret>' -docstring "Paste from clipboard (before)"
-      # Git mode
-      map global user g ': enter-user-mode git<ret>' -docstring "Git mode"
-      hook global BufOpenFile .* git-mode-show-diff
-      hook global BufWritePost .* git-mode-update-diff
-      hook global BufReload .* git-mode-update-diff
-      hook global WinSetOption filetype=git-status %{
-          map window normal c ': git commit --verbose '
-          map window normal l ': git log --oneline --graph<ret>'
-          map window normal d ': -- %val{selections}<a-!><home> git diff '
-          map window normal D ': -- %val{selections}<a-!><home> git diff --cached '
-          map window normal a ': -- %val{selections}<a-!><home> git add '
-          map window normal A ': -- %val{selections}<a-!><home> repl git add -p '
-          map window normal r ': -- %val{selections}<a-!><home> git reset '
-          map window normal R ': -- %val{selections}<a-!><home> repl git reset -p '
-          map window normal o ': -- %val{selections}<a-!><home> git checkout '
-      }
-      hook global WinSetOption filetype=git-log %{
-          map window normal d     ': %val{selections}<a-!><home> git diff '
-          map window normal <ret> ': %val{selections}<a-!><home> git show '
-          map window normal r     ': %val{selections}<a-!><home> git reset '
-          map window normal R     ': %val{selections}<a-!><home> repl git reset -p '
-          map window normal o     ': %val{selections}<a-!><home> git checkout '
-      }
       ## Other shortcuts
       map global user w ':write <ret>' -docstring "Save current buffer"
       map global user e ':e<space>' -docstring "Edit file"
@@ -91,7 +68,6 @@
       map global user * '<a-i>w*%s<ret>' -docstring "Select all occurrences of inner word"
       map global user c ': addhl window/col column 80 default,rgb:303030<ret>' -docstring "Add 80th column highlighter"
       map global user C ': rmhl window/col<ret>' -docstring "Remove 80th column highlighter"
-
       ## case insensitive search
       map -docstring 'case insensitive search' global user '/' /(?i)
       map -docstring 'case insensitive backward search' global user '<a-/>' <a-/>(?i)
@@ -122,6 +98,31 @@
       ## Copying from tmux
 
       map global user t '<a-|> cat > /tmp/kak-cpy && tmux new-window "cat /tmp/kak-cpy; read"<ret>' -docstring "Open selection in new tmux window for copying"
+
+      # Git mode
+      map global user g ': enter-user-mode git<ret>' -docstring "Git mode"
+      hook global WinCreate .* git-mode-show-diff
+      hook global BufWritePost .* git-mode-update-diff
+      hook global BufReload .* git-mode-update-diff
+      ## kit
+      hook global WinSetOption filetype=git-status %{
+          map window normal c ': git commit --verbose '
+          map window normal l ': git log --oneline --graph<ret>'
+          map window normal d ': -- %val{selections}<a-!><home> git diff '
+          map window normal D ': -- %val{selections}<a-!><home> git diff --cached '
+          map window normal a ': -- %val{selections}<a-!><home> git add '
+          map window normal A ': -- %val{selections}<a-!><home> repl git add -p '
+          map window normal r ': -- %val{selections}<a-!><home> git reset '
+          map window normal R ': -- %val{selections}<a-!><home> repl git reset -p '
+          map window normal o ': -- %val{selections}<a-!><home> git checkout '
+      }
+      hook global WinSetOption filetype=git-log %{
+          map window normal d     ': %val{selections}<a-!><home> git diff '
+          map window normal <ret> ': %val{selections}<a-!><home> git show '
+          map window normal r     ': %val{selections}<a-!><home> git reset '
+          map window normal R     ': %val{selections}<a-!><home> repl git reset -p '
+          map window normal o     ': %val{selections}<a-!><home> git checkout '
+      }
 
       # kak-buffers
       map global normal ^ q

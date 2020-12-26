@@ -41,6 +41,7 @@
       # balancing!
       # kak-auto-pairs    # Auto close parens, etc.
       kak-buffers         # smarter buffer movements
+      # kak-tabs # assumes sh = bash
     ];
     extraConfig = ''
       colorscheme tomorrow-night
@@ -101,7 +102,11 @@
 
       # Git mode
       map global user g ': enter-user-mode git<ret>' -docstring "Git mode"
-      hook global WinCreate .* git-mode-show-diff
+      hook global WinCreate .* %{ evaluate-commands %sh{
+        if git ls-files --error-unmatch $kak_hook_param > /dev/null 2>&1; then
+           echo "git-mode-show-diff"
+        fi
+      }}
       hook global BufWritePost .* git-mode-update-diff
       hook global BufReload .* git-mode-update-diff
       ## kit
@@ -134,6 +139,17 @@
       map global normal b ': enter-user-mode buffers<ret>' -docstring 'buffers'
       map global normal B ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
 
+      # kak-tabs
+      #set-option global modelinefmt_tabs '%val{cursor_line}:%val{cursor_char_column} {{context_info}} {{mode_info}}'
+      #map global normal ^ q
+      #map global normal <a-^> Q
+      #map global normal q b
+      #map global normal Q B
+      #map global normal <a-q> <a-b>
+      #map global normal <a-Q> <a-B>
+      #map global normal b ': enter-user-mode tabs<ret>' -docstring 'tabs'
+      #map global normal B ': enter-user-mode -lock tabs<ret>' -docstring 'tabs (lock)'
+
       # Tab completion
       hook global InsertCompletionShow .* %{
           try %{
@@ -144,22 +160,22 @@
               execute-keys -draft 'h<a-K>\h<ret>'
               map window insert <tab> <c-n>
               map window insert <s-tab> <c-p>
+              hook -once -always global InsertCompletionHide .* %{
+                  unmap window insert <tab> <c-n>
+                  unmap window insert <s-tab> <c-p>
+              }
           }
-      }
-      hook global InsertCompletionHide .* %{
-          unmap window insert <tab> <c-n>
-          unmap window insert <s-tab> <c-p>
       }
 
       # auto-pairs.kak: currently disabled
       # hook global WinCreate .* auto-pairs-enable
 
       # kak-lsp
+      map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"
       hook global WinCreate .* %{
         lsp-auto-hover-enable
         set-option global lsp_show_hover_format 'printf %s "''${lsp_diagnostics}"'
       }
-      map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"
 
       # haskell mode
       declare-user-mode haskell

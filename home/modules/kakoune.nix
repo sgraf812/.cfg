@@ -50,7 +50,6 @@
       # add-highlighter global/show-trailing-whitespaces regex '\h+$' 0:Error
       # Remove trailing whitespace
       hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
-
       hook global InsertChar k %{ try %{
           exec -draft hH <a-k>jk<ret> d
           exec <esc>
@@ -152,19 +151,19 @@
 
       # Tab completion
       hook global InsertCompletionShow .* %{
-          try %{
-              # this command temporarily removes cursors preceded by whitespace;
-              # if there are no cursors left, it raises an error, does not
-              # continue to execute the mapping commands, and the error is eaten
-              # by the `try` command so no warning appears.
-              execute-keys -draft 'h<a-K>\h<ret>'
-              map window insert <tab> <c-n>
-              map window insert <s-tab> <c-p>
-              hook -once -always global InsertCompletionHide .* %{
-                  unmap window insert <tab> <c-n>
-                  unmap window insert <s-tab> <c-p>
-              }
+        try %{
+          # this command temporarily removes cursors preceded by whitespace;
+          # if there are no cursors left, it raises an error, does not
+          # continue to execute the mapping commands, and the error is eaten
+          # by the `try` command so no warning appears.
+          execute-keys -draft 'h<a-K>\h<ret>'
+          map window insert <tab> <c-n>
+          map window insert <s-tab> <c-p>
+          hook -once -always window InsertCompletionHide .* %{
+            map window insert <tab> <tab>
+            map window insert <s-tab> <s-tab>
           }
+        }
       }
 
       # auto-pairs.kak: currently disabled

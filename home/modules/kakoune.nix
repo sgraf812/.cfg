@@ -41,7 +41,7 @@
       # balancing!
       # kak-auto-pairs    # Auto close parens, etc.
       kak-buffers         # smarter buffer movements
-      # kak-tabs # assumes sh = bash
+      kak-tabs
     ];
     extraConfig = ''
       colorscheme tomorrow-night
@@ -102,8 +102,8 @@
       # Git mode
       map global user g ': enter-user-mode git<ret>' -docstring "Git mode"
       hook global WinCreate .* %{ evaluate-commands %sh{
-        if git ls-files --error-unmatch "$kak_hook_param" > /dev/null 2>&1; then
-           echo "git-mode-show-diff"
+        if [ $kak_buffile != $kak_bufname ] && git ls-files --error-unmatch "$kak_buffile" > /dev/null 2>&1; then
+          echo "git-mode-show-diff"
         fi
       }}
       hook global BufWritePost .* git-mode-update-diff
@@ -129,25 +129,27 @@
       }
 
       # kak-buffers
-      map global normal ^ q
-      map global normal <a-^> Q
-      map global normal q b
-      map global normal Q B
-      map global normal <a-q> <a-b>
-      map global normal <a-Q> <a-B>
-      map global normal b ': enter-user-mode buffers<ret>' -docstring 'buffers'
-      map global normal B ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
-
-      # kak-tabs
-      #set-option global modelinefmt_tabs '%val{cursor_line}:%val{cursor_char_column} {{context_info}} {{mode_info}}'
       #map global normal ^ q
       #map global normal <a-^> Q
       #map global normal q b
       #map global normal Q B
       #map global normal <a-q> <a-b>
       #map global normal <a-Q> <a-B>
-      #map global normal b ': enter-user-mode tabs<ret>' -docstring 'tabs'
-      #map global normal B ': enter-user-mode -lock tabs<ret>' -docstring 'tabs (lock)'
+      #map global normal b ': enter-user-mode buffers<ret>' -docstring 'buffers'
+      #map global normal B ': enter-user-mode -lock buffers<ret>' -docstring 'buffers (lock)'
+
+      # kak-tabs
+      hook global KakBegin .* %{
+        set-option global modelinefmt_tabs '%val{cursor_line}:%val{cursor_char_column} {{context_info}} {{mode_info}}'
+      }
+      map global normal ^ q
+      map global normal <a-^> Q
+      map global normal q b
+      map global normal Q B
+      map global normal <a-q> <a-b>
+      map global normal <a-Q> <a-B>
+      map global normal b ': enter-user-mode tabs<ret>' -docstring 'tabs'
+      map global normal B ': enter-user-mode -lock tabs<ret>' -docstring 'tabs (lock)'
 
       # Tab completion
       hook global InsertCompletionShow .* %{
@@ -219,7 +221,7 @@
 
       # kak-lsp
       map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"
-      hook global WinCreate .*\.hs %{
+      hook global WinSetOption filetype=haskell %{
         lsp-auto-hover-enable
         set-option global lsp_show_hover_format 'printf %s "''${lsp_diagnostics}"'
       }

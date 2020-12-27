@@ -4,12 +4,12 @@ self: super:
   kakounePlugins = super.kakounePlugins // {
     kak-tabs = super.stdenv.mkDerivation {
       pname = "kak-tabs";
-      version = "2020-12-26";
+      version = "2020-12-27";
       src = super.fetchFromGitHub {
         owner = "enricozb";
         repo = "tabs.kak";
-        rev = "96b6a37774e5f1ed8dff58b342fa2b92671905f1";
-        sha256 = "0j589rzsh4xfdrj98zxs4gmfgmfs1x1f2yr29lwr94h52d38abr7";
+        rev = "2775ab7a1fe3bb850c1de3bcc4111e3d4c24f5d4";
+        sha256 = "1vyg1dgbrrsh4vj5lllp9lhslv6gip4v6vmym4lg5mnqmd82jji1";
       };
       phases = ["installPhase"];
       installPhase = ''

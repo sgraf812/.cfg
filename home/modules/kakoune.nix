@@ -102,7 +102,7 @@
       # Git mode
       map global user g ': enter-user-mode git<ret>' -docstring "Git mode"
       hook global WinCreate .* %{ evaluate-commands %sh{
-        if git ls-files --error-unmatch $kak_hook_param > /dev/null 2>&1; then
+        if git ls-files --error-unmatch "$kak_hook_param" > /dev/null 2>&1; then
            echo "git-mode-show-diff"
         fi
       }}
@@ -178,8 +178,8 @@
         cli_cmd="$1"
         post_resume_cmd="$2"
 
-        ${pkgs.tmux}/bin/tmux new-window "$cli_cmd; ${pkgs.tmux}/bin/tmux wait-for -S kak-launch-tmux-workflow" > /dev/null 2>&1
-        ${pkgs.tmux}/bin/tmux wait-for kak-launch-tmux-workflow > /dev/null 2>&1
+        ${pkgs.tmux}/bin/tmux new-window "$cli_cmd; ${pkgs.tmux}/bin/tmux wait-for -S kak-launch-tmux-workflow-$kak_client_pid" > /dev/null 2>&1
+        ${pkgs.tmux}/bin/tmux wait-for kak-launch-tmux-workflow-$kak_client_pid > /dev/null 2>&1
         echo $post_resume_cmd
       }}
 
@@ -219,7 +219,7 @@
 
       # kak-lsp
       map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"
-      hook global WinCreate .* %{
+      hook global WinCreate .*\.hs %{
         lsp-auto-hover-enable
         set-option global lsp_show_hover_format 'printf %s "''${lsp_diagnostics}"'
       }

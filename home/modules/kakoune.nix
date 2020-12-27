@@ -97,7 +97,7 @@
 
       ## Copying from tmux
 
-      map global user t '<a-|> cat > /tmp/kak-cpy && tmux new-window "cat /tmp/kak-cpy; read"<ret>' -docstring "Open selection in new tmux window for copying"
+      map global user T '<a-|> cat > /tmp/kak-cpy && ${pkgs.tmux}/bin/tmux new-window "cat /tmp/kak-cpy; read"<ret>' -docstring "Open selection in new tmux window for copying"
 
       # Git mode
       map global user g ': enter-user-mode git<ret>' -docstring "Git mode"
@@ -169,6 +169,54 @@
       # auto-pairs.kak: currently disabled
       # hook global WinCreate .* auto-pairs-enable
 
+      # suspend and resume stuff
+      def launch-tmux-workflow \
+        -params 1..2 \
+        -docstring 'launch-tmux-workflow <cli command> [<kak command after resume>]: Runs specified cli command in new tmux window.  Upon exit of command the optional kak command is executed.' \
+        %{ evaluate-commands %sh{
+
+        cli_cmd="$1"
+        post_resume_cmd="$2"
+
+        ${pkgs.tmux}/bin/tmux new-window "$cli_cmd; ${pkgs.tmux}/bin/tmux wait-for -S kak-launch-tmux-workflow" > /dev/null 2>&1
+        ${pkgs.tmux}/bin/tmux wait-for kak-launch-tmux-workflow > /dev/null 2>&1
+        echo $post_resume_cmd
+      }}
+
+      ## tig integration
+      def tig-blame -override -docstring 'Open blame in tig for current file and line' %{
+          # Note here we aren't passing any command on resume of kakoune
+          launch-tmux-workflow "${pkgs.tig}/bin/tig blame +%val{cursor_line} %val{buffile}"
+      }
+      declare-user-mode tig
+      map global tig b ': tig-blame<ret>' -docstring 'show blame (with tig)'
+      map global tig s ': launch-tmux-workflow "${pkgs.tig}/bin/tig status"<ret>' -docstring 'show git status (with tig)'
+      map global tig m ': launch-tmux-workflow "${pkgs.tig}/bin/tig"<ret>' -docstring 'show main view (with tig)'
+      map global user t ': enter-user-mode tig<ret>' -docstring 'tig commands'
+
+      ## ranger integration
+      def for-each-line \
+          -docstring "for-each-line <command> <path to file>: run command with the value of each line in the file" \
+          -params 2 \
+          %{ evaluate-commands %sh{
+
+          while read f; do
+              printf "$1 $f\n"
+          done < "$2"
+      }}
+      def toggle-ranger %{
+          launch-tmux-workflow \
+              "${pkgs.ranger}/bin/ranger --choosefiles=/tmp/ranger-files-%val{client_pid}" \
+              "for-each-line edit /tmp/ranger-files-%val{client_pid}"
+      }
+      map global user r ': toggle-ranger<ret>' -docstring 'select files in ranger'
+      def toggle-broot %{
+          launch-tmux-workflow \
+              "${pkgs.broot}/bin/broot --conf=$HOME/.config/broot/select.toml > /tmp/broot-files-%val{client_pid}" \
+              "for-each-line edit /tmp/broot-files-%val{client_pid}"
+      }
+      map global user b ': toggle-broot<ret>' -docstring 'select files in broot'
+
       # kak-lsp
       map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"
       hook global WinCreate .* %{
@@ -232,6 +280,15 @@
       }}
     '';
   };
+
+  xdg.configFile."broot/select.toml".text = ''
+    [[verbs]]
+    invocation = "ok"
+    key = "enter"
+    leave_broot = true
+    execution = ":print_path"
+    apply_to = "file"
+  '';
 
   xdg.configFile."kak-lsp/kak-lsp.toml".source = ./kak/kak-lsp.toml;
 }

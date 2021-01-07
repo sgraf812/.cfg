@@ -46,6 +46,14 @@
     extraConfig = ''
       colorscheme tomorrow-night
 
+      hook global ModuleLoaded powerline %{
+        hook global WinDisplay .* %{
+          powerline-theme tomorrow-night
+          powerline-separator triangle
+          powerline-format 'mode_info line_column position bufname filetype git'
+        }
+      }
+
       # Highlight trailing whitespace. But we simply delete it anyway
       # add-highlighter global/show-trailing-whitespaces regex '\h+$' 0:Error
       # Remove trailing whitespace

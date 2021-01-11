@@ -38,7 +38,7 @@ in
       hbd2 = "hb --flavour=devel2 --build-root=_devel2";
       hbp = "hb --flavour=perf --build-root=_perf";
       hbt = "mkdir -p _ticky; [ -e _ticky/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -ticky\\nstage1.ghc-bin.ghc.link.opts += -ticky' > _ticky/hadrian.settings; hb --flavour=perf --build-root=_ticky";
-      hbd = "mkdir -p _dwarf; [ -e _dwarf/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -g3\\nstage1.*.cabal.configure.opts += --disable-library-stripping --disable-executable-stripping' > _dwarf/hadrian.settings; hb --flavour=prof --build-root=_dwarf";
+      hbd = "mkdir -p _dwarf; [ -e _dwarf/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -g3\\nstage1.*.cabal.configure.opts += --disable-library-stripping --disable-executable-stripping' > _dwarf/hadrian.settings; hb --flavour='default+profiled_ghc+no_dynamic_ghc' --build-root=_dwarf";
     };
   };
 }

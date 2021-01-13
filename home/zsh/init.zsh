@@ -14,7 +14,7 @@ export max_print_line=1000
 
 # because otherwise tmux starts in bash (?!).
 # tmux's default-shell doesn't work because we don't have zsh's path
-export SHELL=$(which zsh) 
+export SHELL=$(which zsh)
 export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/opt/ghc/bin:/opt/cabal/bin:$PATH
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
 
@@ -77,19 +77,15 @@ function test_exec() {
 # before setting any aliases
 if [ "x$USE_TMUX" = "xyes" ] && test_exec tmux && [[ ! $TERM =~ screen-256colors && -z $TMUX ]]; then
   home-manager switch
-  #
-  # Why override TMUX_TMPDIR below? Because its value in zsh is something like
-  # '/run/user/$(id -u)', e.g. unescaped. It seems to work in bash, though.
-  #
   # -u (only applicable to tmux, not to new-session): Force UTF-8
   # -s root: Name the new session "root"
   # -n main: Name the initial window "main"
   # -c $(pwd): Set the initial directory to the pwd of the current zsh session
-  TMUX_TMPDIR=/tmp tmux -u new-session -s root -n main -c $(pwd)
+  tmux -u new-session -s root -n main -c $(pwd)
   # -u (only applicable to tmux, not to attach-session): Force UTF-8
   # -t root: attach to the root session
   # -d: detach other clients.
-  TMUX_TMPDIR=/tmp tmux -u attach-session -d -t root
+  tmux -u attach-session -d -t root
 fi
 
 # An alias for quietly forking to background:
@@ -143,7 +139,7 @@ cat << EOF > $1
 -- {-# LANGUAGE BangPatterns #-}
 -- {-# LANGUAGE MagicHash, UnboxedTuples #-}
 module Lib where
-  
+
 EOF
 $EDITOR $1
 }

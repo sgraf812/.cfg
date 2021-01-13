@@ -202,6 +202,8 @@
     shortcut = "a";
     clock24 = true;
     historyLimit = 50000;
+    terminal = "screen-256color"; # colors for kakoune etc.
+    secureSocket = false; # /run/user/$(id -u) is escaped in ZSH and won't work
     plugins = with pkgs; [
       tmuxPlugins.cpu
       tmuxPlugins.resurrect

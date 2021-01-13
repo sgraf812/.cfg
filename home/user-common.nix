@@ -12,6 +12,7 @@
     modules/ghc-dev.nix
     modules/cachix.nix
     modules/kakoune.nix
+    modules/tig.nix
   ];
 
   home.packages = with pkgs; [
@@ -32,7 +33,6 @@
     fzf
     ghc
     glow # CLI markdown viewer
-    gitAndTools.tig
     gnumake
     # gthumb # can crop images # segfaults in ubuntu...
     haskellPackages.ghcid

@@ -90,8 +90,8 @@ in
   programs.kitty = {
     enable = true;
     font = {
-      name = "Fira Code";
-      package = pkgs.fira-code;
+      name = "Iosevka";
+      package = pkgs.iosevka;
     };
     settings = {
       "font_size" = "16";

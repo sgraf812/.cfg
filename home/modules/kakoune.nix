@@ -298,6 +298,9 @@
     leave_broot = true
     execution = ":print_path"
     apply_to = "file"
+
+    [search-modes]
+    "<empty>" = "fuzzy path"
   '';
 
   xdg.configFile."kak-lsp/kak-lsp.toml".source = ./kak/kak-lsp.toml;

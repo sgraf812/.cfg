@@ -32,7 +32,7 @@
       };
     };
     plugins = with pkgs.kakounePlugins; [
-      kak-fzf             # fzf mode
+      # kak-fzf             # fzf mode, not needed with broot
       kak-powerline       # A powerline
       kak-lsp             # A plugin for communicating with lang servers
       kak-git-mode        # A git user mode for better interaction
@@ -62,7 +62,6 @@
           exec -draft hH <a-k>jk<ret> d
           exec <esc>
       }}
-      map global normal <c-p> ': fzf-mode<ret>'
 
       # User mode stuff
       ## Copy and pasting from clipboard
@@ -226,6 +225,7 @@
               "for-each-line edit /tmp/broot-files-%val{client_pid}"
       }
       map global user b ': toggle-broot<ret>' -docstring 'select files in broot'
+      map global normal <c-p> ': toggle-broot<ret>' -docstring 'select files in broot'
 
       # kak-lsp
       map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"

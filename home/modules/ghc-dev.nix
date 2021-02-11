@@ -36,9 +36,11 @@ in
       hbv = "hb --flavour=validate --build-root=_validate";
       hbsv = "hb --flavour=slow-validate --build-root=_slow-validate";
       hbd2 = "hb --flavour=devel2 --build-root=_devel2";
-      hbp = "hb --flavour=perf --build-root=_perf";
-      hbt = "mkdir -p _ticky; [ -e _ticky/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -ticky\\nstage1.ghc-bin.ghc.link.opts += -ticky' > _ticky/hadrian.settings; hb --flavour=perf --build-root=_ticky";
-      hbd = "mkdir -p _dwarf; [ -e _dwarf/hadrian.settings ] || echo 'stage1.*.ghc.hs.opts += -g3\\nstage1.*.cabal.configure.opts += --disable-library-stripping --disable-executable-stripping' > _dwarf/hadrian.settings; hb --flavour='default+profiled_ghc+no_dynamic_ghc' --build-root=_dwarf";
+      hbp = "hb --flavour=perf --build-root=_perf"; # can't add +no_profiled_libs here, build breaks after RTS
+      hbpv = "hb --flavour='validate+profiled_ghc+no_dynamic_ghc' --build-root=_prof-validate";
+      hbt = "hb --flavour='perf+ticky_ghc' --build-root=_ticky";
+      hbtv = "hb --flavour='validate+ticky_ghc' --build-root=_ticky-validate";
+      hbd = "hb --flavour='default+profiled_ghc+no_dynamic_ghc+debug_info' --build-root=_dwarf";
     };
   };
 }

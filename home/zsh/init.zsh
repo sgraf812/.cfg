@@ -154,3 +154,39 @@ function ncpus() {
 function rg-sed() {
   rg --files-with-matches $1 $3 | xargs sed -i "s/$1/$2/g"
 }
+
+function is_git_dir() {
+  git -C $1 rev-parse --is-inside-work-tree > /dev/null 2>&1
+}
+
+# See which git branch is checked out in each of the current sub-dirs.
+function lsg() {
+  function modified_indicator() {
+    if git -C $1 diff --no-ext-diff --quiet --exit-code; then
+      echo "✓"
+    else
+      echo "✗"
+    fi
+  }
+  for d in $(\ls -d */); do
+    if is_git_dir $d; then
+      printf "%s\t%s\t%s\n" $d $(modified_indicator $d) $(git -C $d branch --show-current)
+    fi
+  done | column -t -s $'\t'
+}
+
+function lsghc() {
+  function modified_indicator() {
+    if git -C $1 diff --no-ext-diff --quiet --exit-code; then
+      echo "✓"
+    else
+      echo "✗"
+    fi
+  }
+  for d in $(\ls -d */); do
+    if is_git_dir $d && [ $(git -C $d remote get-url origin) = "https://gitlab.haskell.org/ghc/ghc.git" ]; then
+      printf "%s\t%s\t%s\n" $d $(modified_indicator $d) $(git -C $d branch --show-current)
+    fi
+  done | column -t -s $'\t'
+}
+

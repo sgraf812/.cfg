@@ -96,11 +96,9 @@
       #   - angle bracket > (quotes in markdown)
       #   The q makes sure that we choose the leading quote characters as the
       #   prefix when expanding a single line
-      # - making sure that lines (f)it in the least of amount of columns by
-      #   redistributing words
       #
       # TODO: Need to add _@ (neither case characters) in par-1.53
-      map global user f '<a-x>|${pkgs.par}/bin/par w$kak_opt_autowrap_column "B=.,?_q_Q_A_a" q "Q=_s->" f<ret>' -docstring "Wrap lines of selection"
+      map global user f '<a-x>|${pkgs.par}/bin/par w$kak_opt_autowrap_column "B=.,?_q_Q_A_a" q "Q=_s->"<ret>' -docstring "Wrap lines of selection"
 
       ## Copying from tmux
 

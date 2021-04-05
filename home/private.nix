@@ -90,13 +90,13 @@ in
   programs.kitty = {
     enable = true;
     font = {
-      name = "Iosevka";
+      name = "Iosevka 16";
       package = pkgs.iosevka;
     };
     settings = {
-      "font_size" = "16";
-      "shell" = "${pkgs.zsh}/bin/zsh --login";
-      "enable_audio_bell" = "no";
+      font_size = 16;
+      shell = "${pkgs.zsh}/bin/zsh --login";
+      enable_audio_bell = false;
     };
   };
 

@@ -49,6 +49,7 @@
     nix-diff
     nix-index
     nix-prefetch-scripts
+    nixpkgs-review
     nofib-analyse # see overlay
     p7zip
     # parallel # GNU parallel + env_parallel, clashes with moreutils

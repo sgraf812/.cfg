@@ -55,6 +55,7 @@
     p7zip
     # parallel # GNU parallel + env_parallel, clashes with moreutils
     sd
+    signal-desktop
     stack
     # stack2nix # broken
     ranger

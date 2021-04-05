@@ -60,6 +60,7 @@
       fira-code
       fira-code-symbols
       font-awesome_4
+      iosevka
       material-design-icons # community
       noto-fonts
       noto-fonts-emoji
@@ -74,7 +75,7 @@
         emoji = [ "Noto Color Emoji" ];
         serif = [ "Ubuntu" "Roboto" ];
         sansSerif = [ "Ubuntu" "Roboto" ];
-        monospace = [ "Fira Code" "Cascadia Code" "Ubuntu" ];
+        monospace = [ "Iosevka" "Fira Code" "Cascadia Code" "Ubuntu" ];
       };
     };
   };

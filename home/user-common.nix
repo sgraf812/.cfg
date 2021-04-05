@@ -12,6 +12,7 @@
     modules/ghc-dev.nix
     modules/cachix.nix
     modules/kakoune.nix
+    modules/lazygit.nix
     modules/tig.nix
   ];
 

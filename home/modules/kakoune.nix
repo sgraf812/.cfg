@@ -113,6 +113,8 @@
       }}
       hook global BufWritePost .* git-mode-update-diff
       hook global BufReload .* git-mode-update-diff
+      ## lazygit
+      map global user G ': launch-tmux-workflow "${pkgs.lazygit}/bin/lazygit"<ret>' -docstring 'Launch lazygit'
       ## kit
       hook global WinSetOption filetype=git-status %{
           map window normal c ': git commit --verbose '

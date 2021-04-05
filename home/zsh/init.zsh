@@ -23,8 +23,9 @@ export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward
-bindkey '^P' history-beginning-search-backward
-bindkey '^N' history-beginning-search-forward
+bindkey '^P' history-incremental-search-backward
+bindkey '^N' history-incremental-search-forward
+bindkey -M vicmd ' ' edit-command-line # so that <ESC><SPACE> opens an editor
 
 # Make Ctrl+arrow, Pos1, End, Del, Ins work
 

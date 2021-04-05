@@ -231,6 +231,7 @@
         lsp-auto-hover-enable
         set-option global lsp_show_hover_format 'printf %s "''${lsp_diagnostics}"'
       }
+      hook global BufCreate .*\.lhs %{ set buffer filetype latex }
 
       # haskell mode
       declare-user-mode haskell

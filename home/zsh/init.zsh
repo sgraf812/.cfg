@@ -3,6 +3,9 @@ if [ -f /etc/profile.d/nix.sh ]; then
   . /etc/profile.d/nix.sh
 fi
 
+# From the GNU parallel package, which clashes with moreutils..
+# . $(which env_parallel.zsh)
+
 # Deactivate tty flow control (e.g. suspending with ctlr-s and resuming with ctrl-q)
 stty -ixon
 

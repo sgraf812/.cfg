@@ -51,6 +51,7 @@
     nix-prefetch-scripts
     nofib-analyse # see overlay
     p7zip
+    # parallel # GNU parallel + env_parallel, clashes with moreutils
     sd
     stack
     # stack2nix # broken

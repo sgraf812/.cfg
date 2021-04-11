@@ -20,14 +20,10 @@
 
   networking.hostName = "nixos-lt"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant. Not needed when we have networkmanager.
-  networking.networkmanager = {
-    enable = true;
-    packages = [ pkgs.networkmanager-openvpn ];
-  };
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  # networking.networkmanager = {
+  #   enable = true;
+  #   packages = [ pkgs.networkmanager-openvpn ];
+  # };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -45,13 +41,17 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    brightnessctl
     cachix
     git
     htop
     openssh
     vim
     wget
+    gnome3.adwaita-icon-theme
+    gnomeExtensions.appindicator
+    gnomeExtensions.clipboard-indicator
+    gnomeExtensions.impatience
+    gnomeExtensions.system-monitor
   ];
 
   fonts = {
@@ -83,7 +83,9 @@
     };
   };
 
+  programs.dconf.enable = true;
   services.dbus.packages = with pkgs; [ gnome3.dconf ];
+  services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
 
   # Shoot things when there's less than 2% RAM
   services.earlyoom = {
@@ -92,13 +94,6 @@
   };
 
   programs.zsh.enable = true;
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = { enable = true; enableSSHSupport = true; };
-
-  # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -132,13 +127,6 @@
 
   security.pki.certificateFiles = [ "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" ];
 
-  # For completions mostly
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.drivers = [
@@ -150,24 +138,7 @@
   # Enable sound.
   sound.enable = true;
 
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-    extraModules = [ pkgs.pulseaudio-modules-bt ];
-  };
-
   hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
-
-  services.actkbd = {
-    enable = true;
-    bindings = [
-      # Lower brightness
-      { keys = [ 224 ]; events = [ "key" "rep" ]; command = "${pkgs.brightnessctl}/bin/brightnessctl -n1 set 10%-"; }
-      # Raise brightness
-      { keys = [ 225 ]; events = [ "key" "rep" ]; command = "${pkgs.brightnessctl}/bin/brightnessctl -n1 set 10%+"; }
-    ];
-  };
 
   # Enable the X11 windowing system.
   services.xserver = {
@@ -176,11 +147,8 @@
     xkbOptions = "eurosign:e, caps:swapescape";
     dpi = 132;
 
-    displayManager.defaultSession = "none+i3";
-
-    desktopManager = {
-      xterm.enable = false;
-    };
+    displayManager.gdm.enable = true;
+    desktopManager.gnome3.enable = true;
 
     libinput = {
       enable = true;
@@ -189,31 +157,11 @@
       additionalOptions = ''MatchIsTouchpad "on"'';
       accelSpeed = "0.6";
     };
-
-    # Although we start it in the user session, we need to enable it here in
-    # order for lightdm to pick it up
-    windowManager.i3.enable = true;
   };
 
-  services.logind.extraConfig = "IdleAction=lock";
-
-  services.upower.enable = true;
-
-  services.geoclue2 = {
-    enable = true;
-    enableDemoAgent = true;
-  };
-
-  services.redshift = {
-    enable = true;
-    temperature.day = 6500;
-    temperature.night = 3500;
-  };
-
-  location.provider = "geoclue2";
+  services.gnome3.chrome-gnome-shell.enable = true;
 
   users.mutableUsers = false;
-
   users.users.sgraf = {
     createHome = true;
     home = "/home/sgraf";
@@ -253,16 +201,6 @@
   nix = {
     autoOptimiseStore = true;
     trustedUsers = [ "root" "@wheel" ]; # for user-mode cachix
-  };
-
-  fileSystems."/mnt/sinfo" = {
-      device = ''\\sccfs.scc.kit.edu\Service\Web\zak-web-0002\www.sinfonieorchester.kit.edu'';
-      fsType = "cifs";
-      options = let
-        # this line prevents hanging on network split
-        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-
-      in ["${automount_opts},credentials=/etc/nixos/sinfo-secrets"];
   };
 
   # This value determines the NixOS release with which your system is to be

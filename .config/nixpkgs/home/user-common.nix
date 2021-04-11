@@ -128,7 +128,7 @@
     };
     extraConfig = {
       core = {
-        editor = "vim";
+        editor = "kak";
         pager = "less -x 4 -R -~"; # -F -c
         # excludesfile = "$HOME/.gitignore";
         whitespace = "trailing-space,space-before-tab";
@@ -184,6 +184,7 @@
       hardeningDisable = "fortify";
     };
     shellAliases = {
+      config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
       nix-zsh = "nix-shell --command zsh";
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\\w+-system|\\{memory)' | cut -d' ' -f1";
       setclip = "xclip -selection clipboard -in";
@@ -195,6 +196,7 @@
       l = "ls -l";
       ll = "l --group --header --links --extended --git";
       la = "ll -a";
+      p = "(){ ${pkgs.python}/bin/python -c \"from math import *; print($*);\" }"; # https://stackoverflow.com/questions/34340575/zsh-alias-with-parameter#comment108551041_39395740
     };
   };
 

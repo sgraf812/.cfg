@@ -32,7 +32,7 @@
       realName = "Sebastian Graf";
       flavor = "gmail.com";
       userName = "sgraf1337@gmail.com";
-      passwordCommand = "cat ${./keys/private/gmail.txt}";
+      passwordCommand = "cat ${../keys/private/gmail.txt}";
       mbsync = {
         enable = true;
         create = "maildir";
@@ -47,7 +47,7 @@
       realName = "Sebastian Graf";
       flavor = "plain";
       userName = "sgraf";
-      passwordCommand = "cat ${./keys/private/work.txt}";
+      passwordCommand = "cat ${../keys/private/work.txt}";
       mbsync = {
         enable = true;
         create = "maildir";
@@ -76,7 +76,7 @@
       realName = "Junge Philharmonie Karlsruhe";
       flavor = "plain";
       userName = "info@juphka.de";
-      passwordCommand = "cat ${./keys/private/info-juphka.txt}";
+      passwordCommand = "cat ${../keys/private/info-juphka.txt}";
       mbsync = {
         enable = true;
         create = "maildir";
@@ -105,7 +105,7 @@
       realName = "Junge Philharmonie Karlsruhe";
       flavor = "plain";
       userName = "mitspielen@juphka.de";
-      passwordCommand = "cat ${./keys/private/mitspielen-juphka.txt}";
+      passwordCommand = "cat ${../keys/private/mitspielen-juphka.txt}";
       mbsync = {
         enable = true;
         create = "maildir";

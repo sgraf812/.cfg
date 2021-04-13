@@ -184,7 +184,8 @@
       hardeningDisable = "fortify";
     };
     shellAliases = {
-      config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
+      cfg = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
+      lcfg = "lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME";
       nix-zsh = "nix-shell --command zsh";
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\\w+-system|\\{memory)' | cut -d' ' -f1";
       setclip = "xclip -selection clipboard -in";

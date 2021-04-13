@@ -68,7 +68,7 @@ in
     #   package = pkgs.papirus-icon-theme;
     # };
     theme = {
-      name = "Plata";
+      name = "Plata-Noir-Compact";
       package = pkgs.plata-theme;
     };
   };

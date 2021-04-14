@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./user-common.nix ];
+  imports = [ ./common.nix ];
 
   targets.genericLinux.enable = true;
 

@@ -28,7 +28,7 @@ in
 {
   imports = [
     modules/email.nix
-    ./user-common.nix
+    ./common.nix
   ];
 
   home.packages = with pkgs; [

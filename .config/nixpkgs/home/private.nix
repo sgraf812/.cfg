@@ -35,7 +35,6 @@ in
     discord
     file
     gnome3.dconf # some tools need this to preserve settings
-    gnome3.gnome-system-monitor
     gnome3.gnome-tweaks
     google-chrome
     gucharmap
@@ -96,7 +95,7 @@ in
   programs.git.userEmail = "sgraf1337@gmail.com";
 
   programs.zsh.shellAliases = {
-    ssh = "TERM=xterm-256color ssh";
+    ssh = "${pkgs.kitty}/bin/kitty +kitten ssh";
     upd = "sudo nix-channel --update && nix-channel --update && sudo nixos-rebuild switch && home-manager switch && . ~/.zshrc";
   };
 

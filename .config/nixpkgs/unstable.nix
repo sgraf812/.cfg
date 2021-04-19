@@ -1,8 +1,8 @@
 {
-  name = "nixos-unstable-2021-04-05";
+  name = "nixos-unstable-2021-04-18";
   url = https://github.com/nixos/nixpkgs/;
   ref = "refs/heads/nixos-unstable";
-  # Commit hash for nixos-unstable as of 2021-04-05
+  # Commit hash for nixos-unstable as of 2021-04-18
   # $(git ls-remote https://github.com/nixos/nixpkgs nixos-unstable | cut -f)
-  rev = "04a2b269d8921505a2969fc9ec25c1f517f2b307";
+  rev = "e5cc06a1e806070693add4f231060a62b962fc44";
 }

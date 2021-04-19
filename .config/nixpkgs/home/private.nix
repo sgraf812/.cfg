@@ -62,10 +62,10 @@ in
 
   gtk = {
     enable = true;
-    # iconTheme = {
-    #   name = "Papirus";
-    #   package = pkgs.papirus-icon-theme;
-    # };
+    iconTheme = {
+      name = "Papirus";
+      package = pkgs.papirus-icon-theme;
+    };
     theme = {
       name = "Plata-Noir-Compact";
       package = pkgs.plata-theme;
@@ -85,8 +85,11 @@ in
     };
   };
 
-  programs.firefox.enable = true;
-  programs.firefox.enableGnomeExtensions = true;
+  programs.firefox = {
+    enable = true;
+    enableGnomeExtensions = true;
+    package = pkgs.firefox-bin;
+  };
 
   programs.ssh = {
     # enable = true;
@@ -96,7 +99,7 @@ in
 
   programs.zsh.shellAliases = {
     ssh = "${pkgs.kitty}/bin/kitty +kitten ssh";
-    upd = "sudo nix-channel --update && nix-channel --update && sudo nixos-rebuild switch && home-manager switch && . ~/.zshrc";
+    upd = "sudo nix-channel --update && nix-channel --update && sudo nixos-rebuild switch && home-manager switch -b bak && . ~/.zshrc";
   };
 
   programs.vscode = {
@@ -111,13 +114,15 @@ in
     };
 
     mimeApps = {
-      enable = true;
+      # enable = true;
       defaultApplications = {
         "application/pdf" = [ "org.pwmt.zathura.desktop" ];
       };
     };
   };
 
+  home.username = "sgraf";
+  home.homeDirectory = "/home/sgraf";
   home.file = {
     ".background-image".source = ./wallpapers/haskell.png;
   };

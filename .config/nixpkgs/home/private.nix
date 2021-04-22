@@ -41,6 +41,7 @@ in
     # gcc_multi # ld.bfd conflicts with binutils-wapper's
     hicolor-icon-theme
     htop
+    libreoffice
     ncat
     okular
     pavucontrol
@@ -114,7 +115,7 @@ in
     };
 
     mimeApps = {
-      # enable = true;
+      enable = true;
       defaultApplications = {
         "application/pdf" = [ "org.pwmt.zathura.desktop" ];
       };

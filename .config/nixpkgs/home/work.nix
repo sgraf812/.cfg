@@ -5,6 +5,9 @@
 
   targets.genericLinux.enable = true;
 
+  home.username = "sgraf-local";
+  home.homeDirectory = "/home/sgraf-local/";
+
   home.packages = with pkgs; [
     mendeley
     pdftk

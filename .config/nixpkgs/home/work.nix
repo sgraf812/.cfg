@@ -32,7 +32,8 @@
     shellAliases = {
       afs-lease = "kinit -l 7d sgraf; aklog";
       upd = "sudo apt update && sudo apt upgrade --yes && nix-channel --update && home-manager switch && . ~/.zshrc";
-      afs-serve = ''() { cp "$@" ~sgraf/public_html/ && read; (cd ~sgraf/public_html/ && rm $(echo "$@" | xargs -n1 basename);); }'';
+      afs-serve  = ''() { cp "$@" ~sgraf/public_html/   && read; (cd ~sgraf/public_html/   && rm $(echo "$@" | xargs -n1 basename);); }'';
+      afs-iserve = ''() { cp "$@" ~sgraf/public_html/i/ && read; (cd ~sgraf/public_html/i/ && rm $(echo "$@" | xargs -n1 basename);); }'';
     };
   };
 }

@@ -240,6 +240,7 @@
       # haskell mode
       declare-user-mode haskell
       map global user h ': enter-user-mode haskell<ret>' -docstring "Haskell mode"
+      map global haskell p 'i{-# NOINLINE #-}<esc>bbe' -docstring "Insert NOINLINE pragma snippet"
       # Kudos to wz1000 for this ... device
       define-command ghc-jump-note %{
         try %{

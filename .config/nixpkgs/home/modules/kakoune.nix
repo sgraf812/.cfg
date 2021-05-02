@@ -3,7 +3,9 @@
 {
   imports = [ ];
 
-  home.packages = with pkgs; [ ];
+  home.packages = with pkgs; [
+    pythonPackages.editorconfig
+  ];
 
   programs.kakoune = {
     enable = true;
@@ -62,6 +64,10 @@
           exec -draft hH <a-k>jk<ret> d
           exec <esc>
       }}
+
+      # EditorConfig
+      hook global BufOpenFile .* editorconfig-load
+      hook global BufNewFile .* editorconfig-load
 
       # User mode stuff
       ## Copy and pasting from clipboard

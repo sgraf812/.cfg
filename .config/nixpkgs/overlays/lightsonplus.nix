@@ -31,12 +31,12 @@ self: super:
         xorg.xvinfo
       ]; in ''
         wrapProgram $out/bin/lightson+ \
-          --prefix PATH : ${super.stdenv.lib.makeBinPath path}
+          --prefix PATH : ${super.lib.makeBinPath path}
         wrapProgram $out/bin/lightson+cmd \
-          --prefix PATH : ${super.stdenv.lib.makeBinPath path}
+          --prefix PATH : ${super.lib.makeBinPath path}
       '';
 
-    meta = with self.stdenv.lib; {
+    meta = with self.lib; {
       description = "Bash script managing screensaver and display power management (DPMS) on different conditions (fullscreen videos, specific applications, specific outputs).";
       homepage = "https://github.com/sgraf812/lightsonplus";
       license = licenses.gpl3;

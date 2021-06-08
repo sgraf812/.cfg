@@ -16,7 +16,7 @@ self: super:
 	mkdir -p $out/share/kak/autoload/plugins
 	cp $src/rc/kit.kak $out/share/kak/autoload/plugins/kit.kak
       '';
-      meta = with super.stdenv.lib; {
+      meta = with super.lib; {
         description = "A Git porcelain inside Kakoune";
         homepage = "https://github.com/chambln/kakoune-kit";
         license = licenses.unlicense;

@@ -16,7 +16,7 @@ self: super:
 	mkdir -p $out/share/kak/autoload/plugins
 	cp $src/git-mode.kak $out/share/kak/autoload/plugins/git-mode.kak
       '';
-      meta = with super.stdenv.lib; {
+      meta = with super.lib; {
         description = "Kakoune plugin providing improved git interaction";
         homepage = "https://github.com/jordan-yee/kakoune-git-mode";
         license = licenses.unlicense;

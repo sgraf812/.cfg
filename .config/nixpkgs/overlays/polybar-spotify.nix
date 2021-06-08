@@ -32,10 +32,10 @@ in
 
     installPhase = let path = [ myPython ]; in ''
         wrapProgram $out/bin/spotify_status.py \
-          --prefix PATH : ${self.stdenv.lib.makeBinPath path}
+          --prefix PATH : ${self.lib.makeBinPath path}
       '';
 
-    meta = with self.stdenv.lib; {
+    meta = with self.lib; {
       description = "Spotify artist and song module for Polybar";
       homepage = "https://github.com/Jvanrhijn/polybar-spotify";
       license = licenses.mit;

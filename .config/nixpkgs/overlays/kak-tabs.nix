@@ -16,7 +16,7 @@ self: super:
 	mkdir -p $out/share/kak/autoload/plugins
 	cp $src/rc/tabs.kak $out/share/kak/autoload/plugins/tabs.kak
       '';
-      meta = with super.stdenv.lib; {
+      meta = with super.lib; {
         description = "Kakoune buffers as tabs in the status line";
         homepage = "https://github.com/enricozb/tabs.kak";
         license = licenses.unlicense;

@@ -22,6 +22,7 @@
     bat
     bench
     binutils # ar and stuff
+    bottom # alternative to top
     cabal2nix
     cabal-install
     cloc
@@ -66,7 +67,6 @@
     xclip # Maybe use clipit instead?
     xdg_utils
     vlc
-    ytop
 
     # Haskell/Cabal/Stack stuff
     # haskell-ci # old version, can't get it to work on unstable either

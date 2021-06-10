@@ -19,7 +19,8 @@ self: super:
       };
     };
   };
-  kak-lsp = self.unstable.kak-lsp;
+  kak-lsp = super.kak-lsp;
+#  kak-lsp = self.unstable.kak-lsp;
 #  kak-lsp = super.kak-lsp.overrideAttrs (drv: rec {
 #    version = "9.0.0-pre";
 #    src = super.fetchFromGitHub {

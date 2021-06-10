@@ -9,8 +9,8 @@ fi
 # Deactivate tty flow control (e.g. suspending with ctlr-s and resuming with ctrl-q)
 stty -ixon
 
-# https://github.com/NixOS/nixpkgs/issues/30121
-setopt prompt_sp
+# https://github.com/NixOS/nixpkgs/issues/30121, appears to be fixed now
+# setopt prompt_sp
 
 # pdflatex breaks its error output by default (WTF)
 export max_print_line=1000

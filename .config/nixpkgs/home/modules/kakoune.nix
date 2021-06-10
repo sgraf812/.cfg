@@ -10,6 +10,7 @@
   programs.kakoune = {
     enable = true;
     config = {
+      colorScheme = "tomorrow-night";
       numberLines = {
         enable = true;
         relative = true;
@@ -46,8 +47,6 @@
       kak-tabs
     ];
     extraConfig = ''
-      colorscheme tomorrow-night
-
       hook global ModuleLoaded powerline %{
         hook global WinDisplay .* %{
           powerline-theme tomorrow-night
@@ -226,8 +225,9 @@
       }
       map global user r ': toggle-ranger<ret>' -docstring 'select files in ranger'
       def toggle-broot %{
+          # Need --color=yes below, https://github.com/Canop/broot/issues/397
           launch-tmux-workflow \
-              "${pkgs.broot}/bin/broot --conf=$HOME/.config/broot/select.toml > /tmp/broot-files-%val{client_pid}" \
+              "${pkgs.broot}/bin/broot --color=yes --conf=$HOME/.config/broot/select.toml > /tmp/broot-files-%val{client_pid}" \
               "for-each-line edit /tmp/broot-files-%val{client_pid}"
       }
       map global user b ': toggle-broot<ret>' -docstring 'select files in broot'

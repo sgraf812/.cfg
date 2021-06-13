@@ -236,6 +236,7 @@
       # kak-lsp
       map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"
       hook global WinSetOption filetype=haskell %{
+        lsp-enable-window
         lsp-auto-hover-enable
         lsp-inlay-diagnostics-enable global
         set-option global lsp_hover_max_lines 10

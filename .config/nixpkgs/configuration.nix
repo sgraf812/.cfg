@@ -56,7 +56,7 @@
 
   fonts = {
     enableDefaultFonts = true;
-    enableFontDir = true;
+    fontDir.enable = true;
 
     fonts = with pkgs; [
       cascadia-code
@@ -143,23 +143,24 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    layout = "de";
+    layout = "de,eu";
     xkbOptions = "eurosign:e, caps:swapescape";
     dpi = 132;
 
     displayManager.gdm.enable = true;
-    desktopManager.gnome3.enable = true;
+    desktopManager.gnome.enable = true;
 
     libinput = {
       enable = true;
-      naturalScrolling = true;
-      # We don't want natural scrolling on the track point or mouse
-      additionalOptions = ''MatchIsTouchpad "on"'';
-      accelSpeed = "0.6";
+      touchpad = {
+        naturalScrolling = true;
+        # We don't want natural scrolling on the track point or mouse
+        additionalOptions = ''MatchIsTouchpad "on"'';
+        accelSpeed = "0.6";
+      };
     };
   };
-
-  services.gnome3.chrome-gnome-shell.enable = true;
+  services.gnome.chrome-gnome-shell.enable = true;
 
   users.mutableUsers = false;
   users.users.sgraf = {

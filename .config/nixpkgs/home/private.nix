@@ -88,8 +88,10 @@ in
 
   programs.firefox = {
     enable = true;
-    enableGnomeExtensions = true;
-    package = pkgs.firefox-bin;
+    package = pkgs.firefox-bin.override {
+      # See nixpkgs' firefox/wrapper.nix to check which options you can use
+      cfg.nableGnomeExtensions = true;
+    };
   };
 
   programs.ssh = {

@@ -46,7 +46,11 @@
       kak-buffers         # smarter buffer movements
       kak-tabs
     ];
-    extraConfig = ''
+    extraConfig =
+      let
+        os = builtins.elemAt (builtins.match "(.*[[:space:]])?NAME\=\"?([A-z]*).*" (builtins.readFile /etc/os-release)) 1;
+        launchWorkflow = if os == "NixOS" then "launch-kitty-workflow" else "launch-tmux-workflow";
+      in ''
       hook global ModuleLoaded powerline %{
         hook global WinDisplay .* %{
           powerline-theme tomorrow-night
@@ -197,15 +201,27 @@
         echo $post_resume_cmd
       }}
 
+      def launch-kitty-workflow \
+        -params 1..2 \
+        -docstring 'launch-kitty-workflow <cli command> [<kak command after resume>]: Runs specified cli command in new kitty window.  Upon exit of command the optional kak command is executed.' \
+        %{ evaluate-commands %sh{
+
+        cli_cmd="$1"
+        post_resume_cmd="$2"
+
+        ${pkgs.kitty}/bin/kitty sh -c "$cli_cmd" > /dev/null 2>&1
+        echo $post_resume_cmd
+      }}
+
       ## tig integration
       def tig-blame -override -docstring 'Open blame in tig for current file and line' %{
           # Note here we aren't passing any command on resume of kakoune
-          launch-tmux-workflow "${pkgs.tig}/bin/tig blame +%val{cursor_line} %val{buffile}"
+          ${launchWorkflow} "${pkgs.tig}/bin/tig blame +%val{cursor_line} %val{buffile}"
       }
       declare-user-mode tig
       map global tig b ': tig-blame<ret>' -docstring 'show blame (with tig)'
-      map global tig s ': launch-tmux-workflow "${pkgs.tig}/bin/tig status"<ret>' -docstring 'show git status (with tig)'
-      map global tig m ': launch-tmux-workflow "${pkgs.tig}/bin/tig"<ret>' -docstring 'show main view (with tig)'
+      map global tig s ': ${launchWorkflow} "${pkgs.tig}/bin/tig status"<ret>' -docstring 'show git status (with tig)'
+      map global tig m ': ${launchWorkflow} "${pkgs.tig}/bin/tig"<ret>' -docstring 'show main view (with tig)'
       map global user t ': enter-user-mode tig<ret>' -docstring 'tig commands'
 
       ## ranger integration
@@ -219,14 +235,14 @@
           done < "$2"
       }}
       def toggle-ranger %{
-          launch-tmux-workflow \
+          ${launchWorkflow} \
               "${pkgs.ranger}/bin/ranger --choosefiles=/tmp/ranger-files-%val{client_pid}" \
               "for-each-line edit /tmp/ranger-files-%val{client_pid}"
       }
       map global user r ': toggle-ranger<ret>' -docstring 'select files in ranger'
       def toggle-broot %{
           # Need --color=yes below, https://github.com/Canop/broot/issues/397
-          launch-tmux-workflow \
+          ${launchWorkflow} \
               "${pkgs.broot}/bin/broot --color=yes --conf=$HOME/.config/broot/select.toml > /tmp/broot-files-%val{client_pid}" \
               "for-each-line edit /tmp/broot-files-%val{client_pid}"
       }

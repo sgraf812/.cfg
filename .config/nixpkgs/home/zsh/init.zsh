@@ -134,6 +134,15 @@ function cpfd() {
   cp $f $2
 }
 
+function lnfd() {
+  f=$(exf --query $1)
+  ret=$?
+  if (( $ret != 0 )); then
+    return $ret
+  fi
+  ln -s $f $2
+}
+
 # Prepare a new testcase and open it in $EDITOR
 function ntc() {
 cat << EOF > $1

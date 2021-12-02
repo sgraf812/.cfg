@@ -36,6 +36,7 @@ in
     file
     gnome3.dconf # some tools need this to preserve settings
     gnome3.gnome-tweaks
+    unstable.gnomeExtensions.pop-shell
     google-chrome
     gucharmap
     # gcc_multi # ld.bfd conflicts with binutils-wapper's

@@ -32,7 +32,7 @@ in
   ];
 
   home.packages = with pkgs; [
-    discord
+    # discord # somehow broken.. can't satisfy libasound
     file
     gnome3.dconf # some tools need this to preserve settings
     gnome3.gnome-tweaks

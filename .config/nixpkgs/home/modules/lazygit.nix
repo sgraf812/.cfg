@@ -14,6 +14,6 @@
 
   programs.zsh.shellAliases = {
     lg = "lazygit";
-    lcfg = "${pkgs.unstable.lazygit}/bin/lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME";
+    lcfg = "lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME";
   };
 }

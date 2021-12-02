@@ -262,7 +262,7 @@
       };
 
       Service = {
-        ExecStart = "${pkgs.unstable.pcloud}/bin/pcloud";
+        ExecStart = "${pkgs.pcloud}/bin/pcloud";
         Restart = "on-abnormal";
       };
 

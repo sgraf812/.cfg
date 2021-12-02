@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 # (Re-)Install nix
-# sh <(curl https://nixos.org/nix/install)
+curl -L https://nixos.org/nix/install | sh
 # It's important to call the channel <nixpkgs>, otherwise e.g. home-manager won't pick it up
 nix-channel --add https://nixos.org/channels/nixos-$(cat "$(dirname $0)/release") nixpkgs
 nix-channel --update

@@ -264,6 +264,7 @@
       declare-user-mode haskell
       map global user h ': enter-user-mode haskell<ret>' -docstring "Haskell mode"
       map global haskell p 'i{-# NOINLINE #-}<esc>bbe' -docstring "Insert NOINLINE pragma snippet"
+      map global haskell t 'o  | pprTrace "" (vcat [ppr arg]) False = undefined<esc><a-h>wwwlli' -docstring "Insert pprTrace guard"
       # Kudos to wz1000 for this ... device
       define-command ghc-jump-note %{
         try %{
@@ -271,13 +272,13 @@
           evaluate-commands %sh{
             brace=$(echo '{}' | cut -b1)
             echo "echo $brace"
-            out=$(${pkgs.ripgrep}/bin/rg --no-messages --vimgrep -i --engine pcre2 "^ ?[$brace\-#*]* *\Q$kak_reg_dot")
+            out=$(${pkgs.ripgrep}/bin/rg --no-messages --vimgrep -i --engine pcre2 "^ ?[$brace\-#*]* *\Q$kak_reg_dot\E\s*$")
             [ -n "$out" ] || { echo 'echo "No definition found!"' ; exit 1; }
-            ln=$(cat "$out" | wc -l)
+            ln=$(printf "$out\n" | wc -l)
             if [ "$ln" -gt 1 ]; then
               output=$(mktemp -d "''${TMPDIR:-/tmp}"/kak-grep.XXXXXXXX)/fifo
               mkfifo $output
-              ( cat "$out" > $output & ) > /dev/null 2>&1 < /dev/null
+              ( printf "$out\n" > $output & ) > /dev/null 2>&1 < /dev/null
               printf %s\\n "evaluate-commands %{
                        edit! -fifo $output *grep*
                        set-option buffer filetype grep

@@ -255,5 +255,21 @@
         WantedBy = [ "multi-user.target" ];
       };
     };
+    pcloud = {
+      Unit = {
+        Description = "pCloud client";
+        Documentation = "man:pcloud(1)";
+        After = [ "local-fs.target" "network.target" ];
+      };
+
+      Service = {
+        ExecStart = "${pkgs.unstable.pcloud}/bin/pcloud";
+        Restart = "on-abnormal";
+      };
+
+      Install = {
+        WantedBy = [ "multi-user.target" ];
+      };
+    };
   };
 }

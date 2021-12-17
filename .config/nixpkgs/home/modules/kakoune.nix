@@ -257,9 +257,26 @@
       hook global WinSetOption filetype=haskell %{
         lsp-enable-window
         lsp-auto-hover-enable
-        lsp-inlay-diagnostics-enable global
         set-option global lsp_hover_max_lines 10
         # set-option global lsp_show_hover_format 'printf %s "''${lsp_diagnostics}"'
+
+        # Inlay diagnostics
+        # Not supported by HLS
+        #hook window -group hs-inlay-hints BufReload .* hs-analyzer-inlay-hints
+        #hook window -group hs-inlay-hints NormalIdle .* hs-analyzer-inlay-hints
+        #hook window -group hs-inlay-hints InsertIdle .* hs-analyzer-inlay-hints
+        #hook -once -always window WinSetOption filetype=.* %{
+        #  remove-hooks window hs-inlay-hints
+        #}
+
+        # Semantic tokens
+        # Not supported by HLS
+        #hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
+        #hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
+        #hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
+        #hook -once -always window WinSetOption filetype=.* %{
+        #  remove-hooks window semantic-tokens
+        #}
       }
       hook global BufCreate .*\.lhs %{ set buffer filetype latex }
 

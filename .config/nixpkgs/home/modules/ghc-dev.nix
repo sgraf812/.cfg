@@ -3,7 +3,7 @@
 let
 
   addSkipAndFreezeAliases = baseAliases: lib.fold (alias: a: a // {
-    "${alias}s" = "${alias} --skip='//*.mk' --skip=stage1:lib:rts";
+    "${alias}s" = "${alias} --skip-depends --skip='//*.mk' --skip=stage1:lib:rts";
     "${alias}f" = "${alias}s --freeze1";
   }) baseAliases (builtins.attrNames baseAliases);
 
@@ -34,6 +34,7 @@ in
       hb = "hadrian/build -j$(($(ncpus) +1))";
       hbq = "hb --flavour=quick";
       hbv = "hb --flavour=validate --build-root=_validate";
+      hbdv = "hb --flavour='validate+debug_info' --build-root=_debug-validate";
       hbsv = "hb --flavour=slow-validate --build-root=_slow-validate";
       hbd2 = "hb --flavour=devel2 --build-root=_devel2";
       hbp = "hb --flavour=perf --build-root=_perf"; # can't add +no_profiled_libs here, build breaks after RTS

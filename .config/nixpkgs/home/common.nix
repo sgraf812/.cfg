@@ -185,6 +185,7 @@
     };
     shellAliases = {
       cfg = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
+      cdc = "cd ~/.config/nixpkgs";
       nix-zsh = "nix-shell --command zsh";
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\\w+-system|\\{memory)' | cut -d' ' -f1";
       setclip = "xclip -selection clipboard -in";

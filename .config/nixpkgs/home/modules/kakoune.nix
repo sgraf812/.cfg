@@ -216,18 +216,6 @@
         echo $post_resume_cmd
       }}
 
-      ## tig integration
-      def tig-blame -override -docstring 'Open blame in tig for current file and line' %{
-          # Note here we aren't passing any command on resume of kakoune
-          ${launchWorkflow} "${pkgs.tig}/bin/tig blame +%val{cursor_line} %val{buffile}"
-      }
-      declare-user-mode tig
-      map global tig b ': tig-blame<ret>' -docstring 'show blame (with tig)'
-      map global tig s ': ${launchWorkflow} "${pkgs.tig}/bin/tig status"<ret>' -docstring 'show git status (with tig)'
-      map global tig m ': ${launchWorkflow} "${pkgs.tig}/bin/tig"<ret>' -docstring 'show main view (with tig)'
-      map global user t ': enter-user-mode tig<ret>' -docstring 'tig commands'
-
-      ## ranger integration
       def for-each-line \
           -docstring "for-each-line <command> <path to file>: run command with the value of each line in the file" \
           -params 2 \
@@ -237,20 +225,15 @@
               printf "$1 $f\n"
           done < "$2"
       }}
-      def toggle-ranger %{
-          ${launchWorkflow} \
-              "${pkgs.ranger}/bin/ranger --choosefiles=/tmp/ranger-files-%val{client_pid}" \
-              "for-each-line edit /tmp/ranger-files-%val{client_pid}"
-      }
-      map global user r ': toggle-ranger<ret>' -docstring 'select files in ranger'
-      def toggle-broot %{
+
+      ## broot integration
+      def run-broot %{
           # Need --color=yes below, https://github.com/Canop/broot/issues/397
           ${launchWorkflow} \
               "${pkgs.broot}/bin/broot --color=yes --conf=$HOME/.config/broot/select.toml > /tmp/broot-files-%val{client_pid}" \
               "for-each-line edit /tmp/broot-files-%val{client_pid}"
       }
-      map global user b ': toggle-broot<ret>' -docstring 'select files in broot'
-      map global normal <c-p> ': toggle-broot<ret>' -docstring 'select files in broot'
+      map global normal <c-p> ': run-broot<ret>' -docstring 'select files in broot'
 
       # kak-lsp
       map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"

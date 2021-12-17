@@ -72,6 +72,9 @@
       hook global BufOpenFile .* editorconfig-load
       hook global BufNewFile .* editorconfig-load
 
+      # Disable mouse capture
+      set global ui_options terminal_enable_mouse=false
+
       # User mode stuff
       ## Copy and pasting from clipboard
       map global user y '<a-|>${pkgs.xclip}/bin/xclip -selection clipboard -in <ret>' -docstring "Copy to clipboard"

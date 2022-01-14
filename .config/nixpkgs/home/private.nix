@@ -32,6 +32,7 @@ in
   ];
 
   home.packages = with pkgs; [
+    binutils # ar and stuff
     # discord # somehow broken.. can't satisfy libasound
     file
     gnome3.dconf # some tools need this to preserve settings

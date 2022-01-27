@@ -5,7 +5,7 @@
 
   targets.genericLinux.enable = true;
 
-  home.packages = with pkgs; [ 
+  home.packages = with pkgs; [
   ];
 
   programs.git.userEmail = "sgraf1337@gmail.com";
@@ -25,4 +25,7 @@
       upd = "sudo apt update && sudo apt upgrade --yes && nix-channel --update && home-manager switch && . ~/.zshrc";
     };
   };
+
+  home.username = "sgraf";
+  home.homeDirectory = "/home/sgraf";
 }

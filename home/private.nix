@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, unstable, ... }:
 
 # Worth considering:
 # - home-manager.useGlobalPkgs: See https://rycee.gitlab.io/home-manager/#sec-install-nixos-module
@@ -27,7 +27,7 @@ in
 
 {
   imports = [
-    modules/email.nix
+    # modules/email.nix # doesn't currently work
     ./common.nix
   ];
 

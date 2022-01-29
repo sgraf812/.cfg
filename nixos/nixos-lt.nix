@@ -9,7 +9,6 @@
     # Include the results of the hardware scan.
     ./nixos-lt-hardware.nix
     inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
-    inputs.home-manager.nixosModules.home-manager
   ];
 
   # Use the systemd-boot EFI boot loader.

@@ -16,6 +16,7 @@
   outputs = { self, ... }@inputs:
     with inputs.nixpkgs.lib;
     let
+      username = "sgraf";
       forEachSystem = genAttrs [ "x86_64-linux" ];
       pkgsBySystem = forEachSystem (system:
         import inputs.nixpkgs {
@@ -127,10 +128,15 @@
                 };
               };
             })
-            inputs.home-manager.nixosModules.home-manager {
-              useUserPackages = true;
-              useGlobalPkgs = true;
-              users.${username} = import (homeManagerConfigurations."${hostname}");
+            inputs.home-manager.nixosModules.home-manager
+            {
+              home-manager.useUserPackages = true;
+              home-manager.useGlobalPkgs = true;
+              home-manager.users.${username} = homeManagerConfigurations."${hostname}";
+              home-manager.extraSpecialArgs = {
+                inherit hostname inputs;
+                unstable = unstableBySystem."${system}";
+              };
             }
             (import config)
           ];

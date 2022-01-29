@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, unstable, ... }:
 
 # Worth considering:
 # - [starship](https://starship.rs): Cool cross-shell prompt
@@ -10,7 +10,6 @@
 {
   imports = [
     modules/ghc-dev.nix
-    modules/cachix.nix
     modules/kakoune.nix
     modules/lazygit.nix
   ];
@@ -76,9 +75,9 @@
     numactl
   ];
 
-  caches.cachix = [
-    "ghc-nix"
-  ];
+  # caches.cachix = [
+  #   "ghc-nix"
+  # ];
 
   programs.command-not-found.enable = true;
 

@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, hostname, ... }:
 
 {
   imports = [ ];
@@ -44,12 +44,16 @@
       # balancing!
       # kak-auto-pairs    # Auto close parens, etc.
       kak-buffers         # smarter buffer movements
-      kak-tabs
+      tabs-kak
     ];
     extraConfig =
       let
         os = builtins.elemAt (builtins.match "(.*[[:space:]])?NAME\=\"?([A-z]*).*" (builtins.readFile /etc/os-release)) 1;
-        launchWorkflow = if os == "NixOS" then "launch-kitty-workflow" else "launch-tmux-workflow";
+        launchWorkflow = {
+          "i44pc6" = "launch-tmux-workflow";
+          "nixos-lt" = "launch-kitty-workflow";
+          "Sebastian-PC" = "launch-kitty-workflow"; # FIXME
+        }."${hostname}";
       in ''
       hook global ModuleLoaded powerline %{
         hook global WinDisplay .* %{

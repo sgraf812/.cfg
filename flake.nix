@@ -8,6 +8,8 @@
     home-manager.url = github:rycee/home-manager/release-21.11;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = github:NixOS/nixos-hardware;
+    nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;
+    nofib.flake = false;
   };
 
   # Taken from https://github.com/davidtwco/veritas/blob/master/flake.nix
@@ -19,54 +21,30 @@
         import inputs.nixpkgs {
           inherit system;
           config = import ./nixpkgs/config.nix;
-          overlays = self.internal.overlays."${system}";
+          # Overlays consumed by the home-manager/NixOS configuration.
+          overlays = [
+            (import ./nixpkgs/overlays/kak-git-mode.nix)
+            (import ./nixpkgs/overlays/kak-lsp.nix)
+            # (import ./nixpkgs/overlays/kak-tabs.nix)
+            (import ./nixpkgs/overlays/nofib-analyse.nix inputs.nofib)
+          ];
         }
       );
 
-      mkNixOsConfiguration = name: { system, config }:
-        nameValuePair name (nixosSystem {
+      unstableBySystem = forEachSystem (system:
+        import inputs.unstable {
           inherit system;
-          modules = [
-            ({ name, ... }: {
-              # Set the hostname to the name of the configuration being applied (since the
-              # configuration being applied is determined by the hostname).
-              networking.hostName = name;
-            })
-            ({ inputs, ... }: {
-              # Use the nixpkgs from the flake.
-              nixpkgs = { pkgs = pkgsBySystem.${system}; };
+          config = import ./nixpkgs/config.nix;
+        }
+      );
 
-              # For compatibility with nix-shell, nix-build, etc.
-              environment.etc.nixpkgs.source = inputs.nixpkgs;
-              nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
-            })
-            ({ inputs, pkgs, ... }: {
-              nix = {
-                autoOptimiseStore = true;
-                # Don't rely on the configuration to enable a flake-compatible version of Nix.
-                package = pkgs.nixFlakes;
-                extraOptions = "experimental-features = nix-command flakes";
-                # Re-expose self, nixpkgs and unstable as flakes.
-                registry = {
-                  self.flake = inputs.self;
-                  nixpkgs = {
-                    from = { id = "nixpkgs"; type = "indirect"; };
-                    flake = inputs.nixpkgs;
-                  };
-                  unstable = {
-                    from = { id = "unstable"; type = "indirect"; };
-                    flake = inputs.unstable;
-                  };
-                };
-              };
-            })
-            (import config)
-          ];
-          specialArgs = { inherit name inputs; };
-        });
-
-      mkHomeManagerConfiguration = name: { system, config }:
-        nameValuePair name ({ ... }: {
+      # mkHomeManagerConfiguration could just be
+      #    nameValuePair hostname config
+      # But the nix/registry.json settings need access to inputs.
+      # Since the other stuff belongs with those settings, it makes
+      # sense to have this function. Although we could have solved this through passing inputs as extraSpecialArgs.
+      mkHomeManagerConfiguration = hostname: { system, config }:
+        nameValuePair hostname ({ ... }: {
           imports = [
             (import config)
           ];
@@ -78,6 +56,7 @@
 
           # Use the same Nix configuration throughout the system.
           xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs/config.nix;
+          xdg.configFile."nix/nix.conf".source = ./nix/nix.conf;
 
           # Re-expose self, nixpkgs and unsable as flakes. For use in nix-search, for example
           xdg.configFile."nix/registry.json".text = builtins.toJSON {
@@ -111,65 +90,98 @@
           };
         });
 
-      mkHomeManagerHostConfiguration = name: { system }: # The original template is much more flexible here
-        nameValuePair name (inputs.home-manager.lib.homeManagerConfiguration {
+      mkNixOsConfiguration = hostname: { system, config }:
+        nameValuePair hostname (nixosSystem {
           inherit system;
-          configuration = { ... }: {
-            imports = [ self.internal.homeManagerConfigurations."${name}" ];
-            nixpkgs = {
-              config = import ./nixpkgs/config.nix;
-            };
-            # home.packages = [inputs.nix.defaultPackage.${system}];
+          modules = [
+            ({ hostname, ... }: {
+              # Set the hostname to the name of the configuration being applied (since the
+              # configuration being applied is determined by the hostname).
+              networking.hostName = hostname;
+            })
+            ({ inputs, ... }: {
+              # Use the nixpkgs from the flake.
+              nixpkgs.pkgs = pkgsBySystem.${system};
+
+              # For compatibility with nix-shell, nix-build, etc.
+              environment.etc.nixpkgs.source = inputs.nixpkgs;
+              nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
+            })
+            ({ inputs, pkgs, ... }: {
+              nix = {
+                autoOptimiseStore = true;
+                # Don't rely on the configuration to enable a flake-compatible version of Nix.
+                package = pkgs.nixFlakes;
+                extraOptions = "experimental-features = nix-command flakes";
+                # Re-expose self, nixpkgs and unstable as flakes.
+                registry = {
+                  self.flake = inputs.self;
+                  nixpkgs = {
+                    from = { id = "nixpkgs"; type = "indirect"; };
+                    flake = inputs.nixpkgs;
+                  };
+                  unstable = {
+                    from = { id = "unstable"; type = "indirect"; };
+                    flake = inputs.unstable;
+                  };
+                };
+              };
+            })
+            inputs.home-manager.nixosModules.home-manager {
+              useUserPackages = true;
+              useGlobalPkgs = true;
+              users.${username} = import (homeManagerConfigurations."${hostname}");
+            }
+            (import config)
+          ];
+          specialArgs = {
+            inherit hostname inputs;
+            unstable = unstableBySystem."${system}";
           };
-          homeDirectory = "/home/sgraf";
-          pkgs = pkgsBySystem."${system}";
-          username = "sgraf";
         });
 
-    in
-    {
-      # `internal` isn't a known output attribute for flakes. It is used here to contain
-      # anything that isn't meant to be re-usable.
-      internal = {
-        # Attribute set of hostnames to home-manager modules with the entire configuration for
-        # that host - consumed by the home-manager NixOS module for that host (if it exists)
-        # or by `mkHomeManagerHostConfiguration` for home-manager-only hosts.
-        homeManagerConfigurations = mapAttrs' mkHomeManagerConfiguration {
-          nixos-lt = { system = "x86_64-linux"; config = ./nixpkgs/private.nix; };
+      mkHomeManagerHostConfiguration = hostname: { system }: # The original template is much more flexible here
+        let username = "sgraf"; in
+        # home-manager switch --flake tries `<flake-uri>#homeConfigurations."${username}@${hostname}"`
+        nameValuePair "${username}@${hostname}" (inputs.home-manager.lib.homeManagerConfiguration {
+          inherit system;
+          configuration = { ... }: {
+            imports = [ homeManagerConfigurations."${hostname}" ];
+            nixpkgs.config = import ./nixpkgs/config.nix;
+            home.packages = [pkgsBySystem."${system}".nixFlakes];
+          };
+          homeDirectory = "/home/${username}";
+          pkgs = pkgsBySystem."${system}";
+          username = "${username}";
+          extraSpecialArgs = {
+            inherit hostname inputs;
+            unstable = unstableBySystem."${system}";
+          };
+        });
 
-          i44pc6 = { system = "x86_64-linux"; config = ./nixpkgs/work.nix; };
-
-          pengwin = { system = "x86_64-linux"; config = ./nixpkgs/pengwin.nix; };
-        };
-
-        # Overlays consumed by the home-manager/NixOS configuration.
-        overlays = forEachSystem (system: [
-          # (self.overlay."${system}")
-          (import ./nixpkgs/overlays/kak-git-mode.nix)
-          (import ./nixpkgs/overlays/kak-lsp.nix)
-          # (import ./nixpkgs/overlays/kak-tabs.nix)
-          (import ./nixpkgs/overlays/nofib-analyse.nix)
-        ]);
+      # Attribute set of hostnames to home-manager modules with the entire configuration for
+      # that host - consumed by the home-manager NixOS module for that host (if it exists)
+      # or by `mkHomeManagerHostConfiguration` for home-manager-only hosts.
+      homeManagerConfigurations = mapAttrs' mkHomeManagerConfiguration {
+        nixos-lt = { system = "x86_64-linux"; config = ./home/private.nix; };
+        i44pc6 = { system = "x86_64-linux"; config = ./home/work.nix; };
+        Sebastian-PC = { system = "x86_64-linux"; config = ./home/pengwin.nix; };
       };
 
       homeManagerHostConfigurations = mapAttrs' mkHomeManagerHostConfiguration {
         i44pc6 = { system = "x86_64-linux"; };
-        pengwin = { system = "x86_64-linux"; };
+        Sebastian-PC = { system = "x86_64-linux"; };
       };
 
       # Attribute set of hostnames to evaluated NixOS configurations. Consumed by `nixos-rebuild`
       # on those hosts.
-      nixosConfigurations = mapAttrs' mkNixOsConfiguration {
+      nixosHostConfigurations = mapAttrs' mkNixOsConfiguration {
         nixos-lt = { system = "x86_64-linux"; config = ./nixos/nixos-lt.nix; };
       };
 
-      # Expose an overlay which provides the packages defined by this repository.
-      #
-      # Overlays are used more widely in this repository, but often for modifying upstream packages
-      # or making third-party packages easier to access - it doesn't make sense to share those,
-      # so they in the flake output `internal.overlays`.
-      #
-      # These are meant to be consumed by other projects that might import this flake.
-      # overlay = forEachSystem (system: _: _: self.packages."${system}");
+    in
+    {
+      homeConfigurations = homeManagerHostConfigurations;
+      nixosConfigurations = nixosHostConfigurations;
     };
 }

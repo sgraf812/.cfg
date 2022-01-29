@@ -89,12 +89,30 @@
         "type": "github"
       }
     },
+    "nofib": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1566898287,
+        "narHash": "sha256-s3x4xwkgJJJ/sY5+ftTE81PZ+CztleZWY5nXVhG33cQ=",
+        "ref": "wip/input-utf8",
+        "rev": "4c0562ca54a1472ae6b3715a1bac2216bbaed30a",
+        "revCount": 709,
+        "type": "git",
+        "url": "https://gitlab.haskell.org/ghc/nofib"
+      },
+      "original": {
+        "ref": "wip/input-utf8",
+        "type": "git",
+        "url": "https://gitlab.haskell.org/ghc/nofib"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "nix": "nix",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "nofib": "nofib",
         "unstable": "unstable"
       }
     },

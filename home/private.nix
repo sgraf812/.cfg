@@ -104,7 +104,7 @@ in
 
   programs.zsh.shellAliases = {
     ssh = "${pkgs.kitty}/bin/kitty +kitten ssh";
-    upd = "sudo nix-channel --update && nix-channel --update && sudo nixos-rebuild switch && home-manager switch -b bak && . ~/.zshrc";
+    upd = "nix flake update /home/sgraf/code/nix/config/ && sudo nixos-rebuild switch --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";
   };
 
   programs.vscode = {

@@ -200,6 +200,10 @@
   users.extraGroups.docker.members = [ "sgraf" ];
 
   nix = {
+    package = pkgs.nixUnstable; # flakes support
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
     autoOptimiseStore = true;
     trustedUsers = [ "root" "@wheel" ]; # for user-mode cachix
   };

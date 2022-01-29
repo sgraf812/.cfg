@@ -13,7 +13,6 @@
     modules/cachix.nix
     modules/kakoune.nix
     modules/lazygit.nix
-    modules/tig.nix
   ];
 
   home.packages = with pkgs; [
@@ -188,6 +187,7 @@
     shellAliases = {
       cfg = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
       cdc = "cd ~/.config/nixpkgs";
+      cdnix = "cd ~/code/nix/nixpkgs && git checkout master && git pull";
       nix-zsh = "nix-shell --command zsh";
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\\w+-system|\\{memory)' | cut -d' ' -f1";
       setclip = "xclip -selection clipboard -in";

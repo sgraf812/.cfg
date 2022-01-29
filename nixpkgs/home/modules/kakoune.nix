@@ -39,7 +39,7 @@
       kak-powerline       # A powerline
       kak-lsp             # A plugin for communicating with lang servers
       kak-git-mode        # A git user mode for better interaction
-      kak-kit             # Git porcellain
+      # kak-kit             # Git porcellain. Don't need it, we have lazygit
       # auto-pairs is more trouble than worth it, not smart enough about
       # balancing!
       # kak-auto-pairs    # Auto close parens, etc.

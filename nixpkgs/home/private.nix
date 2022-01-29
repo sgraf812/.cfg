@@ -92,7 +92,7 @@ in
     enable = true;
     package = pkgs.firefox-bin.override {
       # See nixpkgs' firefox/wrapper.nix to check which options you can use
-      cfg.nableGnomeExtensions = true;
+      cfg.enableGnomeExtensions = true;
     };
   };
 

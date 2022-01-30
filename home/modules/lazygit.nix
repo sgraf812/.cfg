@@ -14,6 +14,5 @@
 
   programs.zsh.shellAliases = {
     lg = "lazygit";
-    lcfg = "lazygit --git-dir=$HOME/.cfg/ --work-tree=$HOME";
   };
 }

@@ -140,8 +140,7 @@
           };
         });
 
-      mkHomeManagerHostConfiguration = hostname: { system }: # The original template is much more flexible here
-        let username = "sgraf"; in
+      mkHomeManagerHostConfiguration = hostname: { system, username }: # The original template is much more flexible here
         # home-manager switch --flake tries `<flake-uri>#homeConfigurations."${username}@${hostname}"`
         nameValuePair "${username}@${hostname}" (inputs.home-manager.lib.homeManagerConfiguration {
           inherit system;
@@ -169,8 +168,8 @@
       };
 
       homeManagerHostConfigurations = mapAttrs' mkHomeManagerHostConfiguration {
-        i44pc6 = { system = "x86_64-linux"; };
-        Sebastian-PC = { system = "x86_64-linux"; };
+        i44pc6       = { system = "x86_64-linux"; username = "sgraf-local"; };
+        Sebastian-PC = { system = "x86_64-linux"; username = "sgraf"; };
       };
 
       # Attribute set of hostnames to evaluated NixOS configurations. Consumed by `nixos-rebuild`

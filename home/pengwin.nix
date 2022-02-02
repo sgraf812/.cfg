@@ -6,6 +6,7 @@
   targets.genericLinux.enable = true;
 
   home.packages = with pkgs; [
+    texlive.combined.scheme-full
   ];
 
   programs.git.userEmail = "sgraf1337@gmail.com";

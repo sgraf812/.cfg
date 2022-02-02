@@ -185,7 +185,7 @@
     };
     shellAliases = {
       cfg = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
-      cdc = "cd ~/.config/nixpkgs";
+      cdc = "cd ~/code/nix/config";
       cdnix = "cd ~/code/nix/nixpkgs && git checkout master && git pull";
       nix-zsh = "nix-shell --command zsh";
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\\w+-system|\\{memory)' | cut -d' ' -f1";

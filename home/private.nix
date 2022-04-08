@@ -78,10 +78,13 @@ in
   programs.kitty = {
     enable = true;
     font = {
-      name = "Iosevka 14";
+      name = "Iosevka";
       package = pkgs.iosevka;
     };
     settings = {
+      bold_font = "Iosevka Bold";
+      italic_font = "Iosevka Italic";
+      bold_italic_font = "Iosevka Bold Italic";
       font_size = 14;
       shell = "${pkgs.zsh}/bin/zsh --login";
       enable_audio_bell = false;

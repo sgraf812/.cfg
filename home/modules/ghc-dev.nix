@@ -32,8 +32,9 @@ in
       ghc-head = "$HOME/code/hs/ghc/pristine/_validate/stage1/bin/ghc";
     }) // addSkipAndFreezeAliases {
       hb = "hadrian/build -j$(($(ncpus) +1))";
-      hbq = "hb --flavour=quick";
+      hbq = "hb --flavour=quick --build-root=_quick";
       hbv = "hb --flavour=validate --build-root=_validate";
+      hbqv = "hb --flavour=quick-validate --build-root=_quick-validate";
       hbdv = "hb --flavour='validate+debug_info' --build-root=_debug-validate";
       hbsv = "hb --flavour=slow-validate --build-root=_slow-validate";
       hbd2 = "hb --flavour=devel2 --build-root=_devel2";

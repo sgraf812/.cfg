@@ -1,10 +1,11 @@
-{ pkgs, lib, hostname, ... }:
+{ pkgs, lib, hostname, unstable, ... }:
 
 {
   imports = [ ];
 
   home.packages = with pkgs; [
     pythonPackages.editorconfig
+    unstable.kak-lsp
   ];
 
   programs.kakoune = {
@@ -37,7 +38,6 @@
     plugins = with pkgs.kakounePlugins; [
       # kak-fzf             # fzf mode, not needed with broot
       kak-powerline       # A powerline
-      kak-lsp             # A plugin for communicating with lang servers
       kak-git-mode        # A git user mode for better interaction
       # kak-kit             # Git porcellain. Don't need it, we have lazygit
       # auto-pairs is more trouble than worth it, not smart enough about
@@ -240,6 +240,9 @@
       map global normal <c-p> ': run-broot<ret>' -docstring 'select files in broot'
 
       # kak-lsp
+      eval %sh{${unstable.kak-lsp}/bin/kak-lsp --kakoune -s $kak_session}
+      set global lsp_cmd "kak-lsp -s %val{session} -vvvv --log /tmp/kak-lsp-%val{session}.log"
+      # eval %sh{${unstable.kak-lsp}/bin/kak-lsp --kakoune -s $kak_session -vvv --log /tmp/kak-lsp-$kak_session.log}
       map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"
       hook global WinSetOption filetype=haskell %{
         lsp-enable-window

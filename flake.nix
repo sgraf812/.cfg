@@ -153,7 +153,10 @@
           configuration = { ... }: {
             imports = [ homeManagerConfigurations."${hostname}" ];
             nixpkgs.config = import ./nixpkgs/config.nix;
-            home.packages = [pkgsBySystem."${system}".nixFlakes];
+            home.packages = with pkgsBySystem."${system}"; [
+              nixFlakes
+              # home-manager # Don't put home-mananger here, as that clashes with program.home-manager.enable
+            ];
           };
           homeDirectory = "/home/${username}";
           pkgs = pkgsBySystem."${system}";

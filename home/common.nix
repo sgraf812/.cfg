@@ -168,6 +168,7 @@
 
   programs.zsh = {
     enable = true;
+    enableCompletion = false; # Works around an annoying home-manager+nix interaction
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" ];

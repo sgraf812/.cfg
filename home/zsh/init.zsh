@@ -80,7 +80,7 @@ function test_exec() {
 # Rebuild config and launch tmux if not already in some mux session,
 # before setting any aliases
 if [ "x$USE_TMUX" = "xyes" ] && test_exec tmux && [[ ! $TERM =~ screen-256colors && -z $TMUX ]]; then
-  home-manager switch
+  # home-manager switch
   # -u (only applicable to tmux, not to new-session): Force UTF-8
   # -s root: Name the new session "root"
   # -n main: Name the initial window "main"

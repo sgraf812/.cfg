@@ -59,6 +59,13 @@ in
     w3m
     xorg.xprop
     zoom-us
+
+    # Haskell/Cabal/Stack stuff
+    # haskell-ci # old version, can't get it to work on unstable either
+    zlib.dev
+    gmp.static
+    ncurses
+    numactl
   ];
 
   accounts.email.accounts.private.primary = true;

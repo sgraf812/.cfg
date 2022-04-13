@@ -46,7 +46,7 @@
     manpages
     moreutils
     ncdu
-    ncurses
+    # ncurses # the libtinfo uses a glibc that is often too new. That confuses GHC
     niv
     nix-diff
     nix-index
@@ -67,12 +67,6 @@
     xclip # Maybe use clipit instead?
     xdg_utils
     vlc
-
-    # Haskell/Cabal/Stack stuff
-    # haskell-ci # old version, can't get it to work on unstable either
-    zlib.dev
-    gmp.static
-    numactl
   ];
 
   # caches.cachix = [

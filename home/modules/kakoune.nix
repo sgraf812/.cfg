@@ -37,13 +37,13 @@
     };
     plugins = with pkgs.kakounePlugins; [
       # kak-fzf             # fzf mode, not needed with broot
-      kak-powerline       # A powerline
+      # kak-powerline       # A powerline
       kak-git-mode        # A git user mode for better interaction
       # kak-kit             # Git porcellain. Don't need it, we have lazygit
       # auto-pairs is more trouble than worth it, not smart enough about
       # balancing!
       # kak-auto-pairs    # Auto close parens, etc.
-      kak-buffers         # smarter buffer movements
+      kak-buffers         # smarter buffer movements # superseded by tabs-kak
       tabs-kak
     ];
     extraConfig =
@@ -91,6 +91,7 @@
       map global user * '<a-i>w*%s<ret>' -docstring "Select all occurrences of inner word"
       map global user c ': addhl window/col column 80 default,rgb:303030<ret>' -docstring "Add 80th column highlighter"
       map global user C ': rmhl window/col<ret>' -docstring "Remove 80th column highlighter"
+      map global user 8 ':eval %sh{echo "echo $(echo -n $kak_reg_dot | iconv -f utf8 -t ucs-2 | od --address-radix=n --format=x4)" }<ret>' -docstring "Show UCS-2 encoding of selection"
       ## case insensitive search
       map -docstring 'case insensitive search' global user '/' /(?i)
       map -docstring 'case insensitive backward search' global user '<a-/>' <a-/>(?i)
@@ -165,14 +166,14 @@
       #hook global WinCreate .* %{
       #  set-option global modelinefmt_tabs '%val{cursor_line}:%val{cursor_char_column} {{context_info}} {{mode_info}}'
       #}
-      #map global normal ^ q
-      #map global normal <a-^> Q
-      #map global normal q b
-      #map global normal Q B
-      #map global normal <a-q> <a-b>
-      #map global normal <a-Q> <a-B>
-      #map global normal b ': enter-user-mode tabs<ret>' -docstring 'tabs'
-      #map global normal B ': enter-user-mode -lock tabs<ret>' -docstring 'tabs (lock)'
+      map global normal ^ q
+      map global normal <a-^> Q
+      map global normal q b
+      map global normal Q B
+      map global normal <a-q> <a-b>
+      map global normal <a-Q> <a-B>
+      # map global normal b ': enter-user-mode tabs<ret>' -docstring 'tabs'
+      # map global normal B ': enter-user-mode -lock tabs<ret>' -docstring 'tabs (lock)'
 
       # Tab completion
       hook global InsertCompletionShow .* %{

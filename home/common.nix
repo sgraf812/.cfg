@@ -179,7 +179,6 @@
       hardeningDisable = "fortify";
     };
     shellAliases = {
-      cfg = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
       cdc = "cd ~/code/nix/config";
       cdnix = "cd ~/code/nix/nixpkgs && git checkout master && git pull";
       nix-zsh = "nix-shell --command zsh";

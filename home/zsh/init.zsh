@@ -157,6 +157,16 @@ EOF
 $EDITOR $1
 }
 
+# Prepare a new interestingness test and open it in $EDITOR
+function nint() {
+cat << EOF > $1
+#! /usr/bin/env bash
+$HOME/code/hs/ghc/pristine/_validate/stage1/bin/ghc -O repro.hs | grep panic
+EOF
+chmod +x $1
+$EDITOR $1
+}
+
 function ncpus() {
   grep -c ^processor /proc/cpuinfo
 }

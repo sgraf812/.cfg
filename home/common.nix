@@ -189,6 +189,7 @@
       setclip = "xclip -selection clipboard -in";
       getclip = "xclip -selection clipboard -out";
       e = "kak";
+      el = "kak -E 'colorscheme solarized-light'";
       less = ''\less -XFR'';
       info = "info --vi-keys";
       ls = "exa --color=automatic";

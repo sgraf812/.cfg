@@ -131,6 +131,7 @@
       push.default = "simple";
       pull.ff = "only";
       merge.conflictstyle = "diff3";
+      protocol.ext.allow = "user";
     };
   };
 

@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-21.11;
     unstable.url = github:NixOS/nixpkgs/nixos-unstable;
+    local.url = path:/home/sgraf/code/nix/nixpkgs;
     nix.url = github:NixOS/nix;
     home-manager.url = github:rycee/home-manager/release-21.11;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -34,6 +35,13 @@
 
       unstableBySystem = forEachSystem (system:
         import inputs.unstable {
+          inherit system;
+          config = import ./nixpkgs/config.nix;
+        }
+      );
+
+      localBySystem = forEachSystem (system:
+        import inputs.local {
           inherit system;
           config = import ./nixpkgs/config.nix;
         }
@@ -143,6 +151,7 @@
           specialArgs = {
             inherit hostname inputs;
             unstable = unstableBySystem."${system}";
+            local = localBySystem."${system}";
           };
         });
 
@@ -164,6 +173,7 @@
           extraSpecialArgs = {
             inherit hostname inputs;
             unstable = unstableBySystem."${system}";
+            local = localBySystem."${system}";
           };
         });
 

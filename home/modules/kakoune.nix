@@ -1,4 +1,4 @@
-{ pkgs, lib, hostname, unstable, ... }:
+{ pkgs, lib, hostname, unstable, local, ... }:
 
 {
   imports = [ ];
@@ -44,6 +44,7 @@
       # balancing!
       # kak-auto-pairs    # Auto close parens, etc.
       kak-buffers         # smarter buffer movements # superseded by tabs-kak
+      local.kakounePlugins.luar
       tabs-kak
     ];
     extraConfig =

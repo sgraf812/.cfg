@@ -43,7 +43,7 @@
     haskellPackages.hasktags
     unstable.haskell-language-server
     man
-    manpages
+    man-pages
     moreutils
     ncdu
     # ncurses # the libtinfo uses a glibc that is often too new. That confuses GHC
@@ -87,7 +87,6 @@
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
-    nix-direnv.enableFlakes = true; # remove in HM 22.05
   };
 
   programs.git = {

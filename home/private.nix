@@ -35,7 +35,7 @@ in
     binutils # ar and stuff
     # discord # somehow broken.. can't satisfy libasound
     file
-    gnome3.dconf # some tools need this to preserve settings
+    dconf # some tools need this to preserve settings
     gnome3.gnome-tweaks
     unstable.gnomeExtensions.pop-shell
     google-chrome
@@ -44,13 +44,12 @@ in
     hicolor-icon-theme
     htop
     libreoffice
-    ncat
+    nmap
     okular
     pavucontrol
     pmutils
     powertop
     python
-    skype
     spotify
     texlive.combined.scheme-full
     thunderbird

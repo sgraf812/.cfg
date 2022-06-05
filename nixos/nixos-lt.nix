@@ -82,7 +82,7 @@
   };
 
   programs.dconf.enable = true;
-  services.dbus.packages = with pkgs; [ gnome3.dconf ];
+  services.dbus.packages = with pkgs; [ dconf ];
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
 
   # Shoot things when there's less than 2% RAM
@@ -92,6 +92,7 @@
   };
 
   programs.zsh.enable = true;
+  programs.thefuck.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;

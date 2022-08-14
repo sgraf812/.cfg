@@ -127,6 +127,7 @@ in
       "icons/hicolor/128x128/apps/code.png".source = ./vscode/icon-128.png;
     };
 
+    configFile."mimeapps.list".force = true; # https://github.com/nix-community/home-manager/issues/1213
     mimeApps = {
       enable = true;
       defaultApplications = {
@@ -140,12 +141,6 @@ in
   home.file = {
     ".background-image".source = ./wallpapers/haskell.png;
   };
-
-  home.extraProfileCommands = ''
-    if [[ -d "$out/share/applications" ]] ; then
-      ${pkgs.desktop-file-utils}/bin/update-desktop-database $out/share/applications
-    fi
-  '';
 
   systemd.user.services = {
     # Touchpad gestures, accessed by the smooth gestures gnome extension

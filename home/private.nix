@@ -29,6 +29,7 @@ in
   imports = [
     # modules/email.nix # doesn't currently work
     ./common.nix
+    ./modules/dconf.nix
   ];
 
   home.packages = with pkgs; [

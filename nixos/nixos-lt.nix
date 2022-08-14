@@ -82,6 +82,7 @@
   };
 
   programs.dconf.enable = true;
+  services.dbus.enable = true;
   services.dbus.packages = with pkgs; [ dconf ];
   services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
 
@@ -125,6 +126,7 @@
   };
 
   security.pki.certificateFiles = [ "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" ];
+  security.rtkit.enable = true; # for Gnome
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

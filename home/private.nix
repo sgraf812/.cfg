@@ -1,8 +1,5 @@
 { pkgs, lib, unstable, ... }:
 
-# Worth considering:
-# - home-manager.useGlobalPkgs: See https://rycee.gitlab.io/home-manager/#sec-install-nixos-module
-
 let
 
   graphicalService = descr: pkg: exe: {
@@ -100,9 +97,12 @@ in
 
   programs.firefox = {
     enable = true;
-    package = pkgs.firefox-bin.override {
-      # See nixpkgs' firefox/wrapper.nix to check which options you can use
-      cfg.enableGnomeExtensions = true;
+    # Wayland support for https://nixos.wiki/wiki/Firefox, so that fractional scaling works
+    package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+      forceWayland = true;
+      extraPolicies = {
+        ExtensionSettings = {};
+      };
     };
   };
 
@@ -135,6 +135,11 @@ in
         "application/pdf" = [ "org.pwmt.zathura.desktop" ];
       };
     };
+  };
+
+  # Wayland support for https://nixos.wiki/wiki/Firefox
+  home.sessionVariables = {
+    MOZ_ENABLE_WAYLAND = 1;
   };
 
   home.username = "sgraf";

@@ -44,14 +44,20 @@ in
   ];
 
   dconf.settings =
-    let
+    (let
       nmcli = "${pkgs.networkmanager}/bin/nmcli";
     in
       mkShortcuts [
         {
           name = "Toggle VPN";
-          command = "Favorites";
-          binding = "sh -c 'if [[ -n $(${nmcli} con show kit | grep \"VPN connected\") ]]; then ${nmcli} con down kit; else ${nmcli} con up kit; fi'";
+          binding = "Favorites";
+          command = "sh -c 'if [[ -n $(${nmcli} con show kit | grep \"VPN connected\") ]]; then ${nmcli} con down kit; else ${nmcli} con up kit; fi'";
         }
-      ];
+      ])
+    //
+    ({
+      "org/gnome/mutter" = {
+        experimental-features = [ "scale-monitor-framebuffer" ];
+      };
+    });
 }

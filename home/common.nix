@@ -7,6 +7,41 @@
 # - xsuspend: Might be useful on the laptop
 # - getmail: Automatically fetch mail in a systemd service
 
+let
+
+  rcloneMountService = remote: {
+    # Inspired by https://gist.github.com/kabili207/2cd2d637e5c7617411a666d8d7e97101
+    Unit = {
+      Description = "rclone: ${remote}";
+      Documentation = "man:rclone(1)";
+      After = [ "local-fs.target" "network-online.target" ];
+      Wants = [ "local-fs.target" "network-online.target" ];
+      AssertPathIsDirectory = "%h/mnt/${remote}";
+    };
+
+    Service = {
+      Type = "notify";
+      # ExecStartPre="/bin/mkdir -p %h/mnt/%i";
+      ExecStart = ''
+        ${pkgs.rclone}/bin/rclone mount \
+          --config=%h/.config/rclone/rclone.conf \
+          --vfs-cache-mode writes \
+          --vfs-cache-max-size 100M \
+          --log-level INFO \
+          --log-file /tmp/rclone-${remote}.log \
+          ${remote}: %h/mnt/${remote}
+      '';
+      ExecStop = "${pkgs.fuse}/bin/fusermount -u %h/mnt/${remote}";
+      Restart = "on-abnormal";
+    };
+
+    Install = {
+      WantedBy = [ "default.target" ]; # resolves to multi-user.target (server) or graphical.target
+    };
+  };
+
+in
+
 {
   imports = [
     modules/ghc-dev.nix
@@ -237,37 +272,7 @@
   services.lorri.enable = true;
 
   systemd.user.services = {
-    onedrive = {
-      Unit = {
-        Description = "OneDrive Free Client";
-        Documentation = "man:onedrive(1)";
-        After = [ "local-fs.target" "network.target" ];
-      };
-
-      Service = {
-        ExecStart = "${pkgs.onedrive}/bin/onedrive --monitor";
-        Restart = "on-abnormal";
-      };
-
-      Install = {
-        WantedBy = [ "multi-user.target" ];
-      };
-    };
-    pcloud = {
-      Unit = {
-        Description = "pCloud client";
-        Documentation = "man:pcloud(1)";
-        After = [ "local-fs.target" "network.target" ];
-      };
-
-      Service = {
-        ExecStart = "${pkgs.pcloud}/bin/pcloud";
-        Restart = "on-abnormal";
-      };
-
-      Install = {
-        WantedBy = [ "multi-user.target" ];
-      };
-    };
+    onedrive = rcloneMountService "OneDrive";
+    pcloud = rcloneMountService "pCloud";
   };
 }

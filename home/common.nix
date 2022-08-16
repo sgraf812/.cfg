@@ -25,10 +25,14 @@ let
       ExecStart = ''
         ${pkgs.rclone}/bin/rclone mount \
           --config=%h/.config/rclone/rclone.conf \
-          --vfs-cache-mode writes \
-          --vfs-cache-max-size 100M \
+          --vfs-cache-mode full \
+          --buffer-size 5M \
+          --vfs-read-ahead 10M \
+          --vfs-cache-max-size 500M \
           --log-level INFO \
           --log-file /tmp/rclone-${remote}.log \
+          --file-perms 0600 \
+          --dir-perms 0700 \
           ${remote}: %h/mnt/${remote}
       '';
       ExecStop = "${pkgs.fuse}/bin/fusermount -u %h/mnt/${remote}";

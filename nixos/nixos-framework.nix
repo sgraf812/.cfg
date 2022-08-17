@@ -16,6 +16,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+  # Fix brightness control keys etc.
+  # https://dov.dev/blog/nixos-on-the-framework-12th-gen
+  boot.kernelParams = [ "module_blacklist=hid_sensor_hub" ];
+
   # Enable NTFS Fuse FS
   boot.supportedFilesystems = [ "ntfs" ];
 
@@ -99,6 +103,10 @@
     enable = true;
     freeMemThreshold = 2;
   };
+
+  # Install firmware updates
+  services.fwupd.enable = true;
+  services.fwupd.enableTestRemote = true;
 
   programs.zsh.enable = true;
   programs.thefuck.enable = true;

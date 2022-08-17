@@ -7,51 +7,34 @@
 {
   imports = [
     # Include the results of the hardware scan.
-    ./nixos-framework-hardware.nix
-    inputs.nixos-hardware.nixosModules.framework
+    ./lt-hardware.nix
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x1-6th-gen
   ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-
-  # Fix brightness control keys etc.
-  # https://dov.dev/blog/nixos-on-the-framework-12th-gen
-  boot.kernelParams = [ "module_blacklist=hid_sensor_hub" ];
 
   # Enable NTFS Fuse FS
   boot.supportedFilesystems = [ "ntfs" ];
 
-  networking.hostName = "nixos-framework"; # Define your hostname.
+  networking.hostName = "nixos-lt"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant. Not needed when we have networkmanager.
   # networking.networkmanager = {
   #   enable = true;
   #   packages = [ pkgs.networkmanager-openvpn ];
   # };
 
-  # Set your time zone.
-  time.timeZone = "Europe/Berlin";
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "de_DE.utf8";
-    LC_IDENTIFICATION = "de_DE.utf8";
-    LC_MEASUREMENT = "de_DE.utf8";
-    LC_MONETARY = "de_DE.utf8";
-    LC_NAME = "de_DE.utf8";
-    LC_NUMERIC = "de_DE.utf8";
-    LC_PAPER = "de_DE.utf8";
-    LC_TELEPHONE = "de_DE.utf8";
-    LC_TIME = "de_DE.utf8";
-  };
-
   console = {
     font = "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
-    keyMap = "us";
+    keyMap = "de";
   };
+
+  # Set your time zone.
+  time.timeZone = "Europe/Berlin";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -62,6 +45,11 @@
     openssh
     vim
     wget
+    gnome3.adwaita-icon-theme
+    gnomeExtensions.appindicator
+    gnomeExtensions.clipboard-indicator
+    gnomeExtensions.impatience
+    gnomeExtensions.system-monitor
   ];
 
   fonts = {
@@ -103,10 +91,6 @@
     enable = true;
     freeMemThreshold = 2;
   };
-
-  # Install firmware updates
-  services.fwupd.enable = true;
-  services.fwupd.enableTestRemote = true;
 
   programs.zsh.enable = true;
   programs.thefuck.enable = true;
@@ -152,44 +136,29 @@
     pkgs.gutenprintBin
   ];
 
-  # Enable sound with pipewire.
+  # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
 
   hardware.bluetooth.enable = true;
-  hardware.video.hidpi.enable = false;
 
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    layout = "eu,us";
+    layout = "de,eu";
     xkbOptions = "eurosign:e, caps:swapescape";
-    #dpi = 192;
+    dpi = 132;
 
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
 
-    # Enable touchpad support (enabled default in most desktopManager).
     libinput = {
-      #enable = true;
-      #touchpad = {
-      #  naturalScrolling = true;
-      #  # We don't want natural scrolling on the track point or mouse
-      #  additionalOptions = ''MatchIsTouchpad "on"'';
-      #  accelSpeed = "0.6";
-      #};
+      enable = true;
+      touchpad = {
+        naturalScrolling = true;
+        # We don't want natural scrolling on the track point or mouse
+        additionalOptions = ''MatchIsTouchpad "on"'';
+        accelSpeed = "0.6";
+      };
     };
   };
   services.gnome.chrome-gnome-shell.enable = true;
@@ -218,7 +187,7 @@
   # virtualisation.kvmgt = {
   #   enable = true;
   #   vgpus = {
-  #     "i915-GVTg_V5_8" = { # needs to be updated to this laptop
+  #     "i915-GVTg_V5_8" = {
   #       uuid = "78afde9e-24fe-11ea-89ab-c3e54fc4e17c";
   #     };
   #   };
@@ -233,12 +202,10 @@
   users.extraGroups.docker.members = [ "sgraf" ];
 
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05"; # Did you read the comment?
+  # This value determines the NixOS release with which your system is to be
+  # compatible, in order to avoid breaking some software such as database
+  # servers. You should change this only after NixOS release notes say you
+  # should.
+  system.stateVersion = "21.11"; # Did you read the comment?
 
 }

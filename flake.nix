@@ -185,8 +185,8 @@
       # Attribute set of hostnames to evaluated NixOS configurations. Consumed by `nixos-rebuild`
       # on those hosts.
       nixosHostConfigurations = mapAttrs' mkNixOsConfiguration {
-        nixos-framework = { system = "x86_64-linux"; config = ./nixos/nixos-framework.nix; };
-        nixos-lt = { system = "x86_64-linux"; config = ./nixos/nixos-lt.nix; };
+        nixos-framework = { system = "x86_64-linux"; config = ./nixos/framework.nix; };
+        nixos-lt = { system = "x86_64-linux"; config = ./nixos/lt.nix; };
       };
 
     in

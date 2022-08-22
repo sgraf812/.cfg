@@ -63,7 +63,7 @@ in
     //
     ({
       "org/gnome/desktop/input-sources" = {
-        show-all-sources = "true";
+        show-all-sources = true;
       };
     });
 }

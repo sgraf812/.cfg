@@ -35,6 +35,8 @@ in
     file
     dconf # some tools need this to preserve settings
     gnome3.gnome-tweaks
+    gnomeExtensions.bluetooth-quick-connect
+    gnomeExtensions.clipboard-indicator
     # unstable.gnomeExtensions.pop-shell
     google-chrome
     gucharmap

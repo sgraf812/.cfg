@@ -153,6 +153,28 @@
           map window normal o     ': %val{selections}<a-!><home> git checkout '
       }
 
+      # Special math chars mode
+      declare-user-mode math
+      map global user m ': enter-user-mode math<ret>' -docstring "Math characters mode"
+      map global haskell Z 'ℤ' -docstring "ℤ"
+      map global haskell N 'ℕ' -docstring "ℕ"
+      map global haskell m '↦' -docstring "↦"
+      map global haskell a '→' -docstring "→"
+      map global haskell € '∈' -docstring "∈"
+      map global haskell <lt> '≤' -docstring "≤"
+      map global haskell <gt> '≥' -docstring "≥"
+      map global haskell n '∩' -docstring "∩"
+      map global haskell u '∪' -docstring "∪"
+      map global haskell ( '⊂' -docstring "⊂"
+      map global haskell ) '⊆' -docstring "⊆"
+      map global haskell n '∩' -docstring "∩"
+      map global haskell u '∪' -docstring "∪"
+      map global haskell [ '⊏' -docstring "⊏"
+      map global haskell ] '⊑' -docstring "⊑"
+      map global haskell l '⊔' -docstring "⊔"
+      map global haskell g '⊓' -docstring "⊓"
+      map global haskell # '♯' -docstring "♯"
+
       # kak-buffers
       map global normal ^ q
       map global normal <a-^> Q
@@ -343,5 +365,11 @@
     "<empty>" = "fuzzy path"
   '';
 
-  xdg.configFile."kak-lsp/kak-lsp.toml".source = ./kak/kak-lsp.toml;
+  xdg.configFile."kak-lsp/kak-lsp.toml".text = ''
+    [language.haskell]
+    filetypes = ["haskell"]
+    roots = ["hie.yaml", "Setup.hs", "cabal.project", "stack.yaml", "*.cabal"]
+    command = "haskell-language-server-wrapper"
+    args = ["--lsp"]
+  '';
 }

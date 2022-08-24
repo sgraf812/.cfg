@@ -1,6 +1,0 @@
-[language.haskell]
-filetypes = ["haskell"]
-roots = ["hie.yaml", "Setup.hs", "cabal.project", "stack.yaml", "*.cabal"]
-command = "haskell-language-server-wrapper"
-args = ["--lsp"] 
-

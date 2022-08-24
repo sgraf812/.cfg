@@ -37,6 +37,8 @@ in
     gnome3.gnome-tweaks
     gnomeExtensions.bluetooth-quick-connect
     gnomeExtensions.clipboard-indicator
+    gnomeExtensions.system-monitor
+    gnomeExtensions.impatience
     # unstable.gnomeExtensions.pop-shell
     google-chrome
     gucharmap
@@ -116,6 +118,8 @@ in
 
   programs.zsh.shellAliases = {
     ssh = "${pkgs.kitty}/bin/kitty +kitten ssh";
+    sshpp = ''ssh -t -Y sgraf-local@i44pc6 "zsh -l"'';
+    sshfspp = "${pkgs.sshfs}/bin/sshfs sgraf-local@i44pc6:/home/sgraf-local ~/mnt/work";
     upd = "nix flake update /home/sgraf/code/nix/config/ && sudo nixos-rebuild switch --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";
   };
 
@@ -125,10 +129,10 @@ in
 
   xdg = {
     enable = true;
-    dataFile = {
-      "icons/hicolor/128x128/apps/spotify.png".source = "${pkgs.spotify}/share/spotify/icons/spotify-linux-128.png";
-      "icons/hicolor/128x128/apps/code.png".source = ./vscode/icon-128.png;
-    };
+    #dataFile = {
+    #  "icons/hicolor/128x128/apps/spotify.png".source = "${pkgs.spotify}/share/spotify/icons/spotify-linux-128.png";
+    #  "icons/hicolor/128x128/apps/code.png".source = ./vscode/icon-128.png;
+    #};
 
     configFile."mimeapps.list".force = true; # https://github.com/nix-community/home-manager/issues/1213
     mimeApps = {

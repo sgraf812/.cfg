@@ -1,7 +1,10 @@
 { pkgs, ... }:
 
 {
-  imports = [ ./common.nix ];
+  imports = [
+    ./common.nix
+    ./modules/kitty.nix
+  ];
 
   targets.genericLinux.enable = true;
 

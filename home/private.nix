@@ -27,6 +27,7 @@ in
     # modules/email.nix # doesn't currently work
     ./common.nix
     ./modules/dconf.nix
+    ./modules/kitty.nix
   ];
 
   home.packages = with pkgs; [
@@ -83,22 +84,6 @@ in
     };
   };
 
-  programs.kitty = {
-    enable = true;
-    font = {
-      name = "Iosevka";
-      package = pkgs.iosevka;
-    };
-    settings = {
-      bold_font = "Iosevka Bold";
-      italic_font = "Iosevka Italic";
-      bold_italic_font = "Iosevka Bold Italic";
-      font_size = 14;
-      shell = "${pkgs.zsh}/bin/zsh --login";
-      enable_audio_bell = false;
-    };
-  };
-
   programs.firefox = {
     enable = true;
     # Wayland support for https://nixos.wiki/wiki/Firefox, so that fractional scaling works
@@ -117,7 +102,6 @@ in
   programs.git.userEmail = "sgraf1337@gmail.com";
 
   programs.zsh.shellAliases = {
-    ssh = "${pkgs.kitty}/bin/kitty +kitten ssh";
     sshpp = ''ssh -t -Y sgraf-local@i44pc6 "zsh -l"'';
     sshfspp = "${pkgs.sshfs}/bin/sshfs sgraf-local@i44pc6:/home/sgraf-local ~/mnt/work";
     upd = "nix flake update /home/sgraf/code/nix/config/ && sudo nixos-rebuild switch --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";

@@ -224,6 +224,7 @@ in
       cdnix = "cd ~/code/nix/nixpkgs && git checkout master && git pull";
       nix-zsh = "nix-shell --command zsh";
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\\w+-system|\\{memory)' | cut -d' ' -f1";
+      tmux-display = "export DISPLAY=$(tmux show-env | sed -n 's/^DISPLAY=//p')";
       setclip = "xclip -selection clipboard -in";
       getclip = "xclip -selection clipboard -out";
       e = "kak";

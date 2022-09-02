@@ -200,7 +200,7 @@ function lsg() {
 
 function lsghc() {
   function modified_indicator() {
-    if git -C $1 diff --no-ext-diff --quiet --exit-code; then
+    if git -C $1 diff --no-ext-diff --quiet --exit-code --ignore-submodules; then
       echo "✓"
     else
       echo "✗"

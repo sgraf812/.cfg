@@ -1,0 +1,3 @@
+# binary: Mark not automergeable, keep working version in working dir on conflict
+# merge: Mark file as automergeable (again, after removing the trait with binary)
+flake.lock binary merge

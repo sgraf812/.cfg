@@ -22,6 +22,9 @@
       # fix locales for Nix on Ubuntu
       LOCALE_ARCHIVE_2_27 = "${pkgs.glibcLocales}/lib/locale/locale-archive";
     };
+    envExtra = ''
+      export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+    '';
     shellAliases = {
       upd = "sudo apt update && sudo apt upgrade --yes && nix flake update /home/sgraf/code/nix/config/ && home-manager switch -b bak --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";
     };

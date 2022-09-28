@@ -36,4 +36,7 @@
       afs-iserve = ''() { trap "pushd ~sgraf/public_html/i/ > /dev/null  && rm -rf $(echo "$@" | xargs -n1 basename); popd > /dev/null; return" EXIT INT; cp "$@" ~sgraf/public_html/i/ && read; }'';
     };
   };
+
+  # Otherwise we don't see $NIX_PATH
+  systemd.user.systemctlPath = "/bin/systemctl";
 }

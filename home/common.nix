@@ -35,7 +35,8 @@ let
           --dir-perms 0700 \
           ${remote}: %h/mnt/${remote}
       '';
-      ExecStop = "${pkgs.fuse}/bin/fusermount -u %h/mnt/${remote}";
+      # -z: https://stackoverflow.com/a/25986155/388010
+      ExecStop = "${pkgs.fuse}/bin/fusermount -uz %h/mnt/${remote}";
       Restart = "on-abnormal";
     };
 

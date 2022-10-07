@@ -92,6 +92,20 @@ if [ "x$USE_TMUX" = "xyes" ] && test_exec tmux && [[ ! $TERM =~ screen-256colors
   tmux -u attach-session -d -t root
 fi
 
+# https://www.babushk.in/posts/renew-environment-tmux.html
+if [ -n "$TMUX" ]; then
+  function refresh() {
+    export $(tmux show-environment | grep "^DISPLAY")
+  }
+else
+  function refresh() { }
+fi
+
+# a ZSH hook executed prior to every command
+function preexec() {
+  refresh;
+}
+
 # An alias for quietly forking to background:
 alias -g zzz='>/dev/null 2>&1 &!'
 # We need -g (and thus use it here), otherwise it won't expand in postfix position

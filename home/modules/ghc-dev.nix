@@ -34,13 +34,14 @@ in
       hb = "hadrian/build -j$(($(ncpus) +1))";
       hbq = "hb --flavour=quick --build-root=_quick";
       hbv = "hb --flavour=validate --build-root=_validate";
+      hbfv = "hb --flavour='validate+no_dynamic_ghc' --build-root=_validate";
       hbqv = "hb --flavour=quick-validate --build-root=_quick-validate";
       hbdv = "hb --flavour='validate+debug_info' --build-root=_debug-validate";
       hbsv = "hb --flavour=slow-validate --build-root=_slow-validate";
       hbd2 = "hb --flavour=devel2 --build-root=_devel2";
-      hbp = "hb --flavour=perf --build-root=_perf"; # can't add +no_profiled_libs here, build breaks after RTS
+      hbp = "hb --flavour='perf+no_profiled_libs+no_dynamic_ghc' --build-root=_perf";
       hbpv = "hb --flavour='validate+profiled_ghc+no_dynamic_ghc' --build-root=_prof-validate";
-      hbt = "hb --flavour='perf+ticky_ghc' --build-root=_ticky";
+      hbt = "hb --flavour='perf+ticky_ghc+no_profiled_libs+no_dynamic_ghc' --build-root=_ticky";
       hbtv = "hb --flavour='validate+ticky_ghc' --build-root=_ticky-validate";
       hbd = "hb --flavour='default+profiled_ghc+no_dynamic_ghc+debug_info' --build-root=_dwarf";
     };

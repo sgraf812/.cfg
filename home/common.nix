@@ -237,6 +237,8 @@ in
       ll = "l --group --header --links --extended --git";
       la = "ll -a";
       p = "(){ ${pkgs.python}/bin/python -c \"from math import *; print($*);\" }"; # https://stackoverflow.com/questions/34340575/zsh-alias-with-parameter#comment108551041_39395740
+      sshpp = ''ssh -t -Y sgraf-local@i44pc6 "zsh -l"'';
+      sshfspp = "${pkgs.sshfs}/bin/sshfs sgraf-local@i44pc6:/home/sgraf-local ~/mnt/work";
     };
   };
 

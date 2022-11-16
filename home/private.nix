@@ -102,8 +102,6 @@ in
   programs.git.userEmail = "sgraf1337@gmail.com";
 
   programs.zsh.shellAliases = {
-    sshpp = ''ssh -t -Y sgraf-local@i44pc6 "zsh -l"'';
-    sshfspp = "${pkgs.sshfs}/bin/sshfs sgraf-local@i44pc6:/home/sgraf-local ~/mnt/work";
     upd = "nix flake update /home/sgraf/code/nix/config/ && sudo nixos-rebuild switch --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";
   };
 

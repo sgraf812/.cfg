@@ -25,10 +25,12 @@
 
   networking.hostName = "nixos-framework"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant. Not needed when we have networkmanager.
-  # networking.networkmanager = {
-  #   enable = true;
-  #   packages = [ pkgs.networkmanager-openvpn ];
-  # };
+  networking.networkmanager = {
+    # although Gnome activates nm by default, it's important we activate it
+    # here, too, so that NetworkManager-wait-online succeeds.
+    enable = true;
+    plugins = [ pkgs.networkmanager-openvpn ];
+  };
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -150,6 +152,7 @@
     pkgs.epson-escpr
     pkgs.gutenprint
     pkgs.gutenprintBin
+    pkgs.brlaser
   ];
 
   # Enable sound with pipewire.
@@ -193,6 +196,39 @@
     };
   };
   services.gnome.chrome-gnome-shell.enable = true;
+
+  ####################
+  # POWER MANAGEMENT #
+  ####################
+
+  # GNOME integrates with ppd but we want tlp because it works better
+  services.power-profiles-daemon.enable = false;
+  services.tlp = {
+    enable = true;
+    settings = {
+      USB_ALLOWLIST = "1-4 1-9"; # HDMI and USB A extension cards
+      # The following tweaks are from https://www.worldofbs.com/nixos-framework/
+      CPU_BOOST_ON_BAT = 0;
+      CPU_SCALING_GOVERNOR_ON_BATTERY = "powersave";
+      START_CHARGE_THRESH_BAT0 = 90;
+      STOP_CHARGE_THRESH_BAT0 = 97;
+      RUNTIME_PM_ON_BAT = "auto";
+    };
+  };
+  # Suspend-then-hibernate everywhere
+  services.logind = {
+    lidSwitch = "suspend-then-hibernate";
+    extraConfig = ''
+      HandlePowerKey=suspend-then-hibernate
+      IdleAction=suspend-then-hibernate
+      IdleActionSec=2m
+    '';
+  };
+  systemd.sleep.extraConfig = "HibernateDelaySec=2h";
+
+  ####################
+  # USER MANAGEMENT #
+  ####################
 
   users.mutableUsers = false;
   users.users.sgraf = {

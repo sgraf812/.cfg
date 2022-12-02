@@ -51,9 +51,10 @@
           ];
 
           # For compatibility with nix-shell, nix-build, etc.
-          home.file.".nixpkgs".source = inputs.nixpkgs;
+          home.file.".nixpkgs/stable".source = inputs.nixpkgs;
+          home.file.".nixpkgs/unstable".source = inputs.unstable;
           systemd.user.sessionVariables."NIX_PATH" =
-            mkForce "nixpkgs=$HOME/.nixpkgs\${NIX_PATH:+:}$NIX_PATH";
+            mkForce "nixpkgs=$HOME/.nixpkgs/stable:unstable=$HOME/.nixpkgs/unstable\${NIX_PATH:+:}$NIX_PATH";
 
           # Use the same Nix configuration throughout the system.
           xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs/config.nix;

@@ -101,11 +101,6 @@ else
   function refresh() { }
 fi
 
-# a ZSH hook executed prior to every command
-function preexec() {
-  refresh;
-}
-
 # An alias for quietly forking to background:
 alias -g zzz='>/dev/null 2>&1 &!'
 # We need -g (and thus use it here), otherwise it won't expand in postfix position

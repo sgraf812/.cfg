@@ -2,10 +2,10 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-22.05;
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-22.11;
     unstable.url = github:NixOS/nixpkgs/nixos-unstable;
     nix.url = github:NixOS/nix;
-    home-manager.url = github:rycee/home-manager/release-22.05;
+    home-manager.url = github:rycee/home-manager/release-22.11;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = github:NixOS/nixos-hardware;
     nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;
@@ -57,6 +57,8 @@
             mkForce "nixpkgs=$HOME/.nixpkgs/stable:unstable=$HOME/.nixpkgs/unstable\${NIX_PATH:+:}$NIX_PATH";
 
           # Use the same Nix configuration throughout the system.
+          # We really need to set ~/.config/nixpkgs/config.nix as well as import
+          # it in home-manager's nixpkgs.config; see the manpage.
           xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs/config.nix;
           xdg.configFile."nix/nix.conf".source = ./nix/nix.conf;
 
@@ -106,6 +108,8 @@
               nixpkgs.pkgs = pkgsBySystem.${system};
 
               # For compatibility with nix-shell, nix-build, etc.
+              # (It's not completely clear to me why we need to se *both* the
+              # instantiated nixpkgs.pkgs as well as inputs.nixpkgs.)
               environment.etc.nixpkgs.source = inputs.nixpkgs;
               nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
             })
@@ -150,18 +154,19 @@
       mkHomeManagerHostConfiguration = hostname: { system, username }: # The original template is much more flexible here
         # home-manager switch --flake tries `<flake-uri>#homeConfigurations."${username}@${hostname}"`
         nameValuePair "${username}@${hostname}" (inputs.home-manager.lib.homeManagerConfiguration {
-          inherit system;
-          configuration = { ... }: {
-            imports = [ homeManagerConfigurations."${hostname}" ];
-            nixpkgs.config = import ./nixpkgs/config.nix;
-            home.packages = with pkgsBySystem."${system}"; [
-              nixFlakes
-              # home-manager # Don't put home-mananger here, as that clashes with program.home-manager.enable
-            ];
-          };
-          homeDirectory = "/home/${username}";
           pkgs = pkgsBySystem."${system}";
-          username = "${username}";
+          modules = [
+            homeManagerConfigurations."${hostname}"
+            ({ ... }: {
+              # Only username/hostname dependent configuration here,
+              # except for setting nixpkgs/config.nix so that it's all in one place
+              nixpkgs.config = import ./nixpkgs/config.nix;
+              home = {
+                homeDirectory = "/home/${username}";
+                username = "${username}";
+              };
+            })
+          ];
           extraSpecialArgs = {
             inherit hostname inputs;
             unstable = unstableBySystem."${system}";

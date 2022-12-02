@@ -9,7 +9,7 @@
   targets.genericLinux.enable = true;
 
   home.packages = with pkgs; [
-    mendeley
+    #mendeley # Broken in 22.11 because of qt-webkit. Also in browser now
     pdftk
     vit
   ];

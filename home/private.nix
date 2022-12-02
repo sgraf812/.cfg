@@ -24,7 +24,6 @@ in
 
 {
   imports = [
-    # modules/email.nix # doesn't currently work
     ./common.nix
     ./modules/dconf.nix
     ./modules/kitty.nix

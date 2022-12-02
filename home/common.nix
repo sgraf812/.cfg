@@ -88,6 +88,7 @@ in
     ncdu
     # ncurses # the libtinfo uses a glibc that is often too new. That confuses GHC
     niv
+    nixFlakes
     nix-diff
     nix-index
     nix-prefetch-scripts
@@ -122,7 +123,7 @@ in
     enableZshIntegration = true;
   };
 
-  # Used with lorri
+  # Used with nix flakes
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
@@ -275,9 +276,7 @@ in
     time = "de_DE.UTF-8";
   };
 
-  home.stateVersion = "20.09";
-
-  services.lorri.enable = true;
+  home.stateVersion = "22.11";
 
   systemd.user.services = {
     onedrive = rcloneMountService "OneDrive";

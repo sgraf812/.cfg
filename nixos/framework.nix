@@ -184,18 +184,18 @@
     displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
 
-    # Enable touchpad support (enabled default in most desktopManager).
+    # Enable touchpad support (enabled default in most desktopManagers).
     libinput = {
-      #enable = true;
-      #touchpad = {
-      #  naturalScrolling = true;
-      #  # We don't want natural scrolling on the track point or mouse
-      #  additionalOptions = ''MatchIsTouchpad "on"'';
-      #  accelSpeed = "0.6";
-      #};
+      # enable = true;
+      touchpad = {
+        naturalScrolling = true;
+        # We don't want natural scrolling on the track point or mouse
+        additionalOptions = ''MatchIsTouchpad "on"'';
+        # accelSpeed = "0.6";
+      };
     };
   };
-  services.gnome.chrome-gnome-shell.enable = true;
+  services.gnome.gnome-browser-connector.enable = true;
 
   ####################
   # POWER MANAGEMENT #
@@ -277,4 +277,11 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "22.05"; # Did you read the comment?
 
+  # Apparently there is not much sense in doing this, because it doesn't update
+  # the lock file (duh)
+  # system.autoUpgrade = {
+  #   enable = true;
+  #   flake = "/home/sgraf/code/nix/config/";
+  #   allowReboot = false;
+  # };
 }

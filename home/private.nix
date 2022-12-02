@@ -86,12 +86,12 @@ in
   programs.firefox = {
     enable = true;
     # Wayland support for https://nixos.wiki/wiki/Firefox, so that fractional scaling works
-    package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-      forceWayland = true;
-      extraPolicies = {
-        ExtensionSettings = {};
-      };
-    };
+    #package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
+    #  # forceWayland = true; # set by default
+    #  extraPolicies = {
+    #    ExtensionSettings = {};
+    #  };
+    #};
   };
 
   programs.ssh = {

@@ -88,7 +88,7 @@ in
     ncdu
     # ncurses # the libtinfo uses a glibc that is often too new. That confuses GHC
     niv
-    nixFlakes
+    nix#Flakes
     nix-diff
     nix-index
     nix-prefetch-scripts

@@ -117,7 +117,7 @@
               nix = {
                 autoOptimiseStore = true;
                 # Don't rely on the configuration to enable a flake-compatible version of Nix.
-                package = pkgs.nixFlakes;
+                # package = pkgs.nixFlakes;
                 extraOptions = "experimental-features = nix-command flakes";
                 # Re-expose self, nixpkgs and unstable as flakes.
                 registry = {

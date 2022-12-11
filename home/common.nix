@@ -1,4 +1,4 @@
-{ pkgs, lib, unstable, ... }:
+{ config, pkgs, lib, unstable, ... }:
 
 # Worth considering:
 # - [starship](https://starship.rs): Cool cross-shell prompt
@@ -7,51 +7,12 @@
 # - xsuspend: Might be useful on the laptop
 # - getmail: Automatically fetch mail in a systemd service
 
-let
-
-  rcloneMountService = remote: {
-    # Inspired by https://gist.github.com/kabili207/2cd2d637e5c7617411a666d8d7e97101
-    Unit = {
-      Description = "rclone: ${remote}";
-      Documentation = "man:rclone(1)";
-      After = [ "local-fs.target" "network-online.target" ];
-      Wants = [ "local-fs.target" "network-online.target" ];
-      AssertPathIsDirectory = "%h/mnt/${remote}";
-    };
-
-    Service = {
-      Type = "notify";
-      # ExecStartPre="/bin/mkdir -p %h/mnt/%i";
-      ExecStart = ''
-        ${pkgs.rclone}/bin/rclone mount \
-          --config=%h/.config/rclone/rclone.conf \
-          --vfs-cache-mode full \
-          --buffer-size 5M \
-          --vfs-read-ahead 10M \
-          --vfs-cache-max-size 500M \
-          --log-level INFO \
-          --log-file /tmp/rclone-${remote}.log \
-          --file-perms 0600 \
-          --dir-perms 0700 \
-          ${remote}: %h/mnt/${remote}
-      '';
-      # -z: https://stackoverflow.com/a/25986155/388010
-      ExecStop = "${pkgs.fuse}/bin/fusermount -uz %h/mnt/${remote}";
-      Restart = "on-abnormal";
-    };
-
-    Install = {
-      WantedBy = [ "default.target" ]; # resolves to multi-user.target (server) or graphical.target
-    };
-  };
-
-in
-
 {
   imports = [
     modules/ghc-dev.nix
     modules/kakoune.nix
     modules/lazygit.nix
+    modules/rclone.nix
   ];
 
   home.packages = with pkgs; [
@@ -278,8 +239,11 @@ in
 
   home.stateVersion = "22.11";
 
-  systemd.user.services = {
-    onedrive = rcloneMountService "OneDrive";
-    pcloud = rcloneMountService "pCloud";
+  services.rclone = {
+    enable = true;
+    mounts = {
+      onedrive = { from = "OneDrive:/"; to = "${config.home.homeDirectory}/mnt/OneDrive"; };
+      pcloud   = { from = "pCloud:/";   to = "${config.home.homeDirectory}/mnt/pCloud"; };
+    };
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs, lib, unstable, ... }:
+{ config, pkgs, lib, unstable, ... }:
 
 let
 
@@ -27,6 +27,7 @@ in
     ./common.nix
     ./modules/dconf.nix
     ./modules/kitty.nix
+    ./modules/rclone.nix
   ];
 
   home.packages = with pkgs; [
@@ -135,11 +136,15 @@ in
     ".background-image".source = ./wallpapers/haskell.png;
   };
 
+  services.rclone = {
+    enable = true;
+    # dropbox only allows 3 devices in its free plan, so we are only installing it at home
+    mounts.dropbox = { from = "Dropbox:/"; to = "${config.home.homeDirectory}/mnt/Dropbox"; };
+  };
+
   systemd.user.services = {
     # Touchpad gestures, accessed by the smooth gestures gnome extension
     libinput-gestures = graphicalService "libinput gestures" "${pkgs.libinput-gestures}" "libinput-gestures";
-    # dropbox only allows 3 devices in its free plan, so we are only installing it at home
-    dropbox = graphicalService "Dropbox as a system service" "${pkgs.dropbox}" "dropbox";
   };
 
   services.gnome-keyring.enable = true;

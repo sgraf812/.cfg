@@ -84,16 +84,7 @@ in
     };
   };
 
-  programs.firefox = {
-    enable = true;
-    # Wayland support for https://nixos.wiki/wiki/Firefox, so that fractional scaling works
-    #package = pkgs.wrapFirefox pkgs.firefox-unwrapped {
-    #  # forceWayland = true; # set by default
-    #  extraPolicies = {
-    #    ExtensionSettings = {};
-    #  };
-    #};
-  };
+  programs.firefox.enable = true;
 
   programs.ssh = {
     # enable = true;
@@ -123,11 +114,6 @@ in
         "application/pdf" = [ "org.pwmt.zathura.desktop" ];
       };
     };
-  };
-
-  # Wayland support for https://nixos.wiki/wiki/Firefox
-  home.sessionVariables = {
-    MOZ_ENABLE_WAYLAND = 1;
   };
 
   home.username = "sgraf";

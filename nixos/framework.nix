@@ -182,7 +182,10 @@
     #dpi = 192;
 
     displayManager.gdm.enable = true;
+    displayManager.gdm.wayland = true;
+    #displayManager.gdm.debug = true;
     desktopManager.gnome.enable = true;
+    #desktopManager.gnome.debug = true;
 
     # Enable touchpad support (enabled default in most desktopManagers).
     libinput = {
@@ -195,6 +198,7 @@
       };
     };
   };
+  services.gnome.core-utilities.enable = true;
   services.gnome.gnome-browser-connector.enable = true;
 
   ####################

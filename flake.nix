@@ -10,6 +10,7 @@
     nixos-hardware.url = github:NixOS/nixos-hardware;
     nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;
     nofib.flake = false;
+    kitty-fix.url = github:r-ryantm/nixpkgs/71b2fdc8dcc6f70ef7aad8fd20e315180f56d1d6;
   };
 
   # Taken from https://github.com/davidtwco/veritas/blob/master/flake.nix
@@ -123,6 +124,7 @@
               home-manager.extraSpecialArgs = {
                 inherit hostname inputs;
                 unstable = unstableBySystem."${system}";
+                kitty-fix = import inputs.kitty-fix {inherit system;};
               };
             }
           ];
@@ -155,6 +157,7 @@
           extraSpecialArgs = {
             inherit hostname inputs;
             unstable = unstableBySystem."${system}";
+            kitty-fix = import inputs.kitty-fix {inherit system;};
           };
         });
 

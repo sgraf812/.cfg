@@ -1,10 +1,11 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, kitty-fix, ... }:
 
 {
   imports = [ ];
 
   programs.kitty = {
     enable = true;
+    package = kitty-fix.kitty;
     font = {
       name = "Iosevka";
       package = pkgs.iosevka;

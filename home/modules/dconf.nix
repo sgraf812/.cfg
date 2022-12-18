@@ -7,7 +7,7 @@ let
       range = a: b: if a < b then [a] ++ range (a+1) b else [];
       globalPath = "org/gnome/settings-daemon/plugins/media-keys";
       path = "${globalPath}/custom-keybindings";
-      mkPath = id: "${globalPath}/custom${toString id}";
+      mkPath = id: "${path}/custom${toString id}";
       isEmpty = list: length list == 0;
       checkSettings = { name, command, binding }@this: this;
       aux = i: list:
@@ -50,7 +50,8 @@ in
       mkShortcuts [
         {
           name = "Toggle VPN";
-          binding = "Favorites";
+          #binding = "XF86AudioMedia"; # can't catch this key for some reason
+          binding = "F12";
           command = "sh -c 'if [[ -n $(${nmcli} con show kit | grep \"VPN connected\") ]]; then ${nmcli} con down kit; else ${nmcli} con up kit; fi'";
         }
       ])

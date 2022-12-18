@@ -50,47 +50,30 @@
             (import config)
           ];
 
-          # For compatibility with nix-shell, nix-build, etc.
-          home.file.".nixpkgs/stable".source = inputs.nixpkgs;
-          home.file.".nixpkgs/unstable".source = inputs.unstable;
-          systemd.user.sessionVariables."NIX_PATH" =
-            mkForce "nixpkgs=$HOME/.nixpkgs/stable:unstable=$HOME/.nixpkgs/unstable\${NIX_PATH:+:}$NIX_PATH";
-
           # Use the same Nix configuration throughout the system.
           # We really need to set ~/.config/nixpkgs/config.nix as well as import
           # it in home-manager's nixpkgs.config; see the manpage.
           xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs/config.nix;
+          nixpkgs.config = import ./nixpkgs/config.nix;
           xdg.configFile."nix/nix.conf".source = ./nix/nix.conf;
 
           # Re-expose self, nixpkgs and unsable as flakes. For use in nix-search, for example
-          xdg.configFile."nix/registry.json".text = builtins.toJSON {
-            version = 2;
-            flakes =
-              let
-                toInput = input:
-                  {
-                    type = "path";
-                    path = input.outPath;
-                  } // (
-                    filterAttrs
-                      (n: _: n == "lastModified" || n == "rev" || n == "revCount" || n == "narHash")
-                      input
-                  );
-              in
-              [
-                {
-                  from = { id = "self"; type = "indirect"; };
-                  to = toInput inputs.self;
-                }
-                {
-                  from = { id = "nixpkgs"; type = "indirect"; };
-                  to = toInput inputs.nixpkgs;
-                }
-                {
-                  from = { id = "unstable"; type = "indirect"; };
-                  to = toInput inputs.unstable;
-                }
-              ];
+          nix = {
+            #settings = {
+            #  experimental-features = [ "nix-command" "flakes" ];
+            #};
+            # Re-expose self, nixpkgs and unstable as flakes.
+            registry = {
+              self.flake = inputs.self;
+              nixpkgs = {
+                from = { id = "nixpkgs"; type = "indirect"; };
+                flake = inputs.nixpkgs;
+              };
+              unstable = {
+                from = { id = "unstable"; type = "indirect"; };
+                flake = inputs.unstable;
+              };
+            };
           };
         });
 
@@ -98,22 +81,20 @@
         nameValuePair hostname (nixosSystem {
           inherit system;
           modules = [
-            ({ hostname, ... }: {
+            ({ inputs, hostname, pkgs, ... }: {
               # Set the hostname to the name of the configuration being applied (since the
               # configuration being applied is determined by the hostname).
               networking.hostName = hostname;
-            })
-            ({ inputs, ... }: {
+
               # Use the nixpkgs from the flake.
               nixpkgs.pkgs = pkgsBySystem.${system};
 
               # For compatibility with nix-shell, nix-build, etc.
-              # (It's not completely clear to me why we need to se *both* the
-              # instantiated nixpkgs.pkgs as well as inputs.nixpkgs.)
+              # See also the setting of NIX_PATH in the home-manager host config
               environment.etc.nixpkgs.source = inputs.nixpkgs;
-              nix.nixPath = [ "nixpkgs=/etc/nixpkgs" ];
-            })
-            ({ inputs, pkgs, ... }: {
+              environment.etc.unstable.source = inputs.unstable;
+              nix.nixPath = [ "nixpkgs=/etc/nixpkgs" "unstable=/etc/unstable" ];
+
               nix = {
                 autoOptimiseStore = true;
                 # Don't rely on the configuration to enable a flake-compatible version of Nix.
@@ -133,6 +114,7 @@
                 };
               };
             })
+            (import config)
             inputs.home-manager.nixosModules.home-manager
             {
               home-manager.useUserPackages = true;
@@ -143,7 +125,6 @@
                 unstable = unstableBySystem."${system}";
               };
             }
-            (import config)
           ];
           specialArgs = {
             inherit hostname inputs;
@@ -158,13 +139,17 @@
           modules = [
             homeManagerConfigurations."${hostname}"
             ({ ... }: {
-              # Only username/hostname dependent configuration here,
-              # except for setting nixpkgs/config.nix so that it's all in one place
-              nixpkgs.config = import ./nixpkgs/config.nix;
+              # Only username/hostname dependent configuration here
               home = {
                 homeDirectory = "/home/${username}";
                 username = "${username}";
               };
+              # For compatibility with nix-shell, nix-build, etc.
+              # See also the setting of NIX_PATH in the NixOS host config
+              home.file.".nixpkgs/stable".source = inputs.nixpkgs;
+              home.file.".nixpkgs/unstable".source = inputs.unstable;
+              systemd.user.sessionVariables."NIX_PATH" =
+                mkForce "nixpkgs=$HOME/.nixpkgs/stable:unstable=$HOME/.nixpkgs/unstable\${NIX_PATH:+:}$NIX_PATH";
             })
           ];
           extraSpecialArgs = {

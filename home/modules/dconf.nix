@@ -131,6 +131,8 @@ in
         toggle-maximized = [ "<super>m" ];
         # close window
         close = [ "<super>q" "<alt>f4" ];
+        # Instead of switch-applications
+        switch-windows = [ "<alt>Tab" ];
       };
       "org/gnome/shell/keybindings" = {
         open-application-menu = [];
@@ -163,5 +165,7 @@ in
         workspaces-only-on-primary = false;
         experimental-features = [ "scale-monitor-framebuffer" ];
       };
+
+      "org/gnome/shell/window-switcher".current-workspace-only = false;
     });
 }

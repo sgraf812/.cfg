@@ -27,10 +27,12 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant. Not needed when we have networkmanager.
   networking.networkmanager = {
     # although Gnome activates nm by default, it's important we activate it
-    # here, too, so that NetworkManager-wait-online succeeds.
-    enable = true;
+    # here, too, so that NetworkManager-wait-online succeeds. But seems broken again in 22.11
+    # enable = true;
     plugins = [ pkgs.networkmanager-openvpn ];
   };
+  # systemd.network.wait-online.anyInterface = true; # https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1273814285
+  systemd.services.NetworkManager-wait-online.enable = false; # https://github.com/NixOS/nixpkgs/issues/59603#issuecomment-1304869994
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";

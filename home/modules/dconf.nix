@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 let
   mkShortcuts = settings:
@@ -26,11 +26,21 @@ let
       listToAttrs (settingsList ++ [
         {
           name = globalPath;
-          value = {
-            custom-keybindings = genList (i: "/${mkPath i}/") (length settingsList);
-          };
+          value = genList (i: "/${mkPath i}/") (length settingsList);
         }
       ]);
+
+  gnomeCwd = pkgs.writeShellScriptBin "gnome-cwd" ''
+    # Install and activate https://extensions.gnome.org/extension/4974/window-calls-extended/
+    # to use this script
+    #
+    # Inspired by https://www.reddit.com/r/swaywm/comments/ayedi1/comment/ei7i1dl/
+    #
+    pid=$(${pkgs.glib}/bin/gdbus call --session --dest org.gnome.Shell --object-path /org/gnome/Shell/Extensions/WindowsExt --method org.gnome.Shell.Extensions.WindowsExt.FocusPID | sed -E "s/\\('(.*)',\\)/\\1/g")
+    ppid=$(${pkgs.procps}/bin/pgrep --newest --parent $pid)
+    readlink /proc/$ppid/cwd || echo $HOME
+  '';
+
 in
 
 {
@@ -53,6 +63,12 @@ in
           #binding = "XF86AudioMedia"; # can't catch this key for some reason
           binding = "F12";
           command = "sh -c 'if [[ -n $(${nmcli} con show kit | grep \"VPN connected\") ]]; then ${nmcli} con down kit; else ${nmcli} con up kit; fi'";
+        }
+        {
+          name = "Launch terminal here";
+          #binding = "XF86AudioMedia"; # can't catch this key for some reason
+          binding = "<super>t";
+          command = "${config.programs.kitty.package}/bin/kitty --working-directory $(${gnomeCwd}/bin/gnome-cwd)";
         }
       ])
     //
@@ -138,7 +154,8 @@ in
         # launch web browser
         www = [ "<super>b" ];
         # launch terminal
-        terminal = [ "<super>t" ];
+        # Doesn't work
+        #terminal = [ "<super>t" ];
         # rotate video lock
         rotate-video-lock-static = [];
       };

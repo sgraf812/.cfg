@@ -42,6 +42,8 @@ in
     gnomeExtensions.system-monitor
     gnomeExtensions.impatience
     gnomeExtensions.pop-shell
+    gnomeExtensions.window-calls-extended
+    gnomeExtensions.vertical-overview
     google-chrome
     gucharmap
     # gcc_multi # ld.bfd conflicts with binutils-wapper's

@@ -68,7 +68,8 @@ in
         # fusermount needs to be wrapped in NixOS. Otherwise we take the native
         # binary; the one from ${pkgs.fuse} leads to a permission error in
         # `rcone mount`.
-        Environment="PATH=/run/wrappers/bin/:$PATH";
+        # Same happens on Ubuntu; we need the fusermount (and friends) from /bin/.
+        Environment="PATH=/run/wrappers/bin/:/bin/:$PATH";
       };
 
       Install = {

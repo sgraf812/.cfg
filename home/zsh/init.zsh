@@ -3,14 +3,13 @@ if [ -f /etc/profile.d/nix.sh ]; then
   . /etc/profile.d/nix.sh
 fi
 
+# NB: ~/.nix-profile/ should be in PATH, so we get the right zsh and tmux binary
+
 # From the GNU parallel package, which clashes with moreutils..
 # . $(which env_parallel.zsh)
 
 # Deactivate tty flow control (e.g. suspending with ctlr-s and resuming with ctrl-q)
 stty -ixon
-
-# https://github.com/NixOS/nixpkgs/issues/30121, appears to be fixed now
-# setopt prompt_sp
 
 # pdflatex breaks its error output by default (WTF)
 export max_print_line=1000
@@ -77,8 +76,7 @@ function test_exec() {
   command -v $1 > /dev/null
 }
 
-# Rebuild config and launch tmux if not already in some mux session,
-# before setting any aliases
+# Rebuild config and launch tmux if not already in some mux session
 if [ "x$USE_TMUX" = "xyes" ] && test_exec tmux && [[ ! $TERM =~ screen-256colors && -z $TMUX ]]; then
   # home-manager switch
   # -u (only applicable to tmux, not to new-session): Force UTF-8
@@ -101,10 +99,6 @@ else
   function refresh() { }
 fi
 
-# An alias for quietly forking to background:
-alias -g zzz='>/dev/null 2>&1 &!'
-# We need -g (and thus use it here), otherwise it won't expand in postfix position
-
 # Making and changing into a directory:
 function mkcd() {
   mkdir -p $@;
@@ -120,9 +114,6 @@ function o() {
 function nix-which() {
   echo "$(dirname $(dirname $(readlink -f $(which $1))))"
 }
-
-# Not FuZzy, but EXact
-alias exf=fzf --exact
 
 # Use fzf to find a file
 function efd() {

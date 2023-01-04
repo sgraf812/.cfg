@@ -202,6 +202,10 @@
       sshpp = ''ssh -t -Y sgraf-local@i44pc6 "zsh -l"'';
       sshfspp = "${pkgs.sshfs}/bin/sshfs sgraf-local@i44pc6:/home/sgraf-local ~/mnt/work";
     };
+    shellGlobalAliases = {
+      # An alias for quietly forking to background:
+      zzz = ">/dev/null 2>&1 &!";
+    };
   };
 
   programs.tmux = {

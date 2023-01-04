@@ -192,6 +192,7 @@
       getclip = "xclip -selection clipboard -out";
       e = "kak";
       el = "kak -E 'colorscheme solarized-light'";
+      exf = "fzf --exact"; # not FuZzy, but EXact
       less = ''\less -XFR'';
       info = "info --vi-keys";
       ls = "exa --color=automatic";

@@ -21,6 +21,9 @@
   };
 
   programs.zsh.shellAliases = {
-    ssh = "${pkgs.kitty}/bin/kitty +kitten ssh";
+    # https://sw.kovidgoyal.net/kitty/kittens/ssh/
+    # I'm not using any of the features, plus it leads to errors when I work
+    # from home and want to SSH into another work machine
+    # ssh = "${pkgs.kitty}/bin/kitty +kitten ssh";
   };
 }

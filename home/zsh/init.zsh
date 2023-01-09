@@ -107,7 +107,7 @@ function mkcd() {
 
 # An alias for a quiet xdg-open
 function o() {
-  xdg-open $@ zzz
+  xdg-open $@ >/dev/null 2>&1 &!
 }
 
 # Returns the nix store path of the given executable by stripping of the bin/blah suffix

@@ -32,7 +32,6 @@
     entr
     exa
     fd
-    fzf
     ghc
     glow # CLI markdown viewer
     gnumake
@@ -224,6 +223,18 @@
       tmuxPlugins.cpu
       tmuxPlugins.resurrect
     ];
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    defaultCommand = "fd --type f";
+    fileWidgetCommand = "fd --type f";
+    #fileWidgetOptions = [ "--preview 'head {}'" ];
+    changeDirWidgetCommand = "fd --type d";
+    #changeDirWidgetOptions = [ "--preview 'tree -C {} | head -200'" ];
+    #historyWidgetOptions = [ "--sort" "--exact" ];
+    tmux.enableShellIntegration = true;
   };
 
   home.keyboard.layout = "de";

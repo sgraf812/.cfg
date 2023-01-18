@@ -371,5 +371,10 @@
     roots = ["hie.yaml", "Setup.hs", "cabal.project", "stack.yaml", "*.cabal"]
     command = "haskell-language-server-wrapper"
     args = ["--lsp"]
+    [language.lean]
+    filetypes = ["lean"]
+    roots = ["lean-toolchain", "lakefile.lean"]
+    command = "lean"
+    args = ["--server"]
   '';
 }

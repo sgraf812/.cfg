@@ -117,7 +117,7 @@ function nix-which() {
 
 # Use fzf to find a file
 function efd() {
-  f=$(exf --query $1)
+  f=$(fzf --query $1)
   ret=$?
   if (( $ret != 0 )); then
     return $ret
@@ -126,7 +126,7 @@ function efd() {
 }
 
 function cpfd() {
-  f=$(exf --query $1)
+  f=$(fzf --query $1)
   ret=$?
   if (( $ret != 0 )); then
     return $ret
@@ -135,7 +135,7 @@ function cpfd() {
 }
 
 function lnfd() {
-  f=$(exf --query $1)
+  f=$(fzf --query $1)
   ret=$?
   if (( $ret != 0 )); then
     return $ret

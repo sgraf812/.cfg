@@ -230,9 +230,9 @@
     enableZshIntegration = true;
     defaultCommand = "fd --type f";
     fileWidgetCommand = "fd --type f";
-    #fileWidgetOptions = [ "--preview 'head {}'" ];
+    fileWidgetOptions = [ "--preview '${pkgs.bat}/bin/bat {}'" ];
     changeDirWidgetCommand = "fd --type d";
-    #changeDirWidgetOptions = [ "--preview 'tree -C {} | head -200'" ];
+    changeDirWidgetOptions = [ "--preview '${pkgs.tree}/bin/tree -C {} | head -200'" ];
     #historyWidgetOptions = [ "--sort" "--exact" ];
     tmux.enableShellIntegration = true;
   };

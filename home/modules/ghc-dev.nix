@@ -41,8 +41,8 @@ in
       hbd2 = "hb --flavour=devel2 --build-root=_devel2";
       hbp = "hb --flavour='perf+no_profiled_libs+no_dynamic_ghc' --build-root=_perf";
       hbpv = "hb --flavour='validate+profiled_ghc+no_dynamic_ghc' --build-root=_prof-validate";
-      hbt = "hb --flavour='perf+ticky_ghc+no_profiled_libs+no_dynamic_ghc' --build-root=_ticky";
-      hbtv = "hb --flavour='validate+ticky_ghc' --build-root=_ticky-validate";
+      hbt = "hb --flavour='perf+ticky_ghc+no_profiled_libs+no_dynamic_ghc+no_split_sections' --build-root=_ticky";
+      hbtv = "hb --flavour='validate+ticky_ghc+no_split_sections' --build-root=_ticky-validate";
       hbd = "hb --flavour='default+profiled_ghc+no_dynamic_ghc+debug_info' --build-root=_dwarf";
     };
   };

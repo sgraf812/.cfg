@@ -36,12 +36,13 @@
     glow # CLI markdown viewer
     gnumake
     # gthumb # can crop images # segfaults in ubuntu...
-    jq # Manipulating JSON on the CLI
     haskellPackages.ghcid
     # haskellPackages.hkgr # Hackage release management, but it's broken
     haskellPackages.lhs2tex
     haskellPackages.hasktags
     unstable.haskell-language-server
+    htop
+    jq # Manipulating JSON on the CLI
     man
     man-pages
     moreutils

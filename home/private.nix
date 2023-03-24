@@ -48,7 +48,6 @@ in
     gucharmap
     # gcc_multi # ld.bfd conflicts with binutils-wapper's
     hicolor-icon-theme
-    htop
     libreoffice
     nmap
     okular

@@ -168,6 +168,7 @@
         nixos-framework = { system = "x86_64-linux"; config = ./home/private.nix; };
         nixos-lt = { system = "x86_64-linux"; config = ./home/private.nix; };
         "i44pc6.informatik.kit.edu" = { system = "x86_64-linux"; config = ./home/work.nix; };
+        "i44pc19" = { system = "x86_64-linux"; config = ./home/work.nix; };
         Sebastian-PC = { system = "x86_64-linux"; config = ./home/pengwin.nix; };
       };
 

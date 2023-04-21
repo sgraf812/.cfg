@@ -174,6 +174,7 @@
 
       homeManagerHostConfigurations = mapAttrs' mkHomeManagerHostConfiguration {
         "i44pc6.informatik.kit.edu" = { system = "x86_64-linux"; username = "sgraf-local"; };
+        "i44pc19" = { system = "x86_64-linux"; username = "sgraf-local"; };
         Sebastian-PC = { system = "x86_64-linux"; username = "sgraf"; };
       };
 

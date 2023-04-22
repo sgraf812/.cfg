@@ -33,6 +33,8 @@
     exa
     fd
     ghc
+    (pkgs.writeShellScriptBin "ghc92" ''exec -a $0 ${haskell.compiler.ghc92}/bin/ghc "$@"'')
+    (pkgs.writeShellScriptBin "ghc94" ''exec -a $0 ${haskell.compiler.ghc94}/bin/ghc "$@"'')
     glow # CLI markdown viewer
     gnumake
     # gthumb # can crop images # segfaults in ubuntu...
@@ -202,6 +204,7 @@
       p = "(){ ${pkgs.python}/bin/python -c \"from math import *; print($@);\" }"; # https://stackoverflow.com/questions/34340575/zsh-alias-with-parameter#comment108551041_39395740
       sshpp = ''ssh -t -Y sgraf-local@i44pc6 "zsh -l"'';
       sshfspp = "${pkgs.sshfs}/bin/sshfs sgraf-local@i44pc6:/home/sgraf-local ~/mnt/work";
+      "nix-ghc-with" = ''(){ VER="$1"; shift; nix shell --impure --expr "with import <nixpkgs> {}; haskell.packages.ghc$VER.ghcWithPackages (p: [ $@ ])" }'';
     };
     shellGlobalAliases = {
       # An alias for quietly forking to background:

@@ -213,3 +213,15 @@ function lsghc() {
   done | column -t -s $'\t'
 }
 
+function sql2csv() {
+  db=$1
+
+  if [ $# -lt 2 ] || [ ! -f $db ]; then
+    echo "USAGE: $0 ./path/to/db.csv 'select avg(csv.Salary) from csv'"
+    exit 1
+  fi
+
+  shift
+  # https://til.simonwillison.net/sqlite/one-line-csv-operations
+  exec -a $0 sqlite3 :memory: -cmd '.mode csv' -cmd '.separator ";"' -cmd ".import $db csv" "$@"
+}

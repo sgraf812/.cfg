@@ -7,6 +7,21 @@
 # - xsuspend: Might be useful on the laptop
 # - getmail: Automatically fetch mail in a systemd service
 
+let
+  sqlcsv = pkgs.writeShellScriptBin "sql@csv" ''
+    db=$1
+
+    if [ $# -lt 2 ] || [ ! -f $db ]; then
+      echo "USAGE: $(basename $0) ./path/to/db.csv 'select avg(csv.Salary) from csv'"
+      echo "       Set \$SQL_CSV_SEP if you want a separator that is different to ;"
+      exit 1
+    fi
+
+    shift
+    # https://til.simonwillison.net/sqlite/one-line-csv-operations
+    exec -a $0 sqlite3 :memory: -cmd '.mode csv' -cmd '.separator ''${SQL_CSV_SEP:-;};"' -cmd ".import $db csv" "$@"
+  '';
+in
 {
   imports = [
     modules/ghc-dev.nix
@@ -63,6 +78,7 @@
     signal-desktop
     stack
     # stack2nix # broken
+    sqlcsv
     ranger
     rename # prename -- https://stackoverflow.com/a/20657563/388010
     ripgrep

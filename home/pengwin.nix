@@ -23,7 +23,8 @@
       LOCALE_ARCHIVE_2_27 = "${pkgs.glibcLocales}/lib/locale/locale-archive";
     };
     envExtra = ''
-      export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+      # https://x410.dev/cookbook/wsl/using-x410-with-wsl2/ Option 1 did not work in Loccum
+      export DISPLAY=$(${pkgs.iproute2}/bin/ip route | grep default | awk '{print $3; exit;}'):0.0
     '';
     shellAliases = {
       upd = "sudo apt update && sudo apt upgrade --yes && nix flake update /home/sgraf/code/nix/config/ && home-manager switch -b bak --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";

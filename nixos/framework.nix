@@ -266,7 +266,7 @@
   #   };
   # };
   # virtualisation.libvirtd.enable = true;
-  virtualisation.virtualbox.host.enable = true;
+  #virtualisation.virtualbox.host.enable = true; # seems to be broken since Jun 23
   users.extraGroups.vboxusers.members = [ "sgraf" ];
   # Unfortunately the extension pack isn't built by Hydra (unfree) and I really
   # don't want to rebuild this all the time

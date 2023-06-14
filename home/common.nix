@@ -19,7 +19,7 @@ let
 
     shift
     # https://til.simonwillison.net/sqlite/one-line-csv-operations
-    exec -a $0 sqlite3 :memory: -cmd '.mode csv' -cmd '.separator ''${SQL_CSV_SEP:-;};"' -cmd ".import $db csv" "$@"
+    exec -a $0 sqlite3 :memory: -cmd '.mode csv' -cmd ".separator ''${SQL_CSV_SEP:-;}" -cmd ".import $db csv" "$@"
   '';
 in
 {

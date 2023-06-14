@@ -54,7 +54,7 @@ in
     pavucontrol
     pmutils
     powertop
-    python
+    python3
     spotify
     texlive.combined.scheme-full
     thunderbird

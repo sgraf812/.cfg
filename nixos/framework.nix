@@ -174,7 +174,6 @@
   };
 
   hardware.bluetooth.enable = true;
-  hardware.video.hidpi.enable = false;
 
   # Enable the X11 windowing system.
   services.xserver = {

@@ -4,7 +4,7 @@
   imports = [ ];
 
   home.packages = with pkgs; [
-    pythonPackages.editorconfig
+    python3Packages.editorconfig
     unstable.kak-lsp
   ];
 

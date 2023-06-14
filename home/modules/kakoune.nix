@@ -52,7 +52,7 @@
         launchWorkflow = {
           "i44pc6.informatik.kit.edu" = "launch-tmux-workflow";
           "i44pc19" = "launch-tmux-workflow";
-          "nixos-framework" = "launch-kitty-workflow";
+          "nixos-framework" = "launch-tmux-workflow";
           "nixos-lt" = "launch-kitty-workflow";
           "Sebastian-PC" = "launch-kitty-workflow"; # FIXME
         }."${hostname}";

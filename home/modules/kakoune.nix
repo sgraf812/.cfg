@@ -117,7 +117,7 @@
       #   prefix when expanding a single line
       #
       # TODO: Need to add _@ (neither case characters) in par-1.53
-      map global user f '<a-x>|${pkgs.par}/bin/par w$kak_opt_autowrap_column "B=.,?_q_Q_A_a" q "Q=_s->"<ret>' -docstring "Wrap lines of selection"
+      map global user f 'x|${pkgs.par}/bin/par w$kak_opt_autowrap_column "B=.,?_q_Q_A_a" q "Q=_s->"<ret>' -docstring "Wrap lines of selection"
 
       ## Copying from tmux
 

@@ -47,7 +47,7 @@ in
 
       Service = {
         Type = "notify";
-        ExecStartPre="${pkgs.coreutils}/bin/mkdir -p ${mapping.to}";
+        ExecStartPre="/bin/sh -c '${pkgs.coreutils}/bin/mkdir -p ${mapping.to}; fusermount -uz ${mapping.to} || true'";
         ExecStart = ''
           ${pkgs.rclone}/bin/rclone mount \
             --config=%h/.config/rclone/rclone.conf \
@@ -62,12 +62,12 @@ in
             ${mapping.from} ${mapping.to}
         '';
         # -z: https://stackoverflow.com/a/25986155/388010
-        ExecStop = "fusermount -uz ${mapping.to}";
+        ExecStop = "fusermount -uz ${mapping.to} || true";
         Restart = "on-abnormal";
         RestartSec=5;
         # fusermount needs to be wrapped in NixOS. Otherwise we take the native
         # binary; the one from ${pkgs.fuse} leads to a permission error in
-        # `rcone mount`.
+        # `rclone mount`.
         # Same happens on Ubuntu; we need the fusermount (and friends) from /bin/.
         Environment="PATH=/run/wrappers/bin/:/bin/:$PATH";
       };

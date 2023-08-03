@@ -2,15 +2,16 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-23.05;
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-22.11;
     unstable.url = github:NixOS/nixpkgs/nixos-unstable;
     nix.url = github:NixOS/nix;
-    home-manager.url = github:rycee/home-manager/release-23.05;
+    home-manager.url = github:rycee/home-manager/release-22.11;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = github:NixOS/nixos-hardware;
     nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;
     nofib.flake = false;
     kitty-fix.url = github:r-ryantm/nixpkgs/71b2fdc8dcc6f70ef7aad8fd20e315180f56d1d6;
+    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
   };
 
   # Taken from https://github.com/davidtwco/veritas/blob/master/flake.nix
@@ -48,6 +49,7 @@
       mkHomeManagerConfiguration = hostname: { system, config }:
         nameValuePair hostname ({ ... }: {
           imports = [
+            inputs.nix-doom-emacs.hmModule
             (import config)
           ];
 

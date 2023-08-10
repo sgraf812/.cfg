@@ -259,7 +259,7 @@ in
 
   services.emacs.enable = true;
   programs.doom-emacs = {
-    enable = true;
+    enable = lib.mkDefault true;
     doomPrivateDir = ./doom.d;
   };
 

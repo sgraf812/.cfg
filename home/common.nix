@@ -48,8 +48,8 @@ in
     exa
     fd
     ghc
-    (pkgs.writeShellScriptBin "ghc92" ''exec -a $0 ${haskell.compiler.ghc92}/bin/ghc "$@"'')
     (pkgs.writeShellScriptBin "ghc94" ''exec -a $0 ${haskell.compiler.ghc94}/bin/ghc "$@"'')
+    (pkgs.writeShellScriptBin "ghc96" ''exec -a $0 ${haskell.compiler.ghc96}/bin/ghc "$@"'')
     glow # CLI markdown viewer
     gnumake
     # gthumb # can crop images # segfaults in ubuntu...

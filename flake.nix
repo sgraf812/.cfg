@@ -99,7 +99,6 @@
               nix.nixPath = [ "nixpkgs=/etc/nixpkgs" "unstable=/etc/unstable" ];
 
               nix = {
-                autoOptimiseStore = true;
                 # Don't rely on the configuration to enable a flake-compatible version of Nix.
                 # package = pkgs.nixFlakes;
                 extraOptions = "experimental-features = nix-command flakes";
@@ -114,6 +113,9 @@
                     from = { id = "unstable"; type = "indirect"; };
                     flake = inputs.unstable;
                   };
+                };
+                settings = {
+                  auto-optimise-store = true;
                 };
               };
             })

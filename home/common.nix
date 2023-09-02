@@ -220,7 +220,7 @@ in
       p = "(){ ${pkgs.python3}/bin/python -c \"from math import *; print($@);\" }"; # https://stackoverflow.com/questions/34340575/zsh-alias-with-parameter#comment108551041_39395740
       sshpp = ''ssh -t -Y sgraf-local@i44pc6 "zsh -l"'';
       sshfspp = "${pkgs.sshfs}/bin/sshfs sgraf-local@i44pc6:/home/sgraf-local ~/mnt/work";
-      "nix-ghc-with" = ''(){ VER="$1"; shift; nix shell --impure --expr "with import <nixpkgs> {}; haskell.packages.ghc$VER.ghcWithPackages (p: with p; [ $@ ])" }'';
+      "nix-ghc-with" = ''(){ VER="$1"; shift; nix shell "$(nix eval --raw --apply "ghc: (ghc.ghcWithPackages (p: with p; [ $* ])).drvPath" nixpkgs#haskell.packages.ghc$VER)" }''; # https://github.com/NixOS/nix/issues/5567#issuecomment-1662884203
     };
     shellGlobalAliases = {
       # An alias for quietly forking to background:

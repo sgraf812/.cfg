@@ -276,7 +276,7 @@ in
   home.stateVersion = "22.11";
 
   services.rclone = {
-    enable = true;
+    enable = lib.mkDefault true;
     mounts = {
       onedrive = { from = "OneDrive:/"; to = "${config.home.homeDirectory}/mnt/OneDrive"; };
       pcloud   = { from = "pCloud:/";   to = "${config.home.homeDirectory}/mnt/pCloud"; };

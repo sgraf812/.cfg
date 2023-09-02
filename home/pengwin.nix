@@ -31,7 +31,8 @@
     };
   };
 
-  programs.doom-emacs.enable = false;
+  # programs.doom-emacs.enable = false;
+  services.rclone.enable = false;
 
   home.username = "sgraf";
   home.homeDirectory = "/home/sgraf";

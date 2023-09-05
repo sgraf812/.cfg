@@ -258,12 +258,34 @@ in
   };
 
   services.emacs.enable = true;
-  programs.doom-emacs = {
+  programs.doom-emacs = rec {
     enable = lib.mkDefault true;
     doomPrivateDir = ./doom.d;
+    # Only init/packages so we only rebuild when those change.
+    doomPackageDir = let
+      filteredPath = builtins.path {
+        path = doomPrivateDir;
+        name = "doom-private-dir-filtered";
+        filter = path: type:
+          builtins.elem (baseNameOf path) [ "init.el" "packages.el" ];
+      };
+    in pkgs.linkFarm "doom-packages-dir" [
+      {
+        name = "init.el";
+        path = "${filteredPath}/init.el";
+      }
+      {
+        name = "packages.el";
+        path = "${filteredPath}/packages.el";
+      }
+      {
+        name = "config.el";
+        path = pkgs.emptyFile;
+      }
+    ];
   };
 
-  home.keyboard.layout = "de";
+  home.keyboard.layout = "eu";
 
   home.language = {
     base = "en_US.UTF-8";

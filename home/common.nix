@@ -57,7 +57,7 @@ in
     # haskellPackages.hkgr # Hackage release management, but it's broken
     haskellPackages.lhs2tex
     haskellPackages.hasktags
-    unstable.haskell-language-server
+    haskell-language-server
     htop
     jq # Manipulating JSON on the CLI
     man

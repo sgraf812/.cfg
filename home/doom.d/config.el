@@ -28,19 +28,20 @@
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
 ;; refresh your font settings. If Emacs still can't find your font, it likely
 ;; wasn't installed correctly. Font issues are rarely Doom issues!
+(setq doom-font (font-spec :family "Iosevka" :size 13))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;(setq doom-theme 'doom-one)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type 'relative)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+;(setq org-directory "~/org/")
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -74,3 +75,31 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;; Stuff stolen from https://github.com/Kha/dotfiles/blob/master/doom/config.el
+
+;; Something weird is happening with god mode
+;(setq evil-snipe-override-evil-repeat-keys nil) ;; unset `,`
+;(setq doom-localleader-key ",")
+;(setq doom-localleader-alt-key "M-,")
+;(after! evil (evil-define-key 'normal global-map "," 'evil-execute-in-god-state))
+;(after! evil (evil-define-key 'god global-map [escape] 'evil-god-state-bail))
+;(after! which-key (which-key-enable-god-mode-support))
+
+(after! lsp-ui
+  (setq lsp-ui-doc-enable t
+        lsp-ui-doc-include-signature t
+        lsp-ui-doc-max-width 150))
+        ;lsp-headerline-breadcrumb-enable t))
+
+(after! auctex
+  (setq +latex-indent-item-continuation-offset 0))
+
+;; continue comments, of course
+(setq comment-multi-line t)
+
+;; Don't know the implications of this one yet
+(setq split-width-threshold 240)
+
+;; don't guess
+(setq-default tab-width 2)

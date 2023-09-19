@@ -59,6 +59,7 @@ in
     haskellPackages.hasktags
     haskell-language-server
     htop
+    iosevka
     jq # Manipulating JSON on the CLI
     man
     man-pages
@@ -284,6 +285,8 @@ in
       }
     ];
   };
+
+  fonts.fontconfig.enable = true;
 
   home.keyboard.layout = "eu";
 

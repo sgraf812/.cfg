@@ -25,6 +25,7 @@
     envExtra = ''
       # https://x410.dev/cookbook/wsl/using-x410-with-wsl2/ Option 1 did not work in Loccum
       export DISPLAY=$(${pkgs.iproute2}/bin/ip route | grep default | awk '{print $3; exit;}'):0.0
+      ${pkgs.xorg.setxkbmap}/bin/setxkbmap eu # Normally set in OS settings/NixOS module
     '';
     shellAliases = {
       upd = "sudo apt update && sudo apt upgrade --yes && nix flake update /home/sgraf/code/nix/config/ && home-manager switch -b bak --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";

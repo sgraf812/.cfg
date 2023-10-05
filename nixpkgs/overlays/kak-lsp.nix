@@ -19,20 +19,20 @@ self: super:
       };
     };
   };
-  kak-lsp = super.kak-lsp;
+#  kak-lsp = super.kak-lsp;
 #  kak-lsp = self.unstable.kak-lsp;
-#  kak-lsp = super.kak-lsp.overrideAttrs (drv: rec {
-#    version = "9.0.0-pre";
-#    src = super.fetchFromGitHub {
-#      owner = "kak-lsp";
-#      repo = "kak-lsp";
-#      rev = "354b46e3cf56f0da35b444941a701ca4c1135aa8";
-#      sha256 = "00hwf7pgrhrk0d572xp4k82pama09ph7k8s63cg28ixsmzhpaiji";
-#    };
-#    cargoDeps = drv.cargoDeps.overrideAttrs (_: {
-#      name = "${drv.pname}-${version}-vendor.tar.gz";
-#      inherit src;
-#      outputHash = "0av59ii201mzjzrhvc9nny6akxmmbfl0dfzxjhsqnbdgx03vxl5a";
-#    });
-#  });
+  kak-lsp = super.kak-lsp.overrideAttrs (drv: rec {
+    version = "14.2.0";
+    src = super.fetchFromGitHub {
+      owner = "kak-lsp";
+      repo = "kak-lsp";
+      rev = "12bad0b5e4e6eb0dd567701fcd02a7247f6f3ef7";
+      sha256 = "sha256-U4eqIzvYzUfwprVpPHV/OFPKiBXK4/5z2p8kknX2iME=";
+    };
+    cargoDeps = drv.cargoDeps.overrideAttrs (_: {
+      name = "${drv.pname}-${version}-vendor.tar.gz";
+      inherit src;
+      outputHash = "sha256-g63Kfi4xJZO/+fq6eK2iB1dUGoSGWIIRaJr8BWO/txM=";
+    });
+  });
 }

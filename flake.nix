@@ -11,6 +11,8 @@
     nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;
     nofib.flake = false;
     nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
+    lhs2tex.url = "github:sgraf812/lhs2TeX/fix-with-srcdist";
+    lhs2tex.flake = false;
   };
 
   # Taken from https://github.com/davidtwco/veritas/blob/master/flake.nix
@@ -29,6 +31,7 @@
             (import ./nixpkgs/overlays/kak-lsp.nix)
             # (import ./nixpkgs/overlays/kak-tabs.nix)
             (import ./nixpkgs/overlays/nofib-analyse.nix inputs.nofib)
+            (import ./nixpkgs/overlays/lhs2tex.nix inputs.lhs2tex)
           ];
         }
       );

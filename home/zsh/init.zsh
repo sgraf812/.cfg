@@ -17,7 +17,7 @@ export max_print_line=1000
 # because otherwise tmux starts in bash (?!).
 # tmux's default-shell doesn't work because we don't have zsh's path
 export SHELL=$(which zsh)
-export PATH=$HOME/.stack/bin:$HOME/.cabal/bin:/opt/ghc/bin:/opt/cabal/bin:$PATH
+export PATH=$HOME/.ghcup/bin:$HOME/.stack/bin:$HOME/.cabal/bin:/opt/ghc/bin:/opt/cabal/bin:$PATH
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
 
 bindkey -v

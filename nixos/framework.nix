@@ -8,7 +8,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./framework-hardware.nix
-    inputs.nixos-hardware.nixosModules.framework
+    inputs.nixos-hardware.nixosModules.framework-13th-gen-intel
   ];
 
   # Use the systemd-boot EFI boot loader.

@@ -175,7 +175,14 @@ function ncpus() {
 # $2: replacement
 # $3: where
 function rg-sed() {
-  rg --files-with-matches $1 $3 | xargs sed -i "s/$1/$2/g"
+  if [ $# < 3 ]; then
+    echo "USAGE: rg-sed regex replacement path" >&2
+    return 1
+  fi
+
+  for f in $(rg --files-with-matches "$1" "$3"); do
+    rg --passthrough -N "$1" -r "$2" $f | sponge $f
+  done
 }
 
 function is_git_dir() {

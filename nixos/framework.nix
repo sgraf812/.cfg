@@ -16,10 +16,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  # Fix brightness control keys etc.
-  # https://dov.dev/blog/nixos-on-the-framework-12th-gen
-  boot.kernelParams = [ "module_blacklist=hid_sensor_hub" ];
-
   # Enable NTFS Fuse FS
   boot.supportedFilesystems = [ "ntfs" ];
 

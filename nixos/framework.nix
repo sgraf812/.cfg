@@ -19,6 +19,9 @@
   # Enable NTFS Fuse FS
   boot.supportedFilesystems = [ "ntfs" ];
 
+  # Splash screen
+  boot.plymouth.enable = true;
+
   networking.hostName = "nixos-framework"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant. Not needed when we have networkmanager.
   networking.networkmanager = {

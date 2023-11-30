@@ -220,6 +220,16 @@ in
       ll = "l --group --header --links --extended --git";
       la = "ll -a";
       p = "(){ ${pkgs.python3}/bin/python -c \"from math import *; print($@);\" }"; # https://stackoverflow.com/questions/34340575/zsh-alias-with-parameter#comment108551041_39395740
+      rg-sed = ''() {
+        if [ $# -lt 3 ]; then
+          echo "USAGE: rg-sed regex replacement path" >&2
+          return 1
+        fi
+
+        for f in $(${pkgs.ripgrep}/bin/rg --files-with-matches "$1" "$3"); do
+          rg --passthrough -N "$1" -r "$2" $f | ${pkgs.moreutils}/bin/sponge $f
+        done
+      }'';
       sshpp = ''ssh -t -Y sgraf-local@i44pc6 "zsh -l"'';
       sshfspp = "${pkgs.sshfs}/bin/sshfs sgraf-local@i44pc6:/home/sgraf-local ~/mnt/work";
       "nix-ghc-with" = ''(){ VER="$1"; shift; nix shell "$(nix eval --raw --apply "ghc: (ghc.ghcWithPackages (p: with p; [ $* ])).drvPath" nixpkgs#haskell.packages.ghc$VER)" }''; # https://github.com/NixOS/nix/issues/5567#issuecomment-1662884203

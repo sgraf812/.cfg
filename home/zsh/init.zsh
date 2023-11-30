@@ -171,20 +171,6 @@ function ncpus() {
   grep -c ^processor /proc/cpuinfo
 }
 
-# $1: search regex
-# $2: replacement
-# $3: where
-function rg-sed() {
-  if [ $# < 3 ]; then
-    echo "USAGE: rg-sed regex replacement path" >&2
-    return 1
-  fi
-
-  for f in $(rg --files-with-matches "$1" "$3"); do
-    rg --passthrough -N "$1" -r "$2" $f | sponge $f
-  done
-}
-
 function is_git_dir() {
   git -C $1 rev-parse --is-inside-work-tree > /dev/null 2>&1
 }

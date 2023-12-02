@@ -45,7 +45,7 @@ in
     dtrx
     # dust # Needs pypy (WTF)
     entr
-    exa
+    eza
     fd
     ghc
     (pkgs.writeShellScriptBin "ghc94" ''exec -a $0 ${haskell.compiler.ghc94}/bin/ghc "$@"'')
@@ -215,7 +215,7 @@ in
       exf = "fzf --exact"; # not FuZzy, but EXact
       less = ''\less -XFR'';
       info = "info --vi-keys";
-      ls = "exa --color=automatic";
+      ls = "eza --color=automatic";
       l = "ls -l";
       ll = "l --group --header --links --extended --git";
       la = "ll -a";

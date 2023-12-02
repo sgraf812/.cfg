@@ -2,10 +2,10 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-23.05;
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-23.11;
     unstable.url = github:NixOS/nixpkgs/nixos-unstable;
     nix.url = github:NixOS/nix;
-    home-manager.url = github:rycee/home-manager/release-23.05;
+    home-manager.url = github:rycee/home-manager/release-23.11;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = github:NixOS/nixos-hardware;
     nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;

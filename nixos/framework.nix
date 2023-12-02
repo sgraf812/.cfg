@@ -199,7 +199,6 @@
     };
   };
   services.gnome.core-utilities.enable = true;
-  nixpkgs.config.firefox.enableGnomeExtensions = true;
   services.gnome.gnome-browser-connector.enable = true;
 
   ####################

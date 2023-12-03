@@ -271,7 +271,7 @@ in
 
   services.emacs.enable = true;
   programs.doom-emacs = rec {
-    enable = lib.mkDefault true;
+    enable = lib.mkDefault false; # Too much churn for how often I use it
     doomPrivateDir = ./doom.d;
     # Only init/packages so we only rebuild when those change.
     doomPackageDir = let

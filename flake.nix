@@ -172,14 +172,14 @@
       homeManagerConfigurations = mapAttrs' mkHomeManagerConfiguration {
         nixos-framework = { system = "x86_64-linux"; config = ./home/private.nix; };
         nixos-lt = { system = "x86_64-linux"; config = ./home/private.nix; };
-        "i44pc6.informatik.kit.edu" = { system = "x86_64-linux"; config = ./home/work.nix; };
+        "i44pc6.ppd.ipd.kit.edu" = { system = "x86_64-linux"; config = ./home/work.nix; };
         "i44pc19" = { system = "x86_64-linux"; config = ./home/work.nix; };
         "i44pc30" = { system = "x86_64-linux"; config = ./home/work.nix; };
         Sebastian-PC = { system = "x86_64-linux"; config = ./home/pengwin.nix; };
       };
 
       homeManagerHostConfigurations = mapAttrs' mkHomeManagerHostConfiguration {
-        "i44pc6.informatik.kit.edu" = { system = "x86_64-linux"; username = "sgraf-local"; };
+        "i44pc6.ppd.ipd.kit.edu" = { system = "x86_64-linux"; username = "sgraf-local"; };
         "i44pc19" = { system = "x86_64-linux"; username = "sgraf-local"; };
         "i44pc30" = { system = "x86_64-linux"; username = "sgraf-local"; };
         Sebastian-PC = { system = "x86_64-linux"; username = "sgraf"; };

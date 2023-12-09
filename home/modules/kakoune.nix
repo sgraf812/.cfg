@@ -50,7 +50,7 @@
       let
         os = builtins.elemAt (builtins.match "(.*[[:space:]])?NAME\=\"?([A-z]*).*" (builtins.readFile /etc/os-release)) 1;
         launchWorkflow = {
-          "i44pc6.informatik.kit.edu" = "launch-tmux-workflow";
+          "i44pc6.ppd.ipd.kit.edu" = "launch-tmux-workflow";
           "i44pc19" = "launch-tmux-workflow";
           "i44pc30" = "launch-tmux-workflow";
           "nixos-framework" = "launch-tmux-workflow";

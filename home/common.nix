@@ -55,8 +55,7 @@ in
     # gthumb # can crop images # segfaults in ubuntu...
     haskellPackages.ghcid
     # haskellPackages.hkgr # Hackage release management, but it's broken
-    lhs2tex # from flake
-    # haskellPackages.lhs2tex
+    haskellPackages.lhs2tex
     haskellPackages.hasktags
     haskell-language-server
     htop

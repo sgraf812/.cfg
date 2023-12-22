@@ -109,11 +109,11 @@ in
     #  "icons/hicolor/128x128/apps/code.png".source = ./vscode/icon-128.png;
     #};
 
-    configFile."mimeapps.list".force = true; # https://github.com/nix-community/home-manager/issues/1213
+#    configFile."mimeapps.list".force = true; # https://github.com/nix-community/home-manager/issues/1213
     mimeApps = {
       enable = true;
       defaultApplications = {
-        "application/pdf" = [ "org.pwmt.zathura.desktop" ];
+        "application/pdf" = [ "org.gnome.Evince.desktop" ];
       };
     };
   };

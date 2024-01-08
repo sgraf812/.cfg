@@ -90,10 +90,6 @@ in
     vlc
   ];
 
-  # caches.cachix = [
-  #   "ghc-nix"
-  # ];
-
   programs.command-not-found.enable = true;
 
   programs.zathura.enable = true;

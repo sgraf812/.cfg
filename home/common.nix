@@ -45,6 +45,7 @@ in
     dtrx
     # dust # Needs pypy (WTF)
     entr
+    evince
     eza
     fd
     ghc

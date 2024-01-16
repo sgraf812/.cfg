@@ -68,10 +68,10 @@
   ];
 
   fonts = {
-    enableDefaultFonts = true;
+    enableDefaultPackages = true;
     fontDir.enable = true;
 
-    fonts = with pkgs; [
+    packages = with pkgs; [
       cascadia-code
       fira-code
       fira-code-symbols
@@ -99,7 +99,10 @@
   programs.dconf.enable = true;
   services.dbus.enable = true;
   services.dbus.packages = with pkgs; [ dconf ];
-  services.udev.packages = with pkgs; [ gnome3.gnome-settings-daemon ];
+  services.udev.packages = with pkgs; [
+    gnome3.gnome-settings-daemon
+    yubikey-personalization
+  ];
 
   # Shoot things when there's less than 2% RAM
   services.earlyoom = {

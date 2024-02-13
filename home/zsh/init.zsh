@@ -21,9 +21,9 @@ export PATH=$HOME/.ghcup/bin:$HOME/.stack/bin:$HOME/.cabal/bin:/opt/ghc/bin:/opt
 export MANPATH=/nix/var/nix/profiles/default/share/man:$HOME/.nix-profile/share/man:$MANPATH
 
 bindkey -v
-bindkey '^R' history-incremental-search-backward
-bindkey '^P' history-incremental-search-backward
-bindkey '^N' history-incremental-search-forward
+#bindkey '^R' history-incremental-search-backward # using fzf
+#bindkey '^P' history-incremental-search-backward
+#bindkey '^N' history-incremental-search-forward
 bindkey -M vicmd ' ' edit-command-line # so that <ESC><SPACE> opens an editor
 
 # Make Ctrl+arrow, Pos1, End, Del, Ins work

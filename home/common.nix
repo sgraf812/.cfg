@@ -261,7 +261,7 @@ in
     fileWidgetOptions = [ "--preview '${pkgs.bat}/bin/bat {}'" ];
     changeDirWidgetCommand = "fd --type d";
     changeDirWidgetOptions = [ "--preview '${pkgs.tree}/bin/tree -C {} | head -200'" ];
-    #historyWidgetOptions = [ "--sort" "--exact" ];
+    historyWidgetOptions = [ "--sort" "--exact" ];
     tmux.enableShellIntegration = true;
   };
 

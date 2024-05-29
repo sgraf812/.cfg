@@ -266,7 +266,7 @@ in
     tmux.enableShellIntegration = true;
   };
 
-  services.emacs.enable = true;
+  services.emacs.enable = false;
   programs.doom-emacs = rec {
     enable = lib.mkDefault false; # Too much churn for how often I use it
     doomPrivateDir = ./doom.d;

@@ -28,7 +28,6 @@
           overlays = [
             (import ./nixpkgs/overlays/kak-git-mode.nix)
             (import ./nixpkgs/overlays/kak-lsp.nix)
-            # (import ./nixpkgs/overlays/kak-tabs.nix)
             (import ./nixpkgs/overlays/nofib-analyse.nix inputs.nofib)
           ];
         }

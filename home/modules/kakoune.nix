@@ -44,7 +44,6 @@
       # balancing!
       # kak-auto-pairs    # Auto close parens, etc.
       kak-buffers         # smarter buffer movements # superseded by tabs-kak
-      tabs-kak
     ];
     extraConfig =
       let

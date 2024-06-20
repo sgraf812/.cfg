@@ -28,6 +28,8 @@
       # NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
       # fix locales for Nix on Ubuntu
       LOCALE_ARCHIVE_2_27 = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+      # I'm not sure we need the following line; it appears that this var is set already
+      #NIX_PATH = "nixpkgs=$HOME/.nixpkgs/stable:unstable=$HOME/.nixpkgs/unstable\${NIX_PATH:+:}$NIX_PATH";
     };
     shellAliases = {
       afs-lease = "kinit -l 7d sgraf; aklog";

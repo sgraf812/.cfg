@@ -112,7 +112,6 @@
 
   # Install firmware updates
   services.fwupd.enable = true;
-  services.fwupd.enableTestRemote = true;
 
   programs.zsh.enable = true;
   programs.thefuck.enable = true;
@@ -180,8 +179,8 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    layout = "eu,us";
-    xkbOptions = "eurosign:e, caps:swapescape";
+    xkb.layout = "eu,us";
+    xkb.options = "eurosign:e, caps:swapescape";
     #dpi = 192;
 
     displayManager.gdm.enable = true;
@@ -189,16 +188,16 @@
     #displayManager.gdm.debug = true;
     desktopManager.gnome.enable = true;
     #desktopManager.gnome.debug = true;
+  };
 
-    # Enable touchpad support (enabled default in most desktopManagers).
-    libinput = {
-      # enable = true;
-      touchpad = {
-        naturalScrolling = true;
-        # We don't want natural scrolling on the track point or mouse
-        additionalOptions = ''MatchIsTouchpad "on"'';
-        # accelSpeed = "0.6";
-      };
+  # Enable touchpad support (enabled default in most desktopManagers).
+  services.libinput = {
+    # enable = true;
+    touchpad = {
+      naturalScrolling = true;
+      # We don't want natural scrolling on the track point or mouse
+      additionalOptions = ''MatchIsTouchpad "on"'';
+      # accelSpeed = "0.6";
     };
   };
   services.gnome.core-utilities.enable = true;

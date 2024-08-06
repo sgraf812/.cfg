@@ -17,6 +17,7 @@
       font_size = 14;
       shell = "${pkgs.zsh}/bin/zsh --login";
       enable_audio_bell = false;
+      cursor_shape = "block";
       shell_integration = "no-cursor";
     };
   };

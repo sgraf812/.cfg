@@ -27,13 +27,6 @@
         enableMouse = false;
         setTitle = true;
       };
-      showWhitespace = {
-        enable = true;
-        # We only do this to see tabs
-        lineFeed = " ";
-        space = " ";
-        nonBreakingSpace = " ";
-      };
     };
     plugins = with pkgs.kakounePlugins; [
       # kak-fzf             # fzf mode, not needed with broot
@@ -65,7 +58,9 @@
       }
 
       # Highlight trailing whitespace. But we simply delete it anyway
-      # add-highlighter global/show-trailing-whitespaces regex '\h+$' 0:Error
+      # add-highlighter global/ show-trailing-whitespaces regex '\h+$' 0:Error
+      # Show tabs, but no indentation guides
+      add-highlighter global/ show-whitespaces -indent ' ' -spc ' ' -nbsp ' ' -lf ' '
       # Remove trailing whitespace
       hook global BufWritePre .* %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
       hook global InsertChar k %{ try %{

@@ -35,15 +35,16 @@ in
     # discord # somehow broken.. can't satisfy libasound
     file
     dconf # some tools need this to preserve settings
+    elan
     gnome.gnome-tweaks
     gnome.gnome-shell-extensions
     gnomeExtensions.bluetooth-quick-connect
     gnomeExtensions.clipboard-indicator
-    gnomeExtensions.system-monitor
+#    gnomeExtensions.system-monitor
     gnomeExtensions.impatience
     gnomeExtensions.pop-shell
+    gnomeExtensions.paperwm
     gnomeExtensions.window-calls-extended
-    gnomeExtensions.vertical-overview
     google-chrome
     gucharmap
     # gcc_multi # ld.bfd conflicts with binutils-wapper's

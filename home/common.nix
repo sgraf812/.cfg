@@ -1,27 +1,5 @@
 { config, pkgs, lib, unstable, ... }:
 
-# Worth considering:
-# - [starship](https://starship.rs): Cool cross-shell prompt
-# - [sxhkd](https://github.com/baskerville/sxhkd): For X keyboard shortcuts
-# - muchsync: If I ever get the E-Mail stuff working
-# - xsuspend: Might be useful on the laptop
-# - getmail: Automatically fetch mail in a systemd service
-
-let
-  sqlcsv = pkgs.writeShellScriptBin "sql@csv" ''
-    db=$1
-
-    if [ $# -lt 2 ] || [ ! -f $db ]; then
-      echo "USAGE: $(basename $0) ./path/to/db.csv 'select avg(csv.Salary) from csv'"
-      echo "       Set \$SQL_CSV_SEP if you want a separator that is different to ;"
-      exit 1
-    fi
-
-    shift
-    # https://til.simonwillison.net/sqlite/one-line-csv-operations
-    exec -a $0 sqlite3 :memory: -cmd '.mode csv' -cmd ".separator ''${SQL_CSV_SEP:-;}" -cmd ".import $db csv" "$@"
-  '';
-in
 {
   imports = [
     modules/ghc-dev.nix
@@ -31,15 +9,12 @@ in
   ];
 
   home.packages = with pkgs; [
-    audacity
     bandwhich
     bat
     bench
     # Don't install binutils here; it will interfere with Ubuntu's ld/binutils install. Set it in private.nix instead
     # binutils # ar and stuff
     bottom # alternative to top
-    cabal2nix
-    cabal-install
     cloc
     creduce
     dtrx
@@ -48,18 +23,8 @@ in
     evince
     eza
     fd
-    ghc
-    (pkgs.writeShellScriptBin "ghc96" ''exec -a $0 ${haskell.compiler.ghc96}/bin/ghc "$@"'')
-    (pkgs.writeShellScriptBin "ghc98" ''exec -a $0 ${haskell.compiler.ghc98}/bin/ghc "$@"'')
-    (pkgs.writeShellScriptBin "ghc910" ''exec -a $0 ${haskell.compiler.ghc910}/bin/ghc "$@"'')
     glow # CLI markdown viewer
     gnumake
-    # gthumb # can crop images # segfaults in ubuntu...
-    haskellPackages.ghcid
-    # haskellPackages.hkgr # Hackage release management, but it's broken
-    haskellPackages.lhs2tex
-    haskellPackages.hasktags
-    haskell-language-server
     htop
     iosevka
     jq # Manipulating JSON on the CLI
@@ -74,14 +39,9 @@ in
     nix-index
     nix-prefetch-scripts
     nixpkgs-review
-    nofib-analyse # see overlay
     p7zip
     # parallel # GNU parallel + env_parallel, clashes with moreutils
     sd
-    signal-desktop
-    stack
-    # stack2nix # broken
-    sqlcsv
     ranger
     rename # prename -- https://stackoverflow.com/a/20657563/388010
     ripgrep
@@ -89,12 +49,9 @@ in
     tree
     xclip # Maybe use clipit instead?
     xdg_utils
-    vlc
   ];
 
   programs.command-not-found.enable = true;
-
-  programs.zathura.enable = true;
 
   programs.broot = {
     enable = true;
@@ -312,7 +269,6 @@ in
     enable = lib.mkDefault true;
     mounts = {
       onedrive = { from = "OneDrive:/"; to = "${config.home.homeDirectory}/mnt/OneDrive"; };
-      pcloud   = { from = "pCloud:/";   to = "${config.home.homeDirectory}/mnt/pCloud"; };
     };
   };
 }

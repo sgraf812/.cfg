@@ -9,12 +9,9 @@
   targets.genericLinux.enable = true;
 
   home.packages = with pkgs; [
-    #mendeley # Broken in 22.11 because of qt-webkit. Also in browser now
-    pdftk
-    vit
   ];
 
-  programs.git.userEmail = "sebastian.graf@kit.edu";
+  programs.git.userEmail = "sg@lean-fro.org";
 
   programs.taskwarrior.enable = true;
 
@@ -32,10 +29,7 @@
       #NIX_PATH = "nixpkgs=$HOME/.nixpkgs/stable:unstable=$HOME/.nixpkgs/unstable\${NIX_PATH:+:}$NIX_PATH";
     };
     shellAliases = {
-      afs-lease = "kinit -l 7d sgraf; aklog";
-      upd = "sudo apt update && sudo apt upgrade --yes && nix flake update /home/sgraf-local/code/nix/config/ && home-manager switch -b bak --flake /home/sgraf-local/code/nix/config/ && . ~/.zshrc";
-      afs-serve  = ''() { trap "pushd ~sgraf/public_html/   > /dev/null  && rm -rf $(echo "$@" | xargs -n1 basename); popd > /dev/null; return" EXIT INT; cp "$@" ~sgraf/public_html/   && read; }'';
-      afs-iserve = ''() { trap "pushd ~sgraf/public_html/i/ > /dev/null  && rm -rf $(echo "$@" | xargs -n1 basename); popd > /dev/null; return" EXIT INT; cp "$@" ~sgraf/public_html/i/ && read; }'';
+      upd = "sudo apt update && sudo apt upgrade --yes && nix flake update /home/sg/code/nix/config/ && home-manager switch -b bak --flake /home/sg/code/nix/config/ && . ~/.zshrc";
     };
   };
 

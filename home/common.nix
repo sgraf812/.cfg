@@ -184,8 +184,8 @@
           rg --passthrough -N "$1" -r "$2" $f | ${pkgs.moreutils}/bin/sponge $f
         done
       }'';
-      sshpp = ''ssh -t -Y sgraf-local@i44pc6.ppd.ipd.kit.edu "zsh -l"'';
-      sshfspp = "${pkgs.sshfs}/bin/sshfs sgraf-local@i44pc6:/home/sgraf-local ~/mnt/work";
+      sshfro = ''ssh -t -Y sg@chonk.lean-fro.org "zsh -l"'';
+      # sshfspp = "${pkgs.sshfs}/bin/sshfs sg@chonk.lean-fro.org:/home/sg ~/mnt/work";
       "nix-ghc-with" = ''(){ VER="$1"; shift; nix shell "$(nix eval --raw --apply "ghc: (ghc.ghcWithPackages (p: with p; [ $* ])).drvPath" nixpkgs#haskell.packages.ghc$VER)" }''; # https://github.com/NixOS/nix/issues/5567#issuecomment-1662884203
     };
     shellGlobalAliases = {

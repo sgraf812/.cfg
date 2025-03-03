@@ -38,7 +38,6 @@ in
     # discord # somehow broken.. can't satisfy libasound
     file
     dconf # some tools need this to preserve settings
-    elan
     ghc
     (pkgs.writeShellScriptBin "ghc96" ''exec -a $0 ${haskell.compiler.ghc96}/bin/ghc "$@"'')
     (pkgs.writeShellScriptBin "ghc98" ''exec -a $0 ${haskell.compiler.ghc98}/bin/ghc "$@"'')

@@ -29,7 +29,7 @@
       #NIX_PATH = "nixpkgs=$HOME/.nixpkgs/stable:unstable=$HOME/.nixpkgs/unstable\${NIX_PATH:+:}$NIX_PATH";
     };
     shellAliases = {
-      upd = "sudo apt update && sudo apt upgrade --yes && nix flake update /home/sg/code/nix/config/ && home-manager switch -b bak --flake /home/sg/code/nix/config/ && . ~/.zshrc";
+      upd = "nix flake update /home/sg/code/nix/config/ && home-manager switch -b bak --flake /home/sg/code/nix/config/ && . ~/.zshrc";
     };
   };
 

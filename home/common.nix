@@ -19,6 +19,7 @@
     creduce
     dtrx
     # dust # Needs pypy (WTF)
+    elan
     entr
     evince
     eza

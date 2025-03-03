@@ -31,7 +31,7 @@
     plugins = [ pkgs.networkmanager-openvpn ];
   };
   # systemd.network.wait-online.anyInterface = true; # https://github.com/NixOS/nixpkgs/issues/180175#issuecomment-1273814285
-  systemd.services.NetworkManager-wait-online.enable = false; # https://github.com/NixOS/nixpkgs/issues/59603#issuecomment-1304869994
+  # systemd.services.NetworkManager-wait-online.enable = false; # https://github.com/NixOS/nixpkgs/issues/59603#issuecomment-1304869994
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
@@ -100,7 +100,7 @@
   services.dbus.enable = true;
   services.dbus.packages = with pkgs; [ dconf ];
   services.udev.packages = with pkgs; [
-    gnome3.gnome-settings-daemon
+    gnome.gnome-settings-daemon
     yubikey-personalization
   ];
 
@@ -159,7 +159,7 @@
   ];
 
   # Enable sound with pipewire.
-  sound.enable = true;
+  # sound.enable = true; # 24.11 says this has no effect
   hardware.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;

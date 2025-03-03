@@ -41,6 +41,7 @@
     nixpkgs-review
     p7zip
     # parallel # GNU parallel + env_parallel, clashes with moreutils
+    pdfpc
     sd
     ranger
     rename # prename -- https://stackoverflow.com/a/20657563/388010
@@ -48,7 +49,7 @@
     tealdeer
     tree
     xclip # Maybe use clipit instead?
-    xdg_utils
+    xdg-utils
   ];
 
   programs.command-not-found.enable = true;

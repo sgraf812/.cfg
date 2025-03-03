@@ -354,6 +354,26 @@
     execution = ":print_path"
     apply_to = "file"
 
+    [[verbs]]
+    key = "ctrl-h"
+    invocation = "back"
+    description = "Move left"
+
+    [[verbs]]
+    key = "ctrl-l"
+    invocation = "open_stay"
+    description = "Move right"
+
+    [[verbs]]
+    key = "ctrl-j"
+    invocation = "line_down"
+    description = "Move down"
+
+    [[verbs]]
+    key = "ctrl-k"
+    invocation = "line_up"
+    description = "Move up"
+
     [search-modes]
     "<empty>" = "fuzzy path"
   '';

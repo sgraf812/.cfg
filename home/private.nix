@@ -40,6 +40,7 @@ in
     (pkgs.writeShellScriptBin "ghc96" ''exec -a $0 ${haskell.compiler.ghc96}/bin/ghc "$@"'')
     (pkgs.writeShellScriptBin "ghc98" ''exec -a $0 ${haskell.compiler.ghc98}/bin/ghc "$@"'')
     (pkgs.writeShellScriptBin "ghc910" ''exec -a $0 ${haskell.compiler.ghc910}/bin/ghc "$@"'')
+    gimp
     # gthumb # can crop images # segfaults in ubuntu...
     haskellPackages.ghcid
     # haskellPackages.hkgr # Hackage release management, but it's broken
@@ -48,6 +49,7 @@ in
     haskell-language-server
     # nofib-analyse # see overlay
     p7zip
+    pdfpc
     stack
     # stack2nix # broken
     sqlcsv

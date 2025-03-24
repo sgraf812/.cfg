@@ -100,7 +100,7 @@
   services.dbus.enable = true;
   services.dbus.packages = with pkgs; [ dconf ];
   services.udev.packages = with pkgs; [
-    gnome.gnome-settings-daemon
+    gnome-settings-daemon
     yubikey-personalization
   ];
 

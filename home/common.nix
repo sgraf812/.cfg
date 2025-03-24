@@ -70,7 +70,6 @@
   programs.git = {
     enable = true;
     userName = "Sebastian Graf";
-    userEmail = "sgraf1337@gmail.com@";
     aliases = {
       a = "add";
       ap = "add --patch";

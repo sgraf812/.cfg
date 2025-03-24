@@ -24,7 +24,7 @@ in
 
 {
   imports = [
-    ./common.nix
+    ./private.nix
     ./modules/dconf.nix
     ./modules/kitty.nix
     ./modules/rclone.nix
@@ -35,6 +35,7 @@ in
     binutils # ar and stuff
     cabal2nix
     cabal-install
+    unstable.code-cursor
     # discord # somehow broken.. can't satisfy libasound
     file
     dconf # some tools need this to preserve settings
@@ -42,8 +43,8 @@ in
     (pkgs.writeShellScriptBin "ghc96" ''exec -a $0 ${haskell.compiler.ghc96}/bin/ghc "$@"'')
     (pkgs.writeShellScriptBin "ghc98" ''exec -a $0 ${haskell.compiler.ghc98}/bin/ghc "$@"'')
     (pkgs.writeShellScriptBin "ghc910" ''exec -a $0 ${haskell.compiler.ghc910}/bin/ghc "$@"'')
-    gnome.gnome-tweaks
-    gnome.gnome-shell-extensions
+    gnome-tweaks
+    gnome-shell-extensions
     gnomeExtensions.bluetooth-quick-connect
     gnomeExtensions.clipboard-indicator
 #    gnomeExtensions.system-monitor
@@ -125,9 +126,9 @@ in
 #    configFile."mimeapps.list".force = true; # https://github.com/nix-community/home-manager/issues/1213
     mimeApps = {
       enable = true;
-      defaultApplications = {
-        "application/pdf" = [ "org.gnome.Evince.desktop" ];
-      };
+#      defaultApplications = {
+#        "application/pdf" = [ "org.gnome.Evince.desktop" ];
+#      };
     };
   };
 

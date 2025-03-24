@@ -9,9 +9,9 @@
     home-manager.url = github:rycee/home-manager/release-24.11;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = github:NixOS/nixos-hardware;
-    nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;
-    nofib.flake = false;
-    nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
+    #nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;
+    #nofib.flake = false;
+    #nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
   };
 
   # Taken from https://github.com/davidtwco/veritas/blob/master/flake.nix
@@ -167,8 +167,7 @@
       # that host - consumed by the home-manager NixOS module for that host (if it exists)
       # or by `mkHomeManagerHostConfiguration` for home-manager-only hosts.
       homeManagerConfigurations = mapAttrs' mkHomeManagerConfiguration {
-        nixos-framework = { system = "x86_64-linux"; config = ./home/private.nix; };
-        nixos-lt = { system = "x86_64-linux"; config = ./home/private.nix; };
+        nixos-framework = { system = "x86_64-linux"; config = ./home/nixos.nix; };
         chonk = { system = "x86_64-linux"; config = ./home/work.nix; };
         Sebastian-PC = { system = "x86_64-linux"; config = ./home/pengwin.nix; };
       };
@@ -182,7 +181,6 @@
       # on those hosts.
       nixosHostConfigurations = mapAttrs' mkNixOsConfiguration {
         nixos-framework = { system = "x86_64-linux"; config = ./nixos/framework.nix; };
-        nixos-lt = { system = "x86_64-linux"; config = ./nixos/lt.nix; };
       };
 
     in

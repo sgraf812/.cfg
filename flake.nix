@@ -11,7 +11,6 @@
     nixos-hardware.url = github:NixOS/nixos-hardware;
     #nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;
     #nofib.flake = false;
-    #nix-doom-emacs.url = "github:nix-community/nix-doom-emacs";
   };
 
   # Taken from https://github.com/davidtwco/veritas/blob/master/flake.nix
@@ -48,7 +47,6 @@
       mkHomeManagerConfiguration = hostname: { system, config }:
         nameValuePair hostname ({ ... }: {
           imports = [
-            inputs.nix-doom-emacs.hmModule
             (import config)
           ];
 

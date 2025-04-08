@@ -225,34 +225,6 @@
     tmux.enableShellIntegration = true;
   };
 
-  services.emacs.enable = false;
-  programs.doom-emacs = rec {
-    enable = lib.mkDefault false; # Too much churn for how often I use it
-    doomPrivateDir = ./doom.d;
-    # Only init/packages so we only rebuild when those change.
-    doomPackageDir = let
-      filteredPath = builtins.path {
-        path = doomPrivateDir;
-        name = "doom-private-dir-filtered";
-        filter = path: type:
-          builtins.elem (baseNameOf path) [ "init.el" "packages.el" ];
-      };
-    in pkgs.linkFarm "doom-packages-dir" [
-      {
-        name = "init.el";
-        path = "${filteredPath}/init.el";
-      }
-      {
-        name = "packages.el";
-        path = "${filteredPath}/packages.el";
-      }
-      {
-        name = "config.el";
-        path = pkgs.emptyFile;
-      }
-    ];
-  };
-
   fonts.fontconfig.enable = true;
 
   home.keyboard.layout = "eu";

@@ -28,7 +28,7 @@
       ${pkgs.xorg.setxkbmap}/bin/setxkbmap eu # Normally set in OS settings/NixOS module
     '';
     shellAliases = {
-      upd = "sudo apt update && sudo apt upgrade --yes && nix flake update /home/sgraf/code/nix/config/ && home-manager switch -b bak --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";
+      upd = "sudo apt update && sudo apt upgrade --yes && nix flake update --flake /home/sgraf/code/nix/config/ && home-manager switch -b bak --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";
     };
   };
 

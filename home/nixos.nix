@@ -109,7 +109,7 @@ in
   programs.git.userEmail = "sgraf1337@gmail.com";
 
   programs.zsh.shellAliases = {
-    upd = "nix flake update /home/sgraf/code/nix/config/ && sudo nixos-rebuild switch --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";
+    upd = "nix flake update --flake /home/sgraf/code/nix/config/ && sudo nixos-rebuild switch --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";
   };
 
   programs.vscode = {

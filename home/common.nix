@@ -239,6 +239,9 @@
 
   home.stateVersion = "22.11";
 
+  # collect user profiles on a weekly basis
+  nix.gc.automatic = true;
+
   services.rclone = {
     enable = lib.mkDefault true;
     mounts = {

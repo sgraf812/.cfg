@@ -274,6 +274,10 @@
   virtualisation.docker.enable = true;
   users.extraGroups.docker.members = [ "sgraf" ];
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -69,6 +69,7 @@ in
     pmutils
     powertop
     python3
+    rustup
     spotify
     texlive.combined.scheme-full
     thunderbird
@@ -123,13 +124,14 @@ in
     #  "icons/hicolor/128x128/apps/code.png".source = ./vscode/icon-128.png;
     #};
 
+# It's complete overkill to manage these through Nix
 #    configFile."mimeapps.list".force = true; # https://github.com/nix-community/home-manager/issues/1213
-    mimeApps = {
-      enable = true;
+#    mimeApps = {
+#      enable = true;
 #      defaultApplications = {
 #        "application/pdf" = [ "org.gnome.Evince.desktop" ];
 #      };
-    };
+#    };
   };
 
   home.username = "sgraf";

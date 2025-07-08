@@ -11,7 +11,7 @@
   home.packages = with pkgs; [
   ];
 
-  programs.git.userEmail = "sg@lean-fro.org";
+  programs.git.userEmail = "sgraf1337@gmail.com";
 
   programs.taskwarrior.enable = true;
 

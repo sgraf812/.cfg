@@ -2,11 +2,11 @@
   description = "NixOS configuration";
 
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-24.11;
-    #unstable.url = github:NixOS/nixpkgs/nixos-24.11;
+    nixpkgs.url = github:NixOS/nixpkgs/nixos-25.05;
+    #unstable.url = github:NixOS/nixpkgs/nixos-25.05;
     unstable.url = github:NixOS/nixpkgs/nixos-unstable;
     nix.url = github:NixOS/nix;
-    home-manager.url = github:rycee/home-manager/release-24.11;
+    home-manager.url = github:rycee/home-manager/release-25.05;
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = github:NixOS/nixos-hardware;
     #nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;
@@ -54,7 +54,8 @@
           # We really need to set ~/.config/nixpkgs/config.nix as well as import
           # it in home-manager's nixpkgs.config; see the manpage.
           xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs/config.nix;
-          nixpkgs.config = import ./nixpkgs/config.nix;
+          # Since 25.05, the following clashes with useGlobalPkgs
+          # nixpkgs.config = import ./nixpkgs/config.nix;
           xdg.configFile."nix/nix.conf".source = ./nix/nix.conf;
 
           # Re-expose self, nixpkgs and unsable as flakes. For use in nix-search, for example

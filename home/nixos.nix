@@ -64,7 +64,7 @@ in
     libreoffice
     nmap
     # nofib-analyse # see overlay
-    okular
+    # kdePackages.okular
     pavucontrol
     pmutils
     powertop

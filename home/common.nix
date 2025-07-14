@@ -148,7 +148,7 @@
       plugins = [ "git" ];
       theme = "robbyrussell";
     };
-    initExtra = builtins.readFile zsh/init.zsh;
+    initContent = builtins.readFile zsh/init.zsh;
     sessionVariables = {
       # disable default rprompt...?
       RPROMPT = "";

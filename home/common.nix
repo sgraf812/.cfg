@@ -19,7 +19,7 @@
     creduce
     dtrx
     # dust # Needs pypy (WTF)
-    elan
+    # elan # Nix install is no longer supported
     entr
     evince
     eza

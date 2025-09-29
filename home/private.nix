@@ -71,53 +71,6 @@ in
     nix-direnv.enable = true;
   };
 
-  programs.git = {
-    enable = true;
-    userName = "Sebastian Graf";
-    aliases = {
-      a = "add";
-      ap = "add --patch";
-      abort = "rebase --abort";
-      amend = "commit --amend";
-      cat = "cat-file -p";
-      ci = "commit -a";
-      co = "checkout";
-      conflict = ''!"$EDITOR" -c '/^[<=|>]\\{7\\}' `git ls-files --unmerged | cut -c 51- | uniq`'';
-      contains = "branch --contains";
-      continue = "!git add -u && git rebase --continue";
-      cx = "commit";
-      da = "diff HEAD";
-      di = "diff";
-      dx = "diff --cached";
-      fixup = "commit --amend --reuse-message=HEAD"; # reuses timestamp and authorship info
-      # (f)etch (o)rigin and (s)witch to new branch from origin/master
-      fos = ''!bash -ec 'if (( $# != 1)); then echo >&2 git fos: 1 parameter expected; exit 2; fi; git fetch origin && git switch --create $1 --no-track origin/master' fos'';
-      graph = "log --decorate --graph";
-      less = "-p cat-file -p";
-      l = "log --decorate --graph --oneline";
-      lg = "log --decorate --graph --name-status";
-      s = "status -sb";
-      sf = "svn fetch";
-      suir = "!git submodule foreach 'git checkout .' && git submodule update --init --recursive";
-      tar = "archive --format=tar";
-      wta = "worktree add --detach"; # "worktree add --force --detach";
-      wtas = ''!bash -ec 'if (( $# != 1)); then echo >&2 git wtas: 1 parameter expected; exit 2; fi; tree=$(${pkgs.python3}/bin/python -c "from __future__ import print_function; import os, os.path, sys; print(os.path.normpath(os.path.join(os.getenv(\"PWD\"), sys.argv[1])))" "$1"); git wta "$tree"; cd "$(git rev-parse --git-dir)"; for mod in $(git config --blob HEAD:.gitmodules -l --name-only|gawk -F . "/\\.path$/ {print \$2}"); do [ -d modules/$mod ] && git -C modules/$mod wta "$tree/$(git config --blob HEAD:.gitmodules --get submodule.$mod.path)"; done' wtas'';
-    };
-    extraConfig = {
-      core = {
-        editor = "kak";
-        pager = "less -x 4 -R -~"; # -F -c
-        # excludesfile = "$HOME/.gitignore";
-        whitespace = "trailing-space,space-before-tab";
-      };
-      color.ui = "auto";
-      push.default = "simple";
-      pull.ff = "only";
-      merge.conflictstyle = "diff3";
-      protocol.ext.allow = "user";
-    };
-  };
-
   services.rclone = {
     enable = lib.mkDefault true;
     mounts = {

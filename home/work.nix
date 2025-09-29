@@ -13,7 +13,10 @@
 
   programs.git.userEmail = "sgraf1337@gmail.com";
 
-  programs.taskwarrior.enable = true;
+  programs.taskwarrior = {
+    enable = true;
+    package = pkgs.taskwarrior3;
+  };
 
   programs.zsh = {
     localVariables = {

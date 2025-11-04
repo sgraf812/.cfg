@@ -11,6 +11,7 @@
     nixos-hardware.url = github:NixOS/nixos-hardware;
     #nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;
     #nofib.flake = false;
+    cursor.url = "github:sgraf812/cursor-nixos-flake";
   };
 
   # Taken from https://github.com/davidtwco/veritas/blob/master/flake.nix

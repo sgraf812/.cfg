@@ -1,4 +1,4 @@
-{ config, pkgs, lib, unstable, ... }:
+{ config, pkgs, lib, unstable, inputs, ... }:
 
 let
 
@@ -35,7 +35,7 @@ in
     binutils # ar and stuff
     cabal2nix
     cabal-install
-    unstable.code-cursor
+    inputs.cursor.packages.x86_64-linux.cursor
     # discord # somehow broken.. can't satisfy libasound
     file
     dconf # some tools need this to preserve settings

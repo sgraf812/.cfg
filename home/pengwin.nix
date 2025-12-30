@@ -9,7 +9,7 @@
     texlive.combined.scheme-full
   ];
 
-  programs.git.userEmail = "sgraf1337@gmail.com";
+  programs.git.settings.user.email = "sgraf1337@gmail.com";
 
   programs.zsh = {
     localVariables = {

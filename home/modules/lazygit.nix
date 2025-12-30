@@ -5,14 +5,11 @@
 
   programs.lazygit = {
     enable = true;
+    enableZshIntegration = true;
     settings = {
       gui.theme = {
       };
       git.pull.mode = "rebase";
     };
-  };
-
-  programs.zsh.shellAliases = {
-    lg = "lazygit";
   };
 }

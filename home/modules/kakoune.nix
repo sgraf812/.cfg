@@ -5,7 +5,7 @@
 
   home.packages = with pkgs; [
     python3Packages.editorconfig
-    kak-lsp
+    kakoune-lsp
   ];
 
   programs.kakoune = {
@@ -256,10 +256,10 @@
       }
       map global normal <c-p> ': run-broot<ret>' -docstring 'select files in broot'
 
-      # kak-lsp
-      eval %sh{${pkgs.kak-lsp}/bin/kak-lsp --kakoune -s $kak_session}
-      set global lsp_cmd "kak-lsp -s %val{session} -vvvv --log /tmp/kak-lsp-%val{session}.log"
-      # eval %sh{${pkgs.kak-lsp}/bin/kak-lsp --kakoune -s $kak_session -vvv --log /tmp/kak-lsp-$kak_session.log}
+      # kakoune-lsp
+      eval %sh{${pkgs.kakoune-lsp}/bin/kakoune-lsp --kakoune -s $kak_session}
+      set global lsp_cmd "kakoune-lsp -s %val{session} -vvvv --log /tmp/kakoune-lsp-%val{session}.log"
+      # eval %sh{${pkgs.kakoune-lsp}/bin/kakoune-lsp --kakoune -s $kak_session -vvv --log /tmp/kakoune-lsp-$kak_session.log}
       map global user l ': enter-user-mode lsp<ret>' -docstring "LSP mode"
       hook global WinSetOption filetype=haskell %{
         lsp-enable-window
@@ -378,7 +378,7 @@
     "<empty>" = "fuzzy path"
   '';
 
-  xdg.configFile."kak-lsp/kak-lsp.toml".text = ''
+  xdg.configFile."kakoune-lsp/kakoune-lsp.toml".text = ''
     [language.haskell]
     filetypes = ["haskell"]
     roots = ["hie.yaml", "Setup.hs", "cabal.project", "stack.yaml", "*.cabal"]

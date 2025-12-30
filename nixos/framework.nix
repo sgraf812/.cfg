@@ -79,10 +79,10 @@
       iosevka
       material-design-icons # community
       noto-fonts
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       roboto
       siji
-      ubuntu_font_family
+      ubuntu-classic
     ];
 
     fontconfig = {
@@ -114,7 +114,6 @@
   services.fwupd.enable = true;
 
   programs.zsh.enable = true;
-  programs.thefuck.enable = true;
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -182,12 +181,15 @@
     xkb.layout = "eu,us";
     xkb.options = "eurosign:e, caps:swapescape";
     #dpi = 192;
-
-    displayManager.gdm.enable = true;
-    displayManager.gdm.wayland = true;
-    #displayManager.gdm.debug = true;
-    desktopManager.gnome.enable = true;
-    #desktopManager.gnome.debug = true;
+  };
+  services.displayManager.gdm = {
+    enable = true;
+    wayland = true;
+    #debug = true;
+  };
+  services.desktopManager.gnome = {
+    enable = true;
+    #debug = true;
   };
 
   # Enable touchpad support (enabled default in most desktopManagers).
@@ -222,13 +224,11 @@
     };
   };
   # Suspend-then-hibernate everywhere
-  services.logind = {
-    lidSwitch = "suspend-then-hibernate";
-    extraConfig = ''
-      HandlePowerKey=suspend-then-hibernate
-      IdleAction=suspend-then-hibernate
-      IdleActionSec=2m
-    '';
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend-then-hibernate";
+    HandleHibernateKey = "suspend-then-hibernate";
+    IdleAction="suspend-then-hibernate";
+    IdleActionSec="2m";
   };
   systemd.sleep.extraConfig = "HibernateDelaySec=2h";
 

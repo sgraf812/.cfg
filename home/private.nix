@@ -37,14 +37,13 @@ in
     cabal2nix
     cabal-install
     ghc
-    (pkgs.writeShellScriptBin "ghc96" ''exec -a $0 ${haskell.compiler.ghc96}/bin/ghc "$@"'')
-    (pkgs.writeShellScriptBin "ghc98" ''exec -a $0 ${haskell.compiler.ghc98}/bin/ghc "$@"'')
-    (pkgs.writeShellScriptBin "ghc910" ''exec -a $0 ${haskell.compiler.ghc910}/bin/ghc "$@"'')
+    (pkgs.writeShellScriptBin "ghc912" ''exec -a $0 ${haskell.compiler.ghc912}/bin/ghc "$@"'')
+    #(pkgs.writeShellScriptBin "ghc914" ''exec -a $0 ${haskell.compiler.ghc914}/bin/ghc "$@"'')
     gimp
     # gthumb # can crop images # segfaults in ubuntu...
     haskellPackages.ghcid
     # haskellPackages.hkgr # Hackage release management, but it's broken
-    haskellPackages.lhs2tex
+    # haskellPackages.lhs2tex # Broke for GHC 9.10
     haskellPackages.hasktags
     haskell-language-server
     # nofib-analyse # see overlay

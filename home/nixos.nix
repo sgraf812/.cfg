@@ -40,9 +40,7 @@ in
     file
     dconf # some tools need this to preserve settings
     ghc
-    (pkgs.writeShellScriptBin "ghc96" ''exec -a $0 ${haskell.compiler.ghc96}/bin/ghc "$@"'')
-    (pkgs.writeShellScriptBin "ghc98" ''exec -a $0 ${haskell.compiler.ghc98}/bin/ghc "$@"'')
-    (pkgs.writeShellScriptBin "ghc910" ''exec -a $0 ${haskell.compiler.ghc910}/bin/ghc "$@"'')
+    #(pkgs.writeShellScriptBin "ghc910" ''exec -a $0 ${haskell.compiler.ghc910}/bin/ghc "$@"'')
     gnome-tweaks
     gnome-shell-extensions
     gnomeExtensions.bluetooth-quick-connect
@@ -57,7 +55,7 @@ in
     # gcc_multi # ld.bfd conflicts with binutils-wapper's
     haskellPackages.ghcid
     # haskellPackages.hkgr # Hackage release management, but it's broken
-    haskellPackages.lhs2tex
+    # haskellPackages.lhs2tex # Broke for GHC 9.10
     haskellPackages.hasktags
     haskell-language-server
     hicolor-icon-theme
@@ -107,7 +105,7 @@ in
     # enable = true;
   };
 
-  programs.git.userEmail = "sgraf1337@gmail.com";
+  programs.git.settings.user.email = "sgraf1337@gmail.com";
 
   programs.zsh.shellAliases = {
     upd = "sudo true && nix flake update --flake /home/sgraf/code/nix/config/ && sudo nixos-rebuild switch --flake /home/sgraf/code/nix/config/ && . ~/.zshrc";

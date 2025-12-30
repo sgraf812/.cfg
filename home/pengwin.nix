@@ -24,7 +24,9 @@
     };
     envExtra = ''
       # https://x410.dev/cookbook/wsl/using-x410-with-wsl2/ Option 1 did not work in Loccum
-      export DISPLAY=$(${pkgs.iproute2}/bin/ip route | grep default | awk '{print $3; exit;}'):0.0
+      # https://x410.dev/cookbook/wsl/using-x410-with-wsl2/ Option 2 stopped working because it returned wrong IP
+      # https://x410.dev/cookbook/wsl/using-x410-with-wsl2/ Option 3 is good, but requires .wslconfig change
+      export DISPLAY=localhost:0.0
       ${pkgs.xorg.setxkbmap}/bin/setxkbmap eu # Normally set in OS settings/NixOS module
     '';
     shellAliases = {

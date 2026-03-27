@@ -15,6 +15,7 @@
     # Don't install binutils here; it will interfere with Ubuntu's ld/binutils install. Set it in private.nix instead
     # binutils # ar and stuff
     bottom # alternative to top
+    unstable.claude-code
     cloc
     creduce
     dtrx
@@ -43,12 +44,13 @@
     p7zip
     # parallel # GNU parallel + env_parallel, clashes with moreutils
     pdfpc
-    sd
     ranger
     rename # prename -- https://stackoverflow.com/a/20657563/388010
     ripgrep
+    sd
     tealdeer
     tree
+    uv
     xclip # Maybe use clipit instead?
     xdg-utils
   ];

@@ -12,6 +12,7 @@
     #nofib.url = git+https://gitlab.haskell.org/ghc/nofib?ref=wip/input-utf8;
     #nofib.flake = false;
     cursor.url = "github:sgraf812/cursor-nixos-flake";
+    claude-code.url = "github:sadjow/claude-code-nix";
   };
 
   # Taken from https://github.com/davidtwco/veritas/blob/master/flake.nix
@@ -154,6 +155,9 @@
               home.file.".nixpkgs/unstable".source = inputs.unstable;
               systemd.user.sessionVariables."NIX_PATH" =
                 mkForce "nixpkgs=$HOME/.nixpkgs/stable:unstable=$HOME/.nixpkgs/unstable\${NIX_PATH:+:}$NIX_PATH";
+            })
+            ({ ... } : {
+              unstable.overlays = [ inputs.claude-code.overlays.default ];
             })
           ];
           extraSpecialArgs = {

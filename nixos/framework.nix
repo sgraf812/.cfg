@@ -97,6 +97,7 @@
   };
 
   programs.dconf.enable = true;
+  programs.nix-ld.enable = true;
   services.dbus.enable = true;
   services.dbus.packages = with pkgs; [ dconf ];
   services.udev.packages = with pkgs; [

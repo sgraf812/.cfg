@@ -172,12 +172,14 @@
       # or by `mkHomeManagerHostConfiguration` for home-manager-only hosts.
       homeManagerConfigurations = mapAttrs' mkHomeManagerConfiguration {
         nixos-framework = { system = "x86_64-linux"; config = ./home/nixos.nix; };
-        chonk = { system = "x86_64-linux"; config = ./home/work.nix; };
+        chonk2 = { system = "x86_64-linux"; config = ./home/work.nix; };
+        chungus = { system = "x86_64-linux"; config = ./home/work.nix; };
         Sebastian-PC = { system = "x86_64-linux"; config = ./home/pengwin.nix; };
       };
 
       homeManagerHostConfigurations = mapAttrs' mkHomeManagerHostConfiguration {
-        chonk = { system = "x86_64-linux"; username = "sg"; };
+        chonk2 = { system = "x86_64-linux"; username = "sg"; };
+        chungus = { system = "x86_64-linux"; username = "sg"; };
         Sebastian-PC = { system = "x86_64-linux"; username = "sgraf"; };
       };
 

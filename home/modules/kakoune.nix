@@ -42,7 +42,8 @@
       let
         os = builtins.elemAt (builtins.match "(.*[[:space:]])?NAME\=\"?([A-z]*).*" (builtins.readFile /etc/os-release)) 1;
         launchWorkflow = {
-          "chonk" = "launch-tmux-workflow";
+          "chonk2" = "launch-tmux-workflow";
+          "chungus" = "launch-tmux-workflow";
           "nixos-framework" = "launch-tmux-workflow";
           "Sebastian-PC" = "launch-tmux-workflow";
         }."${hostname}";

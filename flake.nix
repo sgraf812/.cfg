@@ -38,6 +38,7 @@
         import inputs.unstable {
           inherit system;
           config = import ./nixpkgs/config.nix;
+          overlays = [ inputs.claude-code.overlays.default ];
         }
       );
 
@@ -155,9 +156,6 @@
               home.file.".nixpkgs/unstable".source = inputs.unstable;
               systemd.user.sessionVariables."NIX_PATH" =
                 mkForce "nixpkgs=$HOME/.nixpkgs/stable:unstable=$HOME/.nixpkgs/unstable\${NIX_PATH:+:}$NIX_PATH";
-            })
-            ({ ... } : {
-              unstable.overlays = [ inputs.claude-code.overlays.default ];
             })
           ];
           extraSpecialArgs = {

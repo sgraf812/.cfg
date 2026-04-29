@@ -100,7 +100,7 @@
       wta = "worktree add --detach"; # "worktree add --force --detach";
       wtas = ''!bash -ec 'if (( $# != 1)); then echo >&2 git wtas: 1 parameter expected; exit 2; fi; tree=$(${pkgs.python3}/bin/python -c "from __future__ import print_function; import os, os.path, sys; print(os.path.normpath(os.path.join(os.getenv(\"PWD\"), sys.argv[1])))" "$1"); git wta "$tree"; cd "$(git rev-parse --git-dir)"; for mod in $(git config --blob HEAD:.gitmodules -l --name-only|gawk -F . "/\\.path$/ {print \$2}"); do [ -d modules/$mod ] && git -C modules/$mod wta "$tree/$(git config --blob HEAD:.gitmodules --get submodule.$mod.path)"; done' wtas'';
     };
-    ignores = [ "scratch.lean" ];
+    ignores = [ "scratch.lean", ".claude/settings.local.json" ];
     settings = {
       core = {
         editor = "kak";

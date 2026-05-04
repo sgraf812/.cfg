@@ -161,7 +161,6 @@
           extraSpecialArgs = {
             inherit hostname inputs;
             unstable = unstableBySystem."${system}";
-            kitty-fix = import inputs.kitty-fix {inherit system;};
           };
         });
 

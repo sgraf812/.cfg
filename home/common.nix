@@ -52,6 +52,26 @@
     uv
     xclip # Maybe use clipit instead?
     xdg-utils
+
+    (writeShellScriptBin "claudeWrap" ''
+      exec ${bubblewrap}/bin/bwrap \
+          --hostname bubblewrap --unshare-uts \
+          --ro-bind / / \
+          --tmpfs /tmp \
+          --dev /dev \
+          --proc /proc \
+          --tmpfs /home \
+          --ro-bind $HOME/.elan $HOME/.elan \
+          --ro-bind $HOME/.nix-profile $HOME/.nix-profile \
+          --ro-bind $HOME/.local $HOME/.local \
+          --ro-bind $HOME/.cursor-server $HOME/.cursor-server \
+          --ro-bind $HOME/code/lean $HOME/code/lean \
+          --bind $HOME/.claude $HOME/.claude \
+          --bind $HOME/.cache $HOME/.cache \
+          --bind $HOME/.claude.json $HOME/.claude.json \
+          --bind "$PWD" "$PWD" \
+          "$@"
+    '')
   ];
 
   programs.command-not-found.enable = true;
@@ -166,6 +186,7 @@
     };
     shellAliases = {
       cdc = "cd ~/code/nix/config";
+      cld = "claudeWrap claude";
       cdnix = "cd ~/code/nix/nixpkgs && git checkout master && git pull";
       nix-zsh = "nix-shell --command zsh";
       nix-stray-roots = "nix-store --gc --print-roots | egrep -v '^(/nix/var|/run/\\w+-system|\\{memory)' | cut -d' ' -f1";

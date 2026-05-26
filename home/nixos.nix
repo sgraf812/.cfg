@@ -39,6 +39,7 @@ in
     # discord # somehow broken.. can't satisfy libasound
     file
     dconf # some tools need this to preserve settings
+    gcc
     ghc
     #(pkgs.writeShellScriptBin "ghc910" ''exec -a $0 ${haskell.compiler.ghc910}/bin/ghc "$@"'')
     gnome-tweaks

@@ -67,7 +67,7 @@
           --ro-bind $HOME/.cursor-server $HOME/.cursor-server \
           --ro-bind $HOME/code/lean $HOME/code/lean \
           --ro-bind $HOME/.config/gh/hosts.yml $HOME/.config/gh/hosts.yml \
-          --bind $HOME/code/lean/lean4 $HOME/code/lean/lean4 \
+          --bind-try $HOME/code/lean/lean4 $HOME/code/lean/lean4 \
           --bind $HOME/.claude $HOME/.claude \
           --bind $HOME/.cache $HOME/.cache \
           --bind $HOME/.claude.json $HOME/.claude.json \

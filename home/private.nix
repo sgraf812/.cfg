@@ -72,12 +72,13 @@ in
     nix-direnv.enable = true;
   };
 
-  programs.gh = {
-    enable = true;
-    settings = {
-      git_protocol = "ssh";
-    };
-  };
+  # The config file created is out of date and forces gh to migrate, which it can't (read-only)
+  # programs.gh = {
+  #   enable = true;
+  #   settings = {
+  #     git_protocol = "ssh";
+  #   };
+  # };
 
   services.rclone = {
     enable = lib.mkDefault true;

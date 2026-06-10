@@ -109,7 +109,7 @@ in
   programs.git.settings.user.email = "sgraf1337@gmail.com";
 
   programs.zsh.shellAliases = {
-    upd = "sudo true && nix flake update --flake /home/sgraf/code/nix/config/ && sudo nixos-rebuild switch --flake /home/sgraf/code/nix/config/ && (git -C /home/sgraf/code/nix/config diff --quiet -- flake.lock || git -C /home/sgraf/code/nix/config commit -m 'flake.lock bump' -- flake.lock) && . ~/.zshrc";
+    upd = "sudo true && nix flake update --flake /home/sgraf/code/nix/config/ && sudo nixos-rebuild switch --flake /home/sgraf/code/nix/config/ && (git -C /home/sgraf/code/nix/config diff --quiet -- flake.lock || git -C /home/sgraf/code/nix/config commit -m 'flake.lock bump' -- flake.lock) && exec zsh";
   };
 
   programs.vscode = {

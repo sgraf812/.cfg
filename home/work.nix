@@ -32,7 +32,7 @@
       #NIX_PATH = "nixpkgs=$HOME/.nixpkgs/stable:unstable=$HOME/.nixpkgs/unstable\${NIX_PATH:+:}$NIX_PATH";
     };
     shellAliases = {
-      upd = "nix flake update --flake /home/sg/code/nix/config/ && home-manager switch -b bak --flake /home/sg/code/nix/config/ && (git -C /home/sg/code/nix/config diff --quiet -- flake.lock || git -C /home/sg/code/nix/config commit -m 'flake.lock bump' -- flake.lock) && . ~/.zshrc";
+      upd = "nix flake update --flake /home/sg/code/nix/config/ && home-manager switch -b bak --flake /home/sg/code/nix/config/ && (git -C /home/sg/code/nix/config diff --quiet -- flake.lock || git -C /home/sg/code/nix/config commit -m 'flake.lock bump' -- flake.lock) && exec zsh";
     };
   };
 

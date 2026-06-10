@@ -75,7 +75,7 @@ in
     # virtmanager # Needs virtualisation.libvirtd.enable = true; in configuration.nix and is currently deactivated
     vlc
     w3m
-    xorg.xprop
+    xprop
     zoom-us
 
     # Haskell/Cabal/Stack stuff
@@ -101,7 +101,10 @@ in
     gtk4.theme = config.gtk.theme;
   };
 
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    configPath = ".mozilla/firefox"; # keep the pre-XDG profile path
+  };
 
   programs.ssh = {
     # enable = true;

@@ -185,7 +185,6 @@
   };
   services.displayManager.gdm = {
     enable = true;
-    wayland = true;
     #debug = true;
   };
   services.desktopManager.gnome = {
@@ -231,7 +230,7 @@
     IdleAction="suspend-then-hibernate";
     IdleActionSec="2m";
   };
-  systemd.sleep.extraConfig = "HibernateDelaySec=2h";
+  systemd.sleep.settings.Sleep.HibernateDelaySec = "2h";
 
   ####################
   # USER MANAGEMENT #

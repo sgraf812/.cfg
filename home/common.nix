@@ -175,6 +175,7 @@
   programs.zsh = {
     enable = true;
     enableCompletion = false; # Works around an annoying home-manager+nix interaction
+    dotDir = config.home.homeDirectory; # keep zsh dotfiles in $HOME, not XDG
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" ];

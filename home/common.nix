@@ -136,6 +136,8 @@
       push.default = "simple";
       pull.ff = "only";
       merge.conflictstyle = "diff3";
+      # Auto-resolve flake.lock conflicts in favour of the local version (see .gitattributes).
+      merge.ours.driver = "true";
       protocol.ext.allow = "user";
     };
   };

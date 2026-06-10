@@ -1,3 +1,4 @@
-# binary: Mark not automergeable, keep working version in working dir on conflict
-# merge: Mark file as automergeable (again, after removing the trait with binary)
-flake.lock binary merge
+# binary: suppress the noisy textual diff (sets -diff -text).
+# merge=ours: auto-resolve every merge/rebase conflict by keeping the local
+#   version. Needs `merge.ours.driver = true` in git config, set in home/common.nix.
+flake.lock binary merge=ours

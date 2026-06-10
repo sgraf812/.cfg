@@ -27,7 +27,7 @@
       # https://x410.dev/cookbook/wsl/using-x410-with-wsl2/ Option 2 stopped working because it returned wrong IP
       # https://x410.dev/cookbook/wsl/using-x410-with-wsl2/ Option 3 is good, but requires .wslconfig change
       export DISPLAY=localhost:0.0
-      ${pkgs.xorg.setxkbmap}/bin/setxkbmap eu # Normally set in OS settings/NixOS module
+      ${pkgs.setxkbmap}/bin/setxkbmap eu # Normally set in OS settings/NixOS module
     '';
     shellAliases = {
       upd = "sudo apt update && sudo apt upgrade --yes && nix flake update --flake /home/sgraf/code/nix/config/ && home-manager switch -b bak --flake /home/sgraf/code/nix/config/ && (git -C /home/sgraf/code/nix/config diff --quiet -- flake.lock || git -C /home/sgraf/code/nix/config commit -m 'flake.lock bump' -- flake.lock) && exec zsh";

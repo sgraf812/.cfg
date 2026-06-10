@@ -2,7 +2,7 @@
 
 let
 
-  addSkipAndFreezeAliases = baseAliases: lib.fold (alias: a: a // {
+  addSkipAndFreezeAliases = baseAliases: lib.foldr (alias: a: a // {
     "${alias}s" = "${alias} --skip-depends --skip='//*.mk' --skip=stage1:lib:rts";
     "${alias}f" = "${alias}s --freeze1";
   }) baseAliases (builtins.attrNames baseAliases);

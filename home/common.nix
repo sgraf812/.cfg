@@ -156,16 +156,16 @@
       number = true;
     };
     plugins = with pkgs.vimPlugins; [
-      ctrlp                # Fuzzy file finder etc.
+      ctrlp-vim            # Fuzzy file finder etc.
       nerdcommenter        # Comment scripts
       nerdtree             # File browser
-      fugitive             # Git commands
-      sensible             # Sensible defaults
-      sleuth               # Heuristically set buffer options
+      vim-fugitive         # Git commands
+      vim-sensible         # Sensible defaults
+      vim-sleuth           # Heuristically set buffer options
       # Solarized
-      airline              # Powerline in vimscript
+      vim-airline          # Powerline in vimscript
       vim-dispatch         # Asynchronous dispatcher
-      gitgutter            # Show git changes in gutter
+      vim-gitgutter        # Show git changes in gutter
       # align              # Align stuff
       tabular              # Also aligns stuff
       tagbar               # ctags

@@ -98,6 +98,7 @@ in
       name = "Plata-Noir-Compact";
       package = pkgs.plata-theme;
     };
+    gtk4.theme = config.gtk.theme;
   };
 
   programs.firefox.enable = true;

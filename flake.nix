@@ -59,7 +59,15 @@
           xdg.configFile."nixpkgs/config.nix".source = ./nixpkgs/config.nix;
           # Since 25.05, the following clashes with useGlobalPkgs
           # nixpkgs.config = import ./nixpkgs/config.nix;
-          xdg.configFile."nix/nix.conf".source = ./nix/nix.conf;
+          # Cache substituters/keys are only honoured for trusted users; on the
+          # non-NixOS hosts the daemon ignores them and warns, so add them only on
+          # the NixOS host, where the user is in trusted-users.
+          xdg.configFile."nix/nix.conf".text =
+            builtins.readFile ./nix/nix.conf
+            + optionalString (hostname == "nixos-framework") ''
+              trusted-substituters = https://ghc-nix.cachix.org https://lean4.cachix.org/ https://cache.nixos.org
+              trusted-public-keys = ghc-nix.cachix.org-1:wI8l3tirheIpjRnr2OZh6YXXNdK2fVQeOI4SVz/X8nA= lean4.cachix.org-1:mawtxSxcaiWE24xCXXgh3qnvlTkyU7evRRnGeAhD4Wk= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            '';
 
           # Re-expose self, nixpkgs and unsable as flakes. For use in nix-search, for example
           nix = {

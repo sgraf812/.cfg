@@ -2,6 +2,7 @@
 
 {
   imports = [
+    modules/claude.nix
     modules/ghc-dev.nix
     modules/kakoune.nix
     modules/lazygit.nix

@@ -75,6 +75,12 @@ in
     # virtmanager # Needs virtualisation.libvirtd.enable = true; in configuration.nix and is currently deactivated
     vlc
     w3m
+    # Connect to a WiFi network by scanning its QR code with the webcam.
+    # The script is Perl and shells out to nmcli (NetworkManager) and zbarcam (zbar).
+    (pkgs.writeShellScriptBin "wifiqr" ''
+      export PATH=${lib.makeBinPath [ pkgs.networkmanager pkgs.zbar ]}:$PATH
+      exec ${pkgs.perl}/bin/perl ${./scripts/wifiqr.sh} "$@"
+    '')
     xprop
     zoom-us
 

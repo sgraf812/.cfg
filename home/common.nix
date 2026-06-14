@@ -135,6 +135,7 @@
       color.ui = "auto";
       push.default = "simple";
       pull.ff = "only";
+      rebase.autoStash = true;
       merge.conflictstyle = "diff3";
       # Auto-resolve flake.lock conflicts in favour of the local version (see .gitattributes).
       merge.ours.driver = "true";

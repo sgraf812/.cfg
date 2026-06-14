@@ -37,6 +37,7 @@ in
     unstable.claude-code
     cabal2nix
     cabal-install
+    gdb
     gh
     ghc
     (pkgs.writeShellScriptBin "ghc912" ''exec -a $0 ${haskell.compiler.ghc912}/bin/ghc "$@"'')
@@ -51,6 +52,7 @@ in
     # nofib-analyse # see overlay
     p7zip
     pdfpc
+    rr
     stack
     # stack2nix # broken
     sqlcsv

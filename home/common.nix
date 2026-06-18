@@ -210,6 +210,7 @@
       l = "ls -l";
       ll = "l --group --header --links --extended --git";
       la = "ll -a";
+      lg = "lazygit";
       p = "(){ ${pkgs.python3}/bin/python -c \"from math import *; print($@);\" }"; # https://stackoverflow.com/questions/34340575/zsh-alias-with-parameter#comment108551041_39395740
       rg-sed = ''() {
         if [ $# -lt 3 ]; then

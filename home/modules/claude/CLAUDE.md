@@ -35,3 +35,24 @@ Describe what exists, on its own terms.
 
 Same instinct for plans, PR bodies, and slides: terse, no rejected
 alternatives, no code sketches. Slide bullets are one-clause anchors.
+
+## Lean formalization
+
+**Reuse before defining.** Before any new `def`, express the body in terms of
+existing combinators and lemmas from the library. If you can't, you're missing
+an abstraction: find it, or extract a reusable one. Don't inline by
+pattern-matching on the underlying representation at the use site. If you've
+added 3+ helpers in a session without citing existing infrastructure, stop and
+audit; you're likely duplicating it.
+
+**Think in APIs, not unfoldings.** Each definition gets a simp (and `grind`)
+framework: the lemmas that characterize it. Prove against that API. Unfolding a
+definition is a smell, justified only while building out the simp/`grind`
+framework of the definition being unfolded. Elsewhere, reaching to unfold means
+the API is incomplete; add the lemma instead.
+
+**Scrap before patch.** When a definition or proof shape is wrong, delete and
+restart. The "make Lean accept this" instinct produces worse code than the
+"find the right abstraction" instinct. A working proof of the wrong shape is
+worse than no proof; it ossifies the bad shape and breeds bridge lemmas to
+compensate.

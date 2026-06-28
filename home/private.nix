@@ -33,7 +33,6 @@ in
   ];
 
   home.packages = with pkgs; [
-    audacity
     unstable.claude-code
     cabal2nix
     cabal-install

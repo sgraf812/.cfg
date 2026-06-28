@@ -31,7 +31,6 @@ in
   ];
 
   home.packages = with pkgs; [
-    audacity
     binutils # ar and stuff
     cabal2nix
     cabal-install

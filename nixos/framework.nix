@@ -107,10 +107,26 @@
     yubikey-personalization
   ];
 
-  # Shoot things when there's less than 2% RAM
+  # Trip on low free memory and target Lean's process group. The swap gate is
+  # held open so a large swap keeps the memory gate authoritative.
   services.earlyoom = {
     enable = true;
-    freeMemThreshold = 2;
+    freeMemThreshold = 8;
+    freeSwapThreshold = 100;
+    freeSwapKillThreshold = 100;
+    enableNotifications = true;
+    extraArgs = [ "--prefer" "^(lean|lake)$" "-g" ];
+  };
+
+  # Reclaim page cache before swapping anonymous memory.
+  boot.kernel.sysctl."vm.swappiness" = 10;
+
+  # Cap the GUI app slice (Cursor, browsers, terminals). A runaway is
+  # OOM-killed within the cgroup near 30 GiB; the largest task dies, so the
+  # editor outlives the lean process it spawned.
+  systemd.user.slices."app".sliceConfig = {
+    MemoryMax = "26G";
+    MemorySwapMax = "4G";
   };
 
   # Install firmware updates

@@ -56,3 +56,12 @@ restart. The "make Lean accept this" instinct produces worse code than the
 "find the right abstraction" instinct. A working proof of the wrong shape is
 worse than no proof; it ossifies the bad shape and breeds bridge lemmas to
 compensate.
+
+## Lean tooling
+
+- Pre-build (`lake build`, `lake exe cache get`) before trusting lean-lsp-mcp
+  goal queries; cold Mathlib elaboration is what makes it time out.
+- On a lean-lsp-mcp timeout, pre-build or raise the timeout. Don't retry the
+  same call.
+- For tactic exploration, prefer REPL-backed `lean_multi_attempt` over repeated
+  `lean_goal` round-trips.

@@ -36,6 +36,15 @@ Describe what exists, on its own terms.
 Same instinct for plans, PR bodies, and slides: terse, no rejected
 alternatives, no code sketches. Slide bullets are one-clause anchors.
 
+## Explanations
+
+When precision matters, explain by unfolding the definitions and manipulating
+the symbols, not by paraphrasing in prose; skip this only when an exact
+statement already fits in one line. Introduce concrete detail only where it
+exposes the mechanism, and follow the manipulation all the way to the claim it
+establishes, stating that conclusion outright rather than gesturing at it. Keep
+prose minimal; let the symbolic work carry the precision.
+
 ## Lean formalization
 
 **Reuse before defining.** Before any new `def`, express the body in terms of

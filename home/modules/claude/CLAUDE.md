@@ -32,6 +32,11 @@ Describe what exists, on its own terms.
 - Rewrite a stale comment instead of appending to it; every comment has a
   maintenance cost.
 - No `--` or `—` in prose (chat, comments, commits, PRs). Lean's `--` is fine.
+- Ban words that name nothing: `structural`, `lever`, `knob`, `seam`, `layer`,
+  `soup`, `shape`, `hatch`, and evaluations like `clean`, `honest`, `elegant`,
+  `real`, `the right`. Before sending, test each content word: does it name a
+  specific thing or make a specific claim? If it only emphasizes or evaluates,
+  cut it or replace it with the thing itself.
 
 Same instinct for plans, PR bodies, and slides: terse, no rejected
 alternatives, no code sketches. Slide bullets are one-clause anchors.

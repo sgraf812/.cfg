@@ -148,3 +148,21 @@ stop and ask for permission before falling back to a `Meta` function.
   same call.
 - For tactic exploration, prefer REPL-backed `lean_multi_attempt` over repeated
   `lean_goal` round-trips.
+- Cap every build so a runaway elaboration can't take the machine down:
+  `systemd-run --user --scope -p MemoryMax=6G -p MemorySwapMax=0 -p
+  CPUQuota=800% -p CPUWeight=50 --quiet timeout <s> ~/.elan/bin/lake build
+  <target>`.
+- Set a `maxHeartbeats` bound and keep it near the default. A declaration that
+  needs a raised limit is telling you the proof is slow, not that the limit is
+  wrong; treat a heartbeat timeout as a bottleneck to fix.
+- When a file takes more than 30s to build, find and fix the bottleneck before
+  continuing (a subagent is well suited to this). Usual cause: `isDefEq`
+  re-deriving the same conversion with no caching, most often a projection
+  (`.uses`, `.supp`) sitting atop an unreduced lifted term (`Domain.select`,
+  `Domain.bind`), forcing the whole term open on every layer. Rewrite the term
+  to its reduced form (a `rfl`-lemma) before the projection lands, and drop the
+  `show` that re-states a lifted goal.
+- In proof terms passed to `exact`/`refine`, avoid constructs that postpone and
+  backtrack: dot notation (`e.foo`, `.foo`) and untyped `(·.field)` resolve
+  against a metavariable and thrash. Write the qualified `T.foo e` instead; it
+  never postpones.

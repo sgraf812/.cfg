@@ -50,6 +50,11 @@ exposes the mechanism, and follow the manipulation all the way to the claim it
 establishes, stating that conclusion outright rather than gesturing at it. Keep
 prose minimal; let the symbolic work carry the precision.
 
+Write each substantive message for a reader without the transcript. Qualify
+session-local shorthand with enough of its referent to locate it: "the frame
+rule cache key", not "the key"; "the default meet frameproc case", not "the
+meet path". A qualifying phrase is enough; no paragraphs of recap.
+
 ## Lean formalization
 
 **Reuse before defining.** Before any new `def`, express the body in terms of

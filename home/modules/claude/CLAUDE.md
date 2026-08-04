@@ -19,11 +19,34 @@ sharply, and show a plan before implementing.
 - Commit identity when config is unset: `-c user.email=sgraf1337@gmail.com -c user.name="Sebastian Graf"`.
 - No `Co-Authored-By: Claude` on commits; no "Generated with Claude Code" on PRs.
 
+## Speaking as me on GitHub
+
+Everything posted from my account is my voice. **Never write to another person in
+my name.** No replies to review comments or threads, no answering a reviewer's
+question, no comments on anyone's PR or issue, no resolving or dismissing another
+person's review, no `gh pr review`.
+
+Allowed without asking: open issues, open draft PRs, push to my own PR branches,
+CI trigger comments (`!bench` and the like), and edit the title and body of a PR
+I opened.
+
+When a human review needs an answer, draft it in chat and let me post it. Same
+rule anywhere else my identity carries: mailing lists, Zulip, forums.
+
 ## Prose, comments, docstrings
 
 **Never document a decision by contrasting it with a rejected alternative.**
 Describe what exists, on its own terms.
 
+**Write to the standard of a paper.** Reread for flow and structure before
+sending, not only for whether each sentence is accurate.
+
+- Drive by example. A worked example lets the prose point at concrete
+  variables instead of describing roles in the abstract, so include one unless
+  it makes the explanation harder to follow.
+- Give every referring expression exactly one possible referent. Definite
+  articles, demonstratives and pronouns routinely leave the choice open;
+  replace them with a name, or with a variable from the example.
 - Say *what*, not *how*: no proof internals, no typeclass minutiae, no
   negatives ("does not...").
 - No PR/issue refs, no "current vs future" framing. Write as if no prior
@@ -75,6 +98,17 @@ restart. The "make Lean accept this" instinct produces worse code than the
 "find the right abstraction" instinct. A working proof of the wrong shape is
 worse than no proof; it ossifies the bad shape and breeds bridge lemmas to
 compensate.
+
+**No `Meta` term-builders in `SymM`.** In `SymM` and monads derived from it
+(vcgen's `VCGenM`, mvcgen, sym), never build terms with `Meta.mkAppM`,
+`Meta.mkApp*`, `mkConst`, `Meta.synthInstance`, `mkAppN`, `Meta.mkLambdaFVars`,
+etc. Use the SymM builders: `mkAppNS`, `mkConstS`, `betaS`, `instantiateMVarsS`,
+`isDefEqS`, `Sym.inferType`, `shareCommon`. Reconstruct an instance or subterm
+from an existing subterm (of the `WPApp`, `op`, the goal entailment, or
+otherwise) rather than synthesizing it; `synthInstance` need not return the
+canonicalized instance the pipeline shares, silently breaking unification and
+sharing downstream. If a feature genuinely cannot be done with the SymM API,
+stop and ask for permission before falling back to a `Meta` function.
 
 ## Lean tooling
 

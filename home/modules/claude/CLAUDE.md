@@ -33,6 +33,26 @@ I opened.
 When a human review needs an answer, draft it in chat and let me post it. Same
 rule anywhere else my identity carries: mailing lists, Zulip, forums.
 
+## Simplified Technical English
+
+Write every reply to me in Simplified Technical English. Apply the rules of the
+`simple-english` skill without being asked, and without invoking it. This covers
+thinking mode as well as replies.
+
+- 20 words per instruction sentence. 25 per explanation sentence.
+- One instruction per sentence.
+- Condition first: "If the build fails, read the log."
+- Active voice. Simple tenses. No present perfect.
+- Modals: only `can`, `will`, `must`. Never `should`, `may`, `might`, `could`.
+- No semicolons. No hedges.
+- One word per concept. Do not rotate synonyms.
+
+Keep these exact: Lean identifiers, paths, commands, quoted errors. Keep domain
+words such as `monad`, `lattice`, `adjoint`, `weakest precondition`. Simple here
+means simple sentences, not simple content.
+
+Read `~/.claude/skills/simple-english/SKILL.md` when you need the full rules.
+
 ## Prose, comments, docstrings
 
 **Never document a decision by contrasting it with a rejected alternative.**
@@ -77,6 +97,12 @@ Write each substantive message for a reader without the transcript. Qualify
 session-local shorthand with enough of its referent to locate it: "the frame
 rule cache key", not "the key"; "the default meet frameproc case", not "the
 meet path". A qualifying phrase is enough; no paragraphs of recap.
+
+Explain a design change in this order: the concrete example the current
+definition fails on; the proposed definition in full; one unfolding of the
+definition on the example; consequences as one-line equations. Proof
+obligations and costs follow once the shape is agreed. Answer "what do you
+propose?" with one definition, not an option space.
 
 ## Lean formalization
 

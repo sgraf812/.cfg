@@ -69,6 +69,7 @@ sending, not only for whether each sentence is accurate.
   replace them with a name, or with a variable from the example.
 - Say *what*, not *how*: no proof internals, no typeclass minutiae, no
   negatives ("does not...").
+- Do *not* write docstrings for theorems.
 - No PR/issue refs, no "current vs future" framing. Write as if no prior
   discussion happened.
 - Scope caveats and design justification go in the PR body, not a docstring.
@@ -105,6 +106,9 @@ obligations and costs follow once the shape is agreed. Answer "what do you
 propose?" with one definition, not an option space.
 
 ## Lean formalization
+
+**Never name instances.** Declare `instance : C α` and let Lean pick the
+auto-generated name.
 
 **Reuse before defining.** Before any new `def`, express the body in terms of
 existing combinators and lemmas from the library. If you can't, you're missing

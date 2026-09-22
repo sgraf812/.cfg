@@ -54,7 +54,7 @@ in
             --vfs-cache-mode full \
             --buffer-size 5M \
             --vfs-read-ahead 10M \
-            --vfs-cache-max-size 500M \
+            --vfs-cache-max-size 5G \
             --log-level INFO \
             --log-file /tmp/rclone-${name}.log \
             --file-perms 0600 \

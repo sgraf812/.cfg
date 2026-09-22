@@ -85,6 +85,15 @@ in
     })
     //
     ({
+      # Keep the file indexer out of ~/mnt, where the rclone mounts live.
+      # Indexing a mount downloads every file through the VFS cache.
+      "org/freedesktop/tracker/miner/files" = {
+        index-recursive-directories = [ "&DESKTOP" "&DOCUMENTS" "&DOWNLOAD" "&MUSIC" "&PICTURES" "&VIDEOS" ];
+        index-single-directories = [ "$HOME" ];
+      };
+    })
+    //
+    ({
       # pop-shell stuff
       #
       #"org/gnome/shell" = {

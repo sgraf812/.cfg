@@ -26,9 +26,12 @@ my name.** No replies to review comments or threads, no answering a reviewer's
 question, no comments on anyone's PR or issue, no resolving or dismissing another
 person's review, no `gh pr review`.
 
-Allowed without asking: open issues, open draft PRs, push to my own PR branches,
-CI trigger comments (`!bench` and the like), and edit the title and body of a PR
-I opened.
+Allowed without asking: open draft PRs, push to my own PR branches, CI trigger
+comments (`!bench` and the like), and edit the title and body of a PR I opened.
+
+**Never open an issue without my explicit OK for that issue.** "Is there an
+issue for X?" and "we should report X" are not an OK. Draft the title and body
+in chat or in a file, then wait.
 
 When a human review needs an answer, draft it in chat and let me post it. Same
 rule anywhere else my identity carries: mailing lists, Zulip, forums.
@@ -166,3 +169,8 @@ stop and ask for permission before falling back to a `Meta` function.
   backtrack: dot notation (`e.foo`, `.foo`) and untyped `(·.field)` resolve
   against a metavariable and thrash. Write the qualified `T.foo e` instead; it
   never postpones.
+- To measure a `grind` pattern `p` for a lemma `T`, register `p` on a copy
+  (`theorem T' … := T ..`, then `grind_pattern T' => p`) and erase `T`.
+  `attribute [-grind] T` followed by `grind_pattern T => p` revives the old
+  pattern of `T` next to `p` (lean4#16244). Remove this rule when #16244 is
+  fixed.

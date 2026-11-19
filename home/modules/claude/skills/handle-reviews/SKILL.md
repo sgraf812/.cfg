@@ -30,9 +30,9 @@ REPO=$(gh repo view --json name --jq .name)
 
 ## 2. Fetch the user's own pending threads
 
-Get unresolved threads whose first comment the user wrote, with the GraphQL node id, the comment's
-databaseId, path/line, and body. Filter on the author in the query so nobody else's thread reaches
-the work list:
+Get unresolved threads that contain a comment by the user, with the GraphQL node id, path/line, and
+every comment of the user in the thread (databaseId and body, oldest first). Filter on the author
+in the query so nobody else's comment reaches the work list:
 
 ```bash
 ME=$(gh api user --jq .login)
@@ -40,12 +40,12 @@ gh api graphql -f query='
 { repository(owner:"'"$OWNER"'", name:"'"$REPO"'") { pullRequest(number:PR) {
   reviewThreads(first:100) { nodes {
     id isResolved path line
-    comments(first:1){ nodes { databaseId author{login} body } } } } } } }' \
+    comments(first:100){ nodes { databaseId author{login} body } } } } } } }' \
   --jq '.data.repository.pullRequest.reviewThreads.nodes[]
         | select(.isResolved==false)
-        | select(.comments.nodes[0].author.login=="'"$ME"'")
-        | {id, path, line, dbid:.comments.nodes[0].databaseId,
-           body:.comments.nodes[0].body}'
+        | {id, path, line,
+           mine:[.comments.nodes[] | select(.author.login=="'"$ME"'") | {dbid:.databaseId, body}]}
+        | select(.mine != [])'
 ```
 
 That result is the complete work list. Do not widen it, and do not re-run without the author
@@ -54,7 +54,8 @@ that is a normal request handled outside this skill, and it still never includes
 
 ## 3. Handle each comment
 
-Treat the body as an instruction, anchored at `path:line`:
+Treat the comments of a thread as one instruction, anchored at `path:line`. A later comment refines
+or overrides an earlier one:
 
 - Concrete change → make it.
 - ```suggestion``` block → apply it verbatim.
@@ -72,12 +73,31 @@ tests elsewhere.
 
 ## 5. Clean up the threads
 
-Only the threads from step 2, which the user wrote themselves. They are working notes rather than
-part of the record, so delete them by default:
+Only the comments from step 2, which the user wrote themselves. They are working notes rather than
+part of the record, so delete them by default. Pending comments of an unsubmitted review count too,
+so delete them like any other. Delete every comment in `mine`, newest first. A
+thread disappears when its last comment goes, so a thread that also holds a comment by someone else
+stays, and that comment stays untouched:
 
 ```bash
 gh api -X DELETE repos/$OWNER/$REPO/pulls/comments/DBID
 ```
+
+Afterwards, re-run the step 2 query and confirm that it returns nothing for the handled threads.
+
+Then delete each pending review of the user that has no comments left. Deletion is the only way to
+remove a draft review, since GitHub dismisses submitted reviews only:
+
+```bash
+gh api graphql -f query='
+{ repository(owner:"'"$OWNER"'", name:"'"$REPO"'") { pullRequest(number:PR) {
+  reviews(states:PENDING, first:10) { nodes { id author{login} comments{totalCount} } } } } }' \
+  --jq '.data.repository.pullRequest.reviews.nodes[]
+        | select(.author.login=="'"$ME"'" and .comments.totalCount==0) | .id'
+gh api graphql -f query='mutation($id:ID!){deletePullRequestReview(input:{pullRequestReviewId:$id}){pullRequestReview{id}}}' -f id=REVIEW_ID
+```
+
+A pending review that still holds comments stays as it is.
 
 If the user asked to **resolve** instead of delete:
 
@@ -86,8 +106,8 @@ gh api graphql -f query='mutation($id:ID!){resolveReviewThread(input:{threadId:$
 ```
 
 The per-item reasoning goes in the chat report, never on the PR. Do not post replies, review
-comments, or `gh pr review` in any form, and do not submit or dismiss a draft review the user has
-open.
+comments, or `gh pr review` in any form. Never submit a draft review of the user, and never touch a
+review of anyone else.
 
 ## 6. Commit and push
 

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, unstable, ... }:
 
 {
   imports = [
@@ -9,6 +9,7 @@
   targets.genericLinux.enable = true;
 
   home.packages = with pkgs; [
+    unstable.claude-code
   ];
 
   programs.git.settings.user.email = "sgraf1337@gmail.com";

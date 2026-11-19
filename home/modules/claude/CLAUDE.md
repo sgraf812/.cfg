@@ -17,7 +17,8 @@ sharply, and show a plan before implementing.
 ## Git
 
 - Commit identity when config is unset: `-c user.email=sgraf1337@gmail.com -c user.name="Sebastian Graf"`.
-- No `Co-Authored-By: Claude` on commits; no "Generated with Claude Code" on PRs.
+- End every PR body with `🤖 Generated with [Claude Code](https://claude.com/claude-code)`
+  and nothing else: no session link.
 
 ## Speaking as me on GitHub
 
@@ -133,9 +134,11 @@ worse than no proof; it ossifies the bad shape and breeds bridge lemmas to
 compensate.
 
 **No `Meta` term-builders in `SymM`.** In `SymM` and monads derived from it
-(vcgen's `VCGenM`, mvcgen, sym), never build terms with `Meta.mkAppM`,
-`Meta.mkApp*`, `mkConst`, `Meta.synthInstance`, `mkAppN`, `Meta.mkLambdaFVars`,
-etc. Use the SymM builders: `mkAppNS`, `mkConstS`, `betaS`, `instantiateMVarsS`,
+(vcgen's `VCGenM`, mvcgen, sym), never build goal, target or proposition terms
+with `Meta.mkAppM`, `Meta.mkApp*`, `mkConst`, `Meta.synthInstance`, `mkAppN`,
+`Meta.mkLambdaFVars`, etc. Unshared proof terms (the proof of a simp step, a
+proof argument) may be built with raw `mkApp`/`mkConst`/`mkLambda`.
+Use the SymM builders: `mkAppNS`, `mkConstS`, `betaS`, `instantiateMVarsS`,
 `isDefEqS`, `Sym.inferType`, `shareCommon`. Reconstruct an instance or subterm
 from an existing subterm (of the `WPApp`, `op`, the goal entailment, or
 otherwise) rather than synthesizing it; `synthInstance` need not return the
@@ -151,10 +154,11 @@ stop and ask for permission before falling back to a `Meta` function.
   same call.
 - For tactic exploration, prefer REPL-backed `lean_multi_attempt` over repeated
   `lean_goal` round-trips.
-- Cap every build so a runaway elaboration can't take the machine down:
-  `systemd-run --user --scope -p MemoryMax=6G -p MemorySwapMax=0 -p
-  CPUQuota=800% -p CPUWeight=50 --quiet timeout <s> ~/.elan/bin/lake build
-  <target>`.
+- Run every build in a scope so a runaway elaboration can't take the machine
+  down: `systemd-run --user --scope @PROPS@ --quiet timeout <s>
+  ~/.elan/bin/lake build <target>`. For lean4 `make`/`ctest`, pass `-j@JOBS@`
+  in the same scope. The properties are sized to this machine by home-manager;
+  do not change them.
 - Set a `maxHeartbeats` bound and keep it near the default. A declaration that
   needs a raised limit is telling you the proof is slow, not that the limit is
   wrong; treat a heartbeat timeout as a bottleneck to fix.
@@ -174,3 +178,17 @@ stop and ask for permission before falling back to a `Meta` function.
   `attribute [-grind] T` followed by `grind_pattern T => p` revives the old
   pattern of `T` next to `p` (lean4#16244). Remove this rule when #16244 is
   fixed.
+
+## Waiting for background work
+
+- Never wait with `until ! pgrep -f "<pattern>"` or `while pgrep -f "<pattern>"`.
+  `pgrep -f` matches the loop's own shell, whose command line contains the
+  pattern, so the loop never ends. A subagent stuck on such a loop reports
+  "waiting on its own background work" for days.
+- To wait for a job, run it with `run_in_background` and act on its completion
+  notification. To wait for a process you did not start, wait on its PID:
+  `while kill -0 <pid> 2>/dev/null; do sleep 5; done`. If you must match by
+  name, use a pattern that cannot match itself: `pgrep -f '[l]ake build'`.
+- Before reporting, stop every background task you no longer need with
+  `TaskStop`.
+- Brief subagents with these rules.
